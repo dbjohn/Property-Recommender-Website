@@ -18,7 +18,7 @@ development:
   database: property_site_development
   pool: 5
   username: railspgu
-  password:
+  password: lapp
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -44,7 +44,7 @@ test:
   database: property_site_test
   pool: 5
   username: railspgu
-  password:
+  password: lapp
 
 production:
   adapter: postgresql
@@ -52,4 +52,4 @@ production:
   database: property_site_production
   pool: 5
   username: railspgu
-  password:
+  password: lapp
