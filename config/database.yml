@@ -17,8 +17,8 @@ development:
   encoding: unicode
   database: property_site_development
   pool: 5
-  username: railspgu
-  password: lapp
+  username: railspg
+  password: RootPass
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -43,13 +43,13 @@ test:
   encoding: unicode
   database: property_site_test
   pool: 5
-  username: railspgu
-  password: lapp
+  username: railspg
+  password: RootPass
 
 production:
   adapter: postgresql
   encoding: unicode
   database: property_site_production
   pool: 5
-  username: railspgu
-  password: lapp
+  username: railspg
+  password: RootPass
