@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   
   def results
 	
-	@property = Property.where("id = ?", 1).first
+	@property = Property.where("price = ?", params[:price]).first
 	
   end
   

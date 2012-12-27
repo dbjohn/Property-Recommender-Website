@@ -1,4 +1,12 @@
 <h1>Home#index</h1>
 <p>Hello there, jb </p>
 
-<%= link_to "Submit", :controller => "home", :action => "results" %>
+<%= form_tag(url_for(:action => 'search')) do -%>
+	
+	<%=label_tag 'price', 'Select Price' %>
+	<%=select_tag "price", options_for_select([ 1000, 2000, 3000 ]) %>
+  
+  <div><%= submit_tag 'Submit' %></div>
+
+<% end -%>
+
