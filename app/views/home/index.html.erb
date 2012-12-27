@@ -3,10 +3,13 @@
 
 <%= form_tag(url_for(:action => 'results')) do -%>
 	
-	<%=label_tag 'price', 'Select Price' %>
-	<%=select_tag "price", options_for_select([ 1000, 20000, 3000 ]) %>
-  
+	<%=label_tag 'min_price', 'Select Min Price' %>
+	<%=select_tag 'min_price', options_for_select([ 1000, 20000, 300000 ]) %>
+	<br>
+	<%=label_tag 'max_price', 'Select Max Price' %>
+	<%=select_tag 'max_price', options_for_select([ 1000, 20000, 300000 ]) %>
+	<br>
   <div><%= submit_tag 'Submit' %></div>
-
+  
 <% end -%>
 
