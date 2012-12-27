@@ -1,6 +1,8 @@
 <h1>Results</h1>
-<p>Hello there, jb </p>
 
+<p>Results</p>
+	<br>
+	<br>
 
 <div> 
 	<p> Address:
@@ -10,4 +12,14 @@
 	<%= @property.price %>
 	</p>
 	
+	
+<% @properties.each do |property| %>
+  	<p> Address:
+	<%= property.address %>
+	</p>
+	<p> Price:
+	<%= property.price %>
+	</p>
+<% end %>
+
 </div>
