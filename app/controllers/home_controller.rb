@@ -3,8 +3,9 @@ class HomeController < ApplicationController
 	
   end
   
-  def search
+  def results
 	
+	@property = Property.where("id = ?", 1)
 	
   end
   

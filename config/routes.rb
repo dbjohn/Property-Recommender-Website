@@ -1,7 +1,7 @@
 PropertySite::Application.routes.draw do
   get "home/index"
 
-  match 'search' => 'home#search'
+  match 'results' => 'home#results'
   
   
   # The priority is based upon order of creation:
