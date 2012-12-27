@@ -1,18 +1,27 @@
-<h1>Property Site</h1>
-<p>Select Criteria</p>
-	<br>
-	<br>
-<%= form_tag(url_for(:action => 'results')) do -%>
-	
-	<%=label_tag 'min_price', 'Select Min Price' %>
-	<%=select_tag 'min_price', options_for_select([ 1000, 20000, 300000 ]) %>
-	<br>
-	<br>
-	<%=label_tag 'max_price', 'Select Max Price' %>
-	<%=select_tag 'max_price', options_for_select([ 1000, 20000, 300000 ]) %>
-	<br>
-	<br>
-  <div><%= submit_tag 'Submit' %></div>
-  
-<% end -%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Property Site</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	</head>
+	<body>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 
+		<p>Select Criteria</p>
+			<br>
+			<br>
+		<%= form_tag(url_for(:action => 'results')) do -%>
+			
+			<%=label_tag 'min_price', 'Select Min Price' %>
+			<%=select_tag 'min_price', options_for_select([ 1000, 20000, 300000 ]) %>
+			<br>
+			<br>
+			<%=label_tag 'max_price', 'Select Max Price' %>
+			<%=select_tag 'max_price', options_for_select([ 1000, 20000, 300000 ]) %>
+			<br>
+			<br>
+		  <div><%= submit_tag 'Submit' %></div>	  
+		<% end -%>
+	</body>
+</html>
