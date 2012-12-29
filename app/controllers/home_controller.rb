@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  require '.\test_ruby.rb'
+
   def index
 	
   end
