@@ -2,7 +2,7 @@ class TestClass
 
 	def self.testMethod
 	
-		return "cats"
+		return "cats wear jumpers"
 	end
 	
 end

@@ -11,10 +11,11 @@ class HomeController < ApplicationController
 	#@properties.each_with_index do |property, i|	
 	#	@durations[i] = CommuteCalc.calc_commute_time(property)
 	
-	=begin
-	comment:
-	
-	=end
+=begin
+comment:
+
+=end
+
 	@durations[i] = TestClass.testMethod
 	
 	end
