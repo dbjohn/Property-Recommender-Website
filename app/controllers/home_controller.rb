@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  require './test_ruby.rb'
+  require_relative './test_ruby.rb'
 
   def index
 	
