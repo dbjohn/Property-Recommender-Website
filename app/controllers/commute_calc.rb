@@ -1,6 +1,6 @@
 class CommuteCalc
 	require 'httparty'
-	
+	require_relative './parse_XML.rb'
 	def initialize 
 	 
 	 #response = HTTParty.get('http://192.168.1.21:8080/opentripplanner-api-webapp/ws/transit/agencyIds', :headers => {'Accept' => 'text/xml'})
