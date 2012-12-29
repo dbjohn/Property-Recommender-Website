@@ -18,7 +18,7 @@ comment:
 
 	@durations[i] = TestClass.testMethod
 	
-	end
+
   end
   
 end
