@@ -15,7 +15,7 @@ class HomeController < ApplicationController
 comment:
 
 =end
-
+	i = 0
 	@durations[i] = TestClass.testMethod
 	
 
