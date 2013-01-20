@@ -7,25 +7,30 @@
 	<body>
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<div class="center">
 		
 		<h1>Property Site</h1>
-		
-		<p>Select Criteria</p>
-			<br>
-			<br>
-		<%= form_tag(url_for(:action => "results")) do -%>
-			
-			<%=label_tag "min_price", "Select Min Price" %>
-			<%=select_tag "min_price", options_for_select([ 1000, 20000, 300000 ]) %>
-			<br>
-			<br>
-			<%=label_tag "max_price", "Select Max Price" %>
-			<%=select_tag "max_price", options_for_select([ 1000, 20000, 300000 ]) %>
-			<br>
-			<br>
-			<%=label_tag "commute_destination", "Select commute destination:" %>
-			<%=select_tag "commute_destination", options_for_select(["53.3376,-6.2658"]) %>
-		  <div><%= submit_tag "Submit" %></div>	  
-		<% end -%>
+			<div class="row">
+				<div class="span4">
+				<p>Select Criteria</p>
+					<br>
+					<br>
+				<%= form_tag(url_for(:action => "results")) do -%>
+					
+					<%=label_tag "min_price", "Select Min Price" %>
+					<%=select_tag "min_price", options_for_select([ 1000, 20000, 300000 ]) %>
+					<br>
+					<br>
+					<%=label_tag "max_price", "Select Max Price" %>
+					<%=select_tag "max_price", options_for_select([ 1000, 20000, 300000 ]) %>
+					<br>
+					<br>
+					<%=label_tag "commute_destination", "Select commute destination:" %>
+					<%=select_tag "commute_destination", options_for_select(["53.3376,-6.2658"]) %>
+				  <div><%= submit_tag "Submit" %></div>	  
+				<% end -%>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
