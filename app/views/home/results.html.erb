@@ -1,24 +1,39 @@
-<h1>Results</h1>
-
-<p>Results</p>
-	<br>
-	<br>	
-<% @properties.each do |property| %>
-  	<p> Address:
-	<%= property.address %>
-	</p>
-	<p> Price:
-	<%= property.price %>
-	</p>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Property Results</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	</head>
 	
-	<p> Location:
-	<%= property.longitude %>&nbsp<%= property.latitude %>
-	</p>
-	
-	<p> Commute Time duration:
-	<%= @durations[0] %>
-	</p>
-	
-<% end %>
-
-</div>
+	<body>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<h1>Results</h1>
+					<div class="row-fluid">
+						<div class="span6">
+							<h3>Results</h3>
+								<br>
+								<br>	
+							<% @properties.each do |property| %>
+								<p> Address:
+								<%= property.address %>
+								</p>
+								<p> Price:
+								<%= property.price %>
+								</p>
+								
+								<p> Location:
+								<%= property.longitude %>&nbsp<%= property.latitude %>
+								</p>
+								
+								<p> Commute Time duration:
+								<%= @durations[0] %>
+								</p>
+								
+							<% end %>
+						</div>
+					</div>
+		</div>
+	</body>
+</html>
+		
