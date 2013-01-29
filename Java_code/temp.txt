@@ -1,0 +1,2 @@
+long startTime = System.nanoTime();//jb
+calcProgramTime(startTime,"total main");   //jb

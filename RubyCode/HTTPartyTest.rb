@@ -57,6 +57,7 @@ class HTTPartyTest
 	 
 	 #------------------
 	 
+	 
 	 #analyst?
 	 	
 	 #response = HTTParty.get('http://localhost:8080/opentripplanner-api-webapp/ws/wms', :query => {:layers=>'traveltime', :batch=>'true', :mode=>'transit%2cwalk', :maxwalkdistance=>'2000', :time=>'2013-1-1t08%3a00%3a00', :fromplace=>'45.5553%2c-122.6008', :toplace=>'44.5553%2c-123.6008'},:headers => {'Accept' => 'text/xml'})
