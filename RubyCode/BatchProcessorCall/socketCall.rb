@@ -4,6 +4,7 @@ hostname = 'localhost'
 port = 55555
 
 socket = TCPSocket.open(hostname, port)
+#socket = TCPSocket.new(hostname, port)
 
 #sleep 5
 socket.puts('Go')
