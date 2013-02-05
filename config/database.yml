@@ -19,13 +19,6 @@ development:
   pool: 5
   username: railspg
   password: RootPass
-  
-  adapter: postgresql
-  encoding: unicode
-  database: dublin_osm
-  pool: 5
-  username: postgres
-  password: lapp
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -60,3 +53,12 @@ production:
   pool: 5
   username: railspg
   password: RootPass
+
+other:
+ adapter: postgresql
+ encoding: unicode
+ database: dublin_osm
+ pool: 5
+ username: postgres
+ password: lapp
+ 
