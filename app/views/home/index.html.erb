@@ -22,11 +22,13 @@
 					<br>
 					<br>
 					<%=label_tag "max_price", "Select Max Price" %>
-					<%=select_tag "max_price", options_for_select([ 1000, 20000, 300000 ]) %>
+					<%=select_tag "max_price", options_for_select([ 20000, 30000, 400000 ]) %>
 					<br>
 					<br>
 					<%=label_tag "commute_destination", "Select commute destination:" %>
 					<%=select_tag "commute_destination", options_for_select(["53.3376,-6.2658"]) %>
+					<br>
+					<br>
 				  <div><%= submit_tag "Submit" %></div>	  
 				<% end -%>
 				</div>

@@ -9,31 +9,44 @@
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<h1>Results</h1>
-					<div class="row-fluid">
-						<div class="span6">
+					<!--<div class="row-fluid">
+						<div class="span6">-->
+						
 							<h3>Results</h3>
+							
 								<br>
-								<br>	
-							<% @properties.each do |property| %>
-								<p> Address:
-								<%= property.address %>
-								</p>
-								<p> Price:
-								<%= property.price %>
-								</p>
+								<br>
+						<table class="table">			
+								<thead>
+									<tr>
+									<th>Rank</th>
+									<th> Address</th>
+									<th> Price</th>
+									<th> Location</th>
+									<th> Commute Time Score</th>
+									<th> Commute Time to work duration</th>
+									<th> Commute Time from work duration</th>
+									</tr>
+								</thead>	
+								<tbody>
 								
-								<p> Location:
-								<%= property.longitude %>&nbsp<%= property.latitude %>
-								</p>
-								
-								<p> Commute Time duration:
-								<%= property.commute_score %>
-								</p>
-								
-							<% end %>
-						</div>
-					</div>
-		</div>
+								<% @properties.each_with_index do |property, index| %>
+									<tr>
+										<td> <%=index + 1%> </td>
+										
+										<td> <%= property.address %> </td> 
+										<td><%= property.price %> </td>									
+										<td> <%= property.longitude %>&nbsp<%= property.latitude %> </td>
+										<td> <%= property.commute_score %></td>																		
+										<td> <%= property.commute_time_to %> </td>									
+										<td> <%= property.commute_time_from %> </td>
+									</tr>
+								<% end %>
+								</tbody>
+							</table>
+		<!--				</div>
+					</div>-->
+		
 	</body>
 </html>
 		

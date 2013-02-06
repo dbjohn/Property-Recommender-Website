@@ -1,4 +1,4 @@
- #class Commute_Calc
+class Commute_Calc
 	# require 'httparty'
 	# require_relative './parse_XML.rb'
 	# def initialize 
@@ -42,10 +42,11 @@
 
 require 'csv'
 require 'socket'
+require_relative './scoring.rb'
 
  #look for a way to keep tcp connection persistent
 	 
-	  def request_routing_calc	 
+	  def request_routing_calculation	 
 			#hostname = 'localhost'
 			hostname = '192.168.1.100'
 			port = 55555
@@ -76,24 +77,33 @@ require 'socket'
 	# end	 
  
 
-	 def calc_commute_score
+	 #def calc_commute_score
+	 def self.calc_commute_score 
 			lines =[]
 			i =0
 			j=0
 	
 			#File.open("C:\\Users\\John\\Google_Drive\\Folders_from_Skydrive\\DIT\\Year_4\\Final_year_project\\Property_site\\source_code\\Main\\property_site\\RubyCode\\BatchProcessorCall\\CSV\\out.csv") do |file|
-#			File.open("C:/Users/John/Google_Drive/Folders_from_Skydrive/DIT/Year_4/Final_year_project/Property_site/source_code/Main/property_site/RubyCode/BatchProcessorCall/CSV/out.csv") do |file|
-			File.open("./RubyCode/BatchProcessorCall/CSV/out.csv") do |file|
-				file.each do |line|			
-						if i != 0
-							lines [i] = CSV.parse(line)
-							@properties[j].commute_score = lines[i][0][4]
-							j	+=1
-						end
-						i +=1					
-					end	
-			end
-		
+			#File.open("C:/Users/John/Google_Drive/Folders_from_Skydrive/DIT/Year_4/Final_year_project/Property_site/source_code/Main/property_site/RubyCode/BatchProcessorCall/CSV/out.csv") do |file|
+			if @properites
+				File.open("./RubyCode/BatchProcessorCall/CSV/out_0_o1.csv") do |file|
+					file.each do |line|			
+							if i != 0				#skip the header line in the csv file
+								lines[i] = CSV.parse(line)
+								#puts @properties[j].address
+								@properties[j].commute_time_to = lines[i][0][4]
+								@properties[j].commute_time_from = lines[i][0][5]
+								@properties[j].commute_score = score_calc @properties[j].commute_time_to, @properties[j].commute_time_from
+								
+								j	+=1
+							end
+							i +=1					
+						end	
+				end
+		end
 	 end
 	 
+	
+	 
+end
 	
