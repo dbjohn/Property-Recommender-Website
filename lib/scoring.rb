@@ -1,6 +1,6 @@
 def score_calc(to, from)	
 	#average = ((to.to_f + from.to_f) / 2.0)
-	average = (to.to_f + from.to_f).to_f / 2.0
+	average = (to.to_f + from.to_f) / 2.0
 	return distance_decay_formula(average)	
 end
 

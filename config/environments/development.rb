@@ -34,4 +34,6 @@ PropertySite::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  config.watchable_dirs['lib']=[:rb]
 end
