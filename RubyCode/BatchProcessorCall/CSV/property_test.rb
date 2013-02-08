@@ -11,7 +11,7 @@ require 'benchmark'
 
 array_properties = []
 
-100000.times do |index|
+10.times do |index|
 	lon = rand(0..1000)		
 	lat = rand(0..1000)		
 	score = rand(0..1000)		
@@ -20,8 +20,11 @@ array_properties = []
 end	
 
 #p array_properties.sort
+#array_properties.sort
+array_properties.sort!
+p array_properties
 
 
-Benchmark.bm do |x|
-	 x.report {array_properties.sort}
- end
+# Benchmark.bm do |x|
+	 # x.report {array_properties.sort}
+ # end

@@ -2,7 +2,8 @@ class HomeController < ApplicationController
   #require_relative './test_ruby.rb'
   #require_relative './commute_calc.rb'
   #require_dependency './commute_calc.rb'
-    require_dependency 'commute_calc.rb'
+ require_dependency 'commute_calc'
+
   
 
   def index
@@ -12,6 +13,7 @@ class HomeController < ApplicationController
   def results
 	
 		@properties = Property.where("price >= :min_price AND price <= :max_price", :min_price => params[:min_price],  :max_price => params[:max_price])
+		#Property.where("price >= 1000 AND price <= 999999")
 		#@durations =[]
 		
 		# puts @properties[1].address
@@ -20,11 +22,15 @@ class HomeController < ApplicationController
 			# @properties[x].commute_score = 3
 		# end
 		
-		#Commute_Calc.calc_commute_score
-		#Commute_Calc.calc_commute_score(@properties)
-		#request_routing_calculation
 		
-		calc_commute_score
+		#request_routing_calculation
+		CommuteCalc.request_routing_calculation
+		CommuteCalc.calc_commute_score @properties
+		
+		
+		 @properties.sort!.reverse!	#sort in descending order and mutate object array
+		#CommuteCalc::calc_commute_score
+		#calc_commute_score
 		
 =begin	
 	@properties.each_with_index do |property, i|	
@@ -44,3 +50,4 @@ comment:
   
   
 end
+

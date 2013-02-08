@@ -4,11 +4,19 @@
 begin	
 	require './random_property_generator.rb'
 
-	no_of_records = 10000
-	min_long = -122.6510	
-	max_long = -122.5000
-	min_lat = 45.4921
-	max_lat = 45.5470	
+	no_of_records = 100
+	
+	#These coordinates work well for testing Portland Oregon
+	# min_long = -122.6510	
+	# max_long = -122.5000
+	# min_lat = 45.4921
+	# max_lat = 45.5470	
+	
+	#These coordinates work well for testing Dublin Ireland
+	 min_long = -6.3507843
+	 max_long = -6.23336792
+	 min_lat = 53.28410054
+	 max_lat = 53.38988075
 
 	array_long = generate_random_array(min_long, max_long, no_of_records)
 #	puts "array long"

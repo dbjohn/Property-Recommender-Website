@@ -1,6 +1,6 @@
 require 'socket'
 
-hostname = 'localhost'
+hostname = 'localhost' #make sure you change this to the correct ip address if necessay.  REMEMBER THAT YOU ARE WORKING WITH A VM AS WELL.
 port = 55555
 
 socket = TCPSocket.open(hostname, port)

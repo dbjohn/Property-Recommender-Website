@@ -1,5 +1,13 @@
+	i=0
+	loop do		
+		puts i
+		i+=1
+		break if (i ==4)
+	end		
+	
+	puts i
 		
-		a = ["sdfs","fdsfsd","fdsdgsdfg","fdsdsf"]
+		#a = ["sdfs","fdsfsd","fdsdgsdfg","fdsdsf"]
 
 =begin				
 		a.each_with_index do |aa, index|

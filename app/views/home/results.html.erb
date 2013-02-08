@@ -24,8 +24,8 @@
 									<th> Price</th>
 									<th> Location</th>
 									<th> Commute Time Score</th>
-									<th> Commute Time to work duration</th>
-									<th> Commute Time from work duration X</th>
+									<th> Commute Time to work duration (minutes)</th>
+									<th> Commute Time from work duration </th>
 									</tr>
 								</thead>	
 								<tbody>
@@ -36,12 +36,12 @@
 										
 										<td> <%= property.address %> </td> 
 										<td><%= property.price %> </td>									
-										<td> <%= property.longitude %>&nbsp<%= property.latitude %> </td>
-										<td> <%= property.commute_score %></td>																		
-										<td> <%= property.commute_time_to %> </td>									
-										<td> <%= property.commute_time_from %> </td>
+										<td> <%= property.longitude %>, &nbsp <%= property.latitude %> </td>
+										<td> <%= number_with_precision property.commute_score, :precision => 2 %></td>																		
+										<td> <%= number_with_precision property.commute_time_to, :precision => 2  %> </td>									
+										<td> <%=  number_with_precision property.commute_time_from, :precision => 2 %> </td> 
 									</tr>
-								<% end %>
+								<% end %> 
 								</tbody>
 							</table>
 		<!--				</div>
