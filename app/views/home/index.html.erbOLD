@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>				
+	</head>
+	
+	<% content_for :head do %>
+			<%= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" %>					
+	<% end %>
+	
+	<body onload="init()">		
+		<h1 id="title">Basic OSM Example</h1>
+		
+			
+				<div id="mapdiv">
+				</div>
+			
+			 <div id="shortdesc">Show a Simple OSM Map</div>
+			 
+   <div id="docs">
+        <p>This example shows a very simple OSM layout with minimal controls.</p> 
+    </div>
+		
+	</body>
+</html>

@@ -14,3 +14,8 @@ p ActiveRecord::Base.connection.select_rows(
 "select osm_id, name, ST_AsText(ST_Transform(way,4326)),amenity from dublin_osm_point where amenity like 'atm'")
 
 puts "hello"
+
+
+properties = Property.all
+
+ps[1].latitude.to_f

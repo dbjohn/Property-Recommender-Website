@@ -1,38 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>Property Site</title>
-		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-	</head>
-	<body>
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		
-		
-		<h1>Property Site</h1>
-			<div class="row-fluid">
-				<div class="span6">
-				<p>Select Criteria</p>
-					<br>
-					<br>
-				<%= form_tag(url_for(:action => "results")) do -%>
-					
-					<%=label_tag "min_price", "Select Min Price" %>
-					<%=select_tag "min_price", options_for_select([ 1000, 20000, 300000 ]) %>
-					<br>
-					<br>
-					<%=label_tag "max_price", "Select Max Price" %>
-					<%=select_tag "max_price", options_for_select([ 20000, 30000, 400000 ]) %>
-					<br>
-					<br>
-					<%=label_tag "commute_destination", "Select commute destination:" %>
-					<%=select_tag "commute_destination", options_for_select(["53.3376,-6.2658"]) %>
-					<br>
-					<br>
-				  <div><%= submit_tag "Submit" %></div>	  
-				<% end -%>
-				</div>
-			</div>
-		
-	</body>
-</html>
+	<% content_for :head do %>
+			<%= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" %>								
+	<% end %>
+
+
+ 
+<body onload="initInputMap()">
+	
+	<h1>Property Site</h1>	
+	 	<div class="row-fluid">
+						<div class="span6" id="criteria_left_column">
+								<p>Select Criteria</p>
+									<br>
+									<br>
+								<%= form_tag(url_for(:action => "results")) do -%>
+									
+										<%=label_tag "min_price", "Select Min Price" %>
+										<%=select_tag "min_price", options_for_select([ 1000, 20000, 300000 ]) %>
+										<br>
+										<br>
+										<%=label_tag "max_price", "Select Max Price" %>
+										<%=select_tag "max_price", options_for_select([ 20000, 30000, 400000 ]) %>
+										<br>
+										<br>																				
+										<%=hidden_field_tag "commute_destination", "", :id=>"commute_destination_val" %>								
+										<br>
+										<br>
+									  <div><%= submit_tag "Submit" %></div>	  
+								<% end -%>
+						</div>
+						<div class="span6" id="criteria_right_column">
+							<p> Select commute destination:</p>
+							<div id="map_canvas"></div>
+						</div> 
+			</div> 
+	
+	<!--
+	old
+	<%=label_tag "commute_destinationOld", "Select commute destination:" %>
+										<%=select_tag "commute_destinationOld", options_for_select(["53.3376,-6.2658", "53.33906,-6.2708", "53.36073,-6.29601"]) %>
+	-->
+    	
+  </body>

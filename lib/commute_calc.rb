@@ -25,7 +25,7 @@ module CommuteCalc
 					i =0
 					j=0
 														
-							 File.open(Rails.root.join( "RubyCode/BatchProcessorCall/CSV/out_0_o1.csv") ) do |file|																			
+							 File.open(Rails.root.join( "RubyCode/BatchProcessorCall/CSV/OTP_files/out_0_o1.csv"),"r" ) do |file|																			
 								puts "hello"
 							 
 			
@@ -39,7 +39,7 @@ module CommuteCalc
 															
 															 property.commute_time_to = convert_seconds_to_minutes(line[0][4])														
 															 property.commute_time_from = convert_seconds_to_minutes(line[0][5])
-															 property.commute_score = Scoring.score_calc property.commute_time_to, property.commute_time_from														
+															 property.commute_score = Scoring.commute_score_calc property.commute_time_to, property.commute_time_from														
 												 end	
 							end
 			

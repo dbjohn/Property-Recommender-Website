@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   #require_relative './commute_calc.rb'
   #require_dependency './commute_calc.rb'
  require_dependency 'commute_calc'
+ require_dependency 'scoring'
 
   
 
@@ -12,26 +13,28 @@ class HomeController < ApplicationController
   
   def results
 	
-		@properties = Property.where("price >= :min_price AND price <= :max_price", :min_price => params[:min_price],  :max_price => params[:max_price])
-		#Property.where("price >= 1000 AND price <= 999999")
-		#@durations =[]
+		@properties = Property.where("price >= :min_price AND price <= :max_price", :min_price => params[:min_price],  :max_price => params[:max_price]).order('price asc')
+		#ps = Property.where("price >= 1000 AND price <= 999999")
+				
+		Scoring.match_score_calc @properties 
+				
 		
-		# puts @properties[1].address
-		# puts @properties[1].commute_time_from 
-		# 3.times do |x|
-			# @properties[x].commute_score = 3
-		# end
+		#Write commute destination coordinates to file for router to read
+		#this is not thread safe at the moment
+		 File.open(Rails.root.join( "RubyCode/BatchProcessorCall/CSV/OTP_files/Origins.csv"), 'w') do |file| 							
+				 file.puts("label,lat,lon,input")
+				 file.puts("o1,#{params[:commute_destination]},0")			
+		 end
 		
 		
-		#request_routing_calculation
+		
 		CommuteCalc.request_routing_calculation
 		CommuteCalc.calc_commute_score @properties
 		
+		Scoring.total_score_calc @properties
 		
-		 @properties.sort!.reverse!	#sort in descending order and mutate object array
-		#CommuteCalc::calc_commute_score
-		#calc_commute_score
-		
+		@properties.sort!.reverse!	#sort in place with descending order 
+				
 =begin	
 	@properties.each_with_index do |property, i|	
 		@durations[i] = CommuteCalc.calc_commute_time(property)

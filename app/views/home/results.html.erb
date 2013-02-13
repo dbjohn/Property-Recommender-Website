@@ -1,52 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>Property Results</title>
-		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-	</head>
+	<% content_for :head do %>
+			<%= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" %>								
+	<% end %>
 	
-	<body>
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<h1>Results</h1>
-					<!--<div class="row-fluid">
-						<div class="span6">-->
-						
-							<h3>Results</h3>
-							
-								<br>
-								<br>
-						<table class="table">			
-								<thead>
-									<tr>
-									<th>Rank</th>
-									<th> Address</th>
-									<th> Price</th>
-									<th> Location</th>
-									<th> Commute Time Score</th>
-									<th> Commute Time to work duration (minutes)</th>
-									<th> Commute Time from work duration </th>
-									</tr>
-								</thead>	
-								<tbody>
-								
-								<% @properties.each_with_index do |property, index| %>
-									<tr>
-										<td> <%=index + 1%> </td>
-										
-										<td> <%= property.address %> </td> 
-										<td><%= property.price %> </td>									
-										<td> <%= property.longitude %>, &nbsp <%= property.latitude %> </td>
-										<td> <%= number_with_precision property.commute_score, :precision => 2 %></td>																		
-										<td> <%= number_with_precision property.commute_time_to, :precision => 2  %> </td>									
-										<td> <%=  number_with_precision property.commute_time_from, :precision => 2 %> </td> 
-									</tr>
-								<% end %> 
-								</tbody>
-							</table>
-		<!--				</div>
-					</div>-->
+	<% temp_array=[] %>
+	<% @properties.each_with_index do |property, index| %>														
+			<%index + 1
+			i=property.longitude
+			j=property.latitude
+			temp_array << [i.to_f,j.to_f] %>
+	<% end %> 
+	
+<body onload="initResultsMap(<%= temp_array %>)">
 		
+		<h1>Results</h1>
+			
+					<div class="row-fluid">
+						<div class="span6" id="results_left_column">																					
+								<p>	Commute destination = <%= params[:commute_destination] %></p>
+											<table class="table table-bordered">			
+													<thead>
+														<tr>
+														<th>Rank</th>
+														<th>ID</th>
+														<th> Address</th>
+														<th> Price</th>
+														<th> Location</th>
+														<th> Total Score</th>
+														<th> Match Score</th>
+														<th> Commute Time Score</th>
+														<th> Commute Time to work duration (minutes)</th>
+														<th> Commute Time from work duration (minutes) </th>
+														</tr>
+													</thead>	
+													<tbody>
+													
+													<% @properties.each_with_index do |property, index| %>
+														<tr>
+															<td> <%=index + 1%> </td>
+															<td> <%= property.id %> </td> 
+															<td> <%= property.address %> </td> 
+															<td><%= property.price %> </td>									
+															<td> <%= property.longitude %>, &nbsp <%= property.latitude %> </td>
+															<td> <%= number_with_precision property.total_score, :precision => 2 %></td>																		
+															<td> <%= property.match_score %></td>																		
+															<td> <%= number_with_precision property.commute_score, :precision => 2 %></td>																		
+															<td> <%= number_with_precision property.commute_time_to, :precision => 2  %> </td>									
+															<td> <%=  number_with_precision property.commute_time_from, :precision => 2 %> </td> 
+														</tr>
+													<% end %> 
+													</tbody>
+												</table>	
+						</div>				
+						<div class="span6"  id="results_right_column">		
+								<div id="map_canvas" ></div>			
+						</div>
+			</div>				
 	</body>
-</html>
 		
