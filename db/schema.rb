@@ -11,7 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130120152324) do
+ActiveRecord::Schema.define(:version => 20130214113832) do
+
+# Could not dump table "dublin_osm_line" because of following StandardError
+#   Unknown type 'geometry' for column 'way'
+
+# Could not dump table "dublin_osm_point" because of following StandardError
+#   Unknown type 'geometry' for column 'way'
+
+# Could not dump table "dublin_osm_polygon" because of following StandardError
+#   Unknown type 'geometry' for column 'way'
+
+# Could not dump table "dublin_osm_roads" because of following StandardError
+#   Unknown type 'geometry' for column 'way'
+
+  create_table "geometry_columns", :id => false, :force => true do |t|
+    t.string  "f_table_catalog",   :limit => 256, :null => false
+    t.string  "f_table_schema",    :limit => 256, :null => false
+    t.string  "f_table_name",      :limit => 256, :null => false
+    t.string  "f_geometry_column", :limit => 256, :null => false
+    t.integer "coord_dimension",                  :null => false
+    t.integer "srid",                             :null => false
+    t.string  "type",              :limit => 30,  :null => false
+  end
 
   create_table "properties", :force => true do |t|
     t.string   "address"
@@ -20,6 +42,25 @@ ActiveRecord::Schema.define(:version => 20130120152324) do
     t.datetime "updated_at", :null => false
     t.decimal  "longitude"
     t.decimal  "latitude"
+  end
+
+  create_table "properties_amenities", :id => false, :force => true do |t|
+    t.integer  "property_id"
+    t.integer  "dublin_osm_point_id"
+    t.string   "amenity_type"
+    t.float    "to_travel_time"
+    t.float    "from_travel_time"
+    t.float    "amenity_score"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  create_table "spatial_ref_sys", :id => false, :force => true do |t|
+    t.integer "srid",                      :null => false
+    t.string  "auth_name", :limit => 256
+    t.integer "auth_srid"
+    t.string  "srtext",    :limit => 2048
+    t.string  "proj4text", :limit => 2048
   end
 
 end

@@ -39,7 +39,7 @@ module CommuteCalc
 															
 															 property.commute_time_to = convert_seconds_to_minutes(line[0][4])														
 															 property.commute_time_from = convert_seconds_to_minutes(line[0][5])
-															 property.commute_score = Scoring.commute_score_calc property.commute_time_to, property.commute_time_from														
+															 property.commute_score = Scoring.travel_score_calc property.commute_time_to, property.commute_time_from														
 												 end	
 							end
 			

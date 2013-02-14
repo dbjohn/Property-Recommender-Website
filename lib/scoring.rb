@@ -1,9 +1,9 @@
 module Scoring
 
-		def self.commute_score_calc(to, from)	
+		def self.travel_score_calc(to, from)	
 			#average = ((to.to_f + from.to_f) / 2.0)
 			average = (to.to_f + from.to_f) / 2.0
-			return distance_decay_formula(average)	
+			distance_decay_formula(average)	
 		end
 
 		def self.distance_decay_formula(num)

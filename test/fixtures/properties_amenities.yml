@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  amenity_type: MyString
+  to_travel_time: 1.5
+  from_travel_time: 1.5
+  amenity_score: 1.5
+
+two:
+  amenity_type: MyString
+  to_travel_time: 1.5
+  from_travel_time: 1.5
+  amenity_score: 1.5
