@@ -26,9 +26,6 @@ module CommuteCalc
 					j=0
 														
 							 File.open(Rails.root.join( "RubyCode/BatchProcessorCall/CSV/OTP_files/out_0_o1.csv"),"r" ) do |file|																			
-								puts "hello"
-							 
-			
 												 #@properties.each_with_index do |property, index|
 												 properties.each do |property|
 												
@@ -37,9 +34,9 @@ module CommuteCalc
 																 break if line[0][0].to_i == property.id		# Convert line id element to int first then compare to property id.
 															 end
 															
-															 property.commute_time_to = convert_seconds_to_minutes(line[0][4])														
-															 property.commute_time_from = convert_seconds_to_minutes(line[0][5])
-															 property.commute_score = Scoring.travel_score_calc property.commute_time_to, property.commute_time_from														
+															 property.commute_time_to = convert_seconds_to_minutes( line[0][4] )														
+															 property.commute_time_from = convert_seconds_to_minutes( line[0][5] )
+															 property.commute_score = Scoring.travel_score_calc( property.commute_time_to, property.commute_time_from)
 												 end	
 							end
 			

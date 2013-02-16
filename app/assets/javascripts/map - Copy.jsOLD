@@ -1,30 +1,25 @@
 // extended simple example here http://wiki.openstreetmap.org/wiki/OpenLayers_Simple_Example#A_little_more_extensive_example
-//we could use ecmascript 5 setters and getters, but it isn't supported on older browsers
-//I am not sure how to do this, I might consider using function closure, getters and setters. see p.183 Java definitive guide for example
-//will come back to it.
-
-map = new OpenLayers.Map("map_canvas");
- 
- function mapGenerate() {
+var mapObj = {
+var map: null,
+ mapGenerate: function () {
 			
 			//*************
 			// Map is being defined as a global variable, this is wrong. need to use var for a local variable
 //			map = new OpenLayers.Map("map_canvas");
-
+			this.map = new OpenLayers.Map("map_canvas");
 			var maplayer         = new OpenLayers.Layer.OSM();
 			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
 			var position       = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);						
 			var zoom           = 12; 
 	 
-			map.addLayer(maplayer);
-			map.setCenter(position, zoom );
+			this.map.addLayer(maplayer);
+			this.map.setCenter(position, zoom );
  
- };
-
- function  initInputMap() {
+ },
+  initInputMap: function () {
 			
-			mapGenerate();
+			this.mapGenerate();
 			
 			//this is built by extending the examples from here http://docs.openlayers.org/library/overlays.html#marker-overlays
 			// and here http://openlayers.org/dev/examples/click-handler.html
@@ -106,9 +101,8 @@ map = new OpenLayers.Map("map_canvas");
 			//view-source:http://openlayers.org/dev/examples/markers.html
 			//view-source:http://openlayers.org/dev/examples/click-handler.html
 			
-    };
-	
-	 function initResultsMap (coord_array) {
+    },	
+	initResultsMap: function (coord_array) {
 						
 						//mapGenerate();
 			
@@ -189,5 +183,6 @@ map = new OpenLayers.Map("map_canvas");
 			// marker.events.register("mousedown", marker, function() {alert(this.id);});
 			// markers.addMarker(marker);						
 			
-};
+		    }
 			
+};

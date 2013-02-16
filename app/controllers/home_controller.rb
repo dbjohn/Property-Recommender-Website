@@ -21,36 +21,25 @@ class HomeController < ApplicationController
 		
 		#Write commute destination coordinates to file for router to read
 		#this is not thread safe at the moment
-		 File.open(Rails.root.join( "RubyCode/BatchProcessorCall/CSV/OTP_files/Origins.csv"), 'w') do |file| 							
-				 file.puts("label,lat,lon,input")
-				 file.puts("o1,#{params[:commute_destination]},0")			
-		 end
+		 # File.open(Rails.root.join( "RubyCode/BatchProcessorCall/CSV/OTP_files/Origins.csv"), 'w') do |file| 							
+				 # file.puts("label,lat,lon,input")
+				 # file.puts("o1,#{params[:commute_destination]},0")			
+		 # end
 		
 		
 		
-		CommuteCalc.request_routing_calculation
-		CommuteCalc.calc_commute_score @properties
+		# CommuteCalc.request_routing_calculation
+		# CommuteCalc.calc_commute_score @properties
 		
-		Scoring.total_score_calc @properties
+		# Scoring.total_score_calc @properties
 		
-		@properties.sort!.reverse!	#sort in place with descending order 
-				
-=begin	
-	@properties.each_with_index do |property, i|	
-		@durations[i] = CommuteCalc.calc_commute_time(property)
+		# @properties.sort!.reverse!	#sort in place for descending order 
+		#@properties.sort!	#sort in place for descending order 
 		
-=end		
+		# amenities = PropertiesAmenity.where(:property_id => properties.map { |prop| prop.id})
+
 	end
 	
-=begin
-comment:
-
-
-	i = 0
-	@durations[i] = TestClass.testMethod
-	end
-=end
-  
   
 end
 
