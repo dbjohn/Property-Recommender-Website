@@ -1,6 +1,6 @@
 class Property < ActiveRecord::Base
   attr_accessor :commute_score, :commute_time_to, :commute_time_from, :match_score, :total_score
-  attr_accessible :address, :price, :longitude, :latitude, :commute_score, :commute_time_to, :commute_time_from, :match_score, :total_score
+  attr_accessible :address, :price, :longitude, :latitude, :amenity_score, :commute_score, :commute_time_to, :commute_time_from, :match_score, :total_score
   
   has_many :properties_amenities
   has_many :dublin_osm_points, :through => :properties_amenities

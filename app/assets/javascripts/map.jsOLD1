@@ -1,20 +1,23 @@
 // extended simple example here http://wiki.openstreetmap.org/wiki/OpenLayers_Simple_Example#A_little_more_extensive_example
+
+//http://stackoverflow.com/questions/4616202/self-references-in-object-literal-declarations
+
 var mapObj = {
-var map: null,
+getMap: new OpenLayers.Map("map_canvas"),
  mapGenerate: function () {
 			
 			//*************
 			// Map is being defined as a global variable, this is wrong. need to use var for a local variable
 //			map = new OpenLayers.Map("map_canvas");
-			this.map = new OpenLayers.Map("map_canvas");
+			
 			var maplayer         = new OpenLayers.Layer.OSM();
 			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
 			var position       = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);						
 			var zoom           = 12; 
 	 
-			this.map.addLayer(maplayer);
-			this.map.setCenter(position, zoom );
+			this.getMap.addLayer(maplayer);
+			this.getMap.setCenter(position, zoom );
  
  },
   initInputMap: function () {
@@ -31,7 +34,7 @@ var map: null,
 			
 			
 			var markers = new OpenLayers.Layer.Markers( "Markers" );
-			map.addLayer(markers);
+			this.getMap.addLayer(markers);
 
 			
 			
@@ -77,7 +80,7 @@ var map: null,
 			
 			//help from http://stackoverflow.com/questions/2160725/taking-coordinates-of-points-in-openlayers
 			
-			map.events.register('click', map, handleMapClick);
+			this.getMap().events.register('click', this.getMap(), handleMapClick);
 			
 			function handleMapClick(e)
 			{
@@ -89,7 +92,7 @@ var map: null,
 			   // lonlat.transform( map.projection,map.displayProjection);
 			   marker.moveTo(e.xy);
 			   //must transform coords http://stackoverflow.com/questions/2601745/how-to-convert-vector-layer-coordinates-into-map-latitude-and-longitude-in-openl
-			   var lonlat = map.getLonLatFromViewPortPx(e.xy);
+			   var lonlat = this.getMap().getLonLatFromViewPortPx(e.xy);
 				lonlat.transform(new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
 			   $("#commute_destination_val").val(lonlat.lat.toString() + ","+ lonlat.lon.toString());
 			   // Longitude = lonlat.lon

@@ -36,8 +36,10 @@ class HomeController < ApplicationController
 		# @properties.sort!.reverse!	#sort in place for descending order 
 		#@properties.sort!	#sort in place for descending order 
 		
-		# amenities = PropertiesAmenity.where(:property_id => properties.map { |prop| prop.id})
-
+		#PUT IN SEPARATE METHOD
+		amenity_ids = []
+		 amenity = PropertiesAmenity.where(:property_id => properties.map { |prop| prop.id}).each { |item| amenity_coord << item.dublin_osm_point_id}
+		.each
 	end
 	
   

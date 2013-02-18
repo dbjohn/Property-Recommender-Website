@@ -4,8 +4,7 @@
 	
 	
 
-<body onload="mapObj.mapGenerate();" >
-		
+<body>		
 		<h1>Results</h1>
 			
 					<div class="row-fluid">
@@ -29,7 +28,8 @@
 													</thead>	
 													<tbody>				
 													
-													<% temp_array=[] %>
+													<% property_location_array=[] %>
+													<% amenity_location_array=[] %>
 													
 													<% @properties.each_with_index do |property, index| %>
 															<tr>
@@ -44,18 +44,28 @@
 																<td> <%= number_with_precision property.commute_time_to, :precision => 2  %> </td>									
 																<td> <%=  number_with_precision property.commute_time_from, :precision => 2 %> </td> 
 																<td> <%=  number_with_precision property.properties_amenities.select(:amenity_score).first.amenity_score, :precision => 2 %> </td> 
-															</tr>																	
-															<% temp_array << [i.to_f,j.to_f] %>
+															</tr>							
+															
+															a = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = 593587611").first
+															amenity_location_array
+															
+															<% property_location_array << [i.to_f,j.to_f] %>
 													<% end %> 
 													</tbody>
 												</table>	
-						</div>				
-						
-						<%= javascript_tag "mapObj.initResultsMap(#{temp_array})" %>			
+						</div>																
 						
 						<div class="span6"  id="results_right_column" >		
 								<div id="map_canvas" ></div>			
 						</div>
+							
+						<%= javascript_tag "mapGenerate()" %>						
+						<%= javascript_tag "initResultsMap(#{property_location_array})" %>
 			</div>				
 	</body>
 		
+		
+DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = 593587611")
+
+a = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = 593587611").first
+a.long.to_f...

@@ -3,14 +3,16 @@
 //I am not sure how to do this, I might consider using function closure, getters and setters. see p.183 Java definitive guide for example
 //will come back to it.
 
-map = new OpenLayers.Map("map_canvas");
+
+//doesn't work
+//window.map = new OpenLayers.Map("map_canvas");
  
  function mapGenerate() {
 			
 			//*************
 			// Map is being defined as a global variable, this is wrong. need to use var for a local variable
-//			map = new OpenLayers.Map("map_canvas");
-
+			window.map = new OpenLayers.Map("map_canvas");
+	
 			var maplayer         = new OpenLayers.Layer.OSM();
 			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
@@ -138,7 +140,7 @@ map = new OpenLayers.Map("map_canvas");
 			 var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
             renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
             
-            var vectorLayer = new OpenLayers.Layer.Vector("Simple Geometry", {
+            var propertyLayer = new OpenLayers.Layer.Vector("Simple Geometry", {
                 styleMap: new OpenLayers.StyleMap({'default':{
                     strokeColor: "#000000",
                     strokeOpacity: 1,
@@ -176,10 +178,83 @@ map = new OpenLayers.Map("map_canvas");
 				i += 1;
 				//position  = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection);		
 				//markers.addMarker(new OpenLayers.Marker(position));
+				propertyLayer.addFeatures([pointFeature]);
+			}
+			
+			map.addLayer(propertyLayer);			
+			
+			// map.addLayer(markers);
+			
+			
+			// var marker = new OpenLayers.Marker(position);
+			// marker.id = "1";
+			// marker.events.register("mousedown", marker, function() {alert(this.id);});
+			// markers.addMarker(marker);						
+			
+};
+			
+
+	//enable layer naming, with ["string"] as a property of this. each layer will be named according to the property.
+	function amenitiesPlot (coord_array) {
+		
+			//see what would happen if you comment these lines out:
+			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+			
+			//var markers = new OpenLayers.Layer.Markers( "Markers" );
+			
+			var lat;
+			var lon;
+			var point;
+			var pointFeature;
+				
+			//************
+			//the statements for declaring the renderer and vector layer is based on modifying an example here: http://openlayers.org/dev/examples/vector-features-with-text.html
+			 var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
+            renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
+            
+            var vectorLayer = new OpenLayers.Layer.Vector("Simple Geometry", {
+                styleMap: new OpenLayers.StyleMap({'default':{
+                    strokeColor: "#000000",
+                    strokeOpacity: 1,
+                    strokeWidth: 2,
+                    fillColor: "#00FFFF",
+                    fillOpacity: 0.9,
+                    pointRadius: 15,
+                    // label with \n linebreaks
+                    label : "${number}",
+                    
+                    fontColor: "${favColor}",
+                    fontSize: "12px",
+                    fontFamily: "Courier New, monospace",
+                    fontWeight: "bold",
+                    labelAlign: "${align}",
+                    labelXOffset: "${xOffset}",
+                    labelYOffset: "${yOffset}",
+                    labelOutlineColor: "white",
+                    labelOutlineWidth: 3
+                }}),
+                renderers: renderer
+            });
+			//************
+				
+			
+			var i =1;
+			
+			for (element in coord_array){
+				lon = coord_array[element][0];
+				lat =coord_array[element][1];
+				point = new OpenLayers.Geometry.Point(lon,lat);
+				point.transform(fromProjection, toProjection);		
+				pointFeature = new OpenLayers.Feature.Vector(point);
+				// pointFeature.attributes = { number: i};
+				// i += 1;
+				//position  = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection);		
+				//markers.addMarker(new OpenLayers.Marker(position));
 				vectorLayer.addFeatures([pointFeature]);
 			}
 			
-			this.map.addLayer(vectorLayer);			
+			map.addLayer(vectorLayer);			
 			
 			// map.addLayer(markers);
 			
