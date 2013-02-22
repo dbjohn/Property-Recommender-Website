@@ -25,7 +25,8 @@ module CommuteCalc
 					i =0
 					j=0
 														
-							 File.open(Rails.root.join( "RubyCode/BatchProcessorCall/CSV/OTP_files/out_0_o1.csv"),"r" ) do |file|																			
+														##check this file name
+							 File.open(Rails.root.join( "other_files/commute/results/o1_0_out.csv"),"r" ) do |file|																			
 												 #@properties.each_with_index do |property, index|
 												 properties.each do |property|
 												
@@ -37,6 +38,7 @@ module CommuteCalc
 															 property.commute_time_to = convert_seconds_to_minutes( line[0][4] )														
 															 property.commute_time_from = convert_seconds_to_minutes( line[0][5] )
 															 property.commute_score = Scoring.travel_score_calc( property.commute_time_to, property.commute_time_from)
+															 #NEED to put in check for zero or negative times
 												 end	
 							end
 			

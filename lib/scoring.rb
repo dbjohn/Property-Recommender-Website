@@ -2,8 +2,12 @@ module Scoring
 
 		def self.travel_score_calc(to, from)	
 			#average = ((to.to_f + from.to_f) / 2.0)
-			average = (to.to_f + from.to_f) / 2.0
-			distance_decay_formula(average)	
+			if(to <= 0 or from <= 0)		#need this check, for bad data for -1, and bug with OTP filters.
+					return 0				
+			else
+					average = (to.to_f + from.to_f) / 2.0
+					return distance_decay_formula(average)						
+			end
 		end
 
 		def self.distance_decay_formula(num)
@@ -24,7 +28,7 @@ module Scoring
 		
 		def self.total_score_calc(properties)
 				properties.each_with_index do |property, index|
-						property.total_score =	(property.match_score + property.commute_score)/2.0
+						property.total_score =	(property.match_score + property.commute_score + property.amenity_score)/3.0
 				end
 		end
 	

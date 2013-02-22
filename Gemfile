@@ -43,3 +43,5 @@ gem 'jquery-rails'
 
 gem "nokogiri"
 gem "httparty"
+
+gem 'haml-rails', :group => :development

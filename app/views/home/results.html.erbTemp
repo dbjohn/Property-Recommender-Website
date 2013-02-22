@@ -1,0 +1,95 @@
+	<% content_for :head do %>
+			<%= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" %>								
+	<% end %>
+	
+	
+
+<body>		
+		<h1>Results</h1>
+			
+					<div class="row-fluid">
+						<div class="span6" id="results_left_column">																					
+								<p>	Commute destination = <%= params[:commute_destination] %></p>
+											
+													
+													<% property_location_array=[] %>
+													<!--<% amenities_location_hash = Hash.new { |hash, key| hash[key] = [] }%>-->
+													<% amenities_location_hash = {} %>
+													
+													<div class="accordion" id="accordion2">
+																			<% @properties.each_with_index do |property, index| %>
+																										  
+																						<div class="accordion-group">
+																											  <div class="accordion-heading">
+																														  <a class="accordion-toggle" data-toggle="collapse"  data-parent="#accordion2" href="#collapse<%=index %>">
+																															Rank: <%=index + 1%> 
+																															Property: <%=property.id %> 
+																															<%= property.address %>
+																														  </a>
+																												</div>
+																											
+																											<div id="collapse<%=index%>" class="accordion-body collapse <%= index==0 ? "in" : "" %>">
+																														<div class="accordion-inner">
+																																			<table class="table table-bordered">			
+																																					<thead>
+																																						<tr>																														
+																																						<th> Price</th>
+																																						<th> Total Score</th>
+																																						<th> Match Score</th>
+																																						<th> Amenity Score </th>
+																																						<th> Commute Score</th>
+																																						<th> Commute To </th>
+																																						<th> Commute From </th>														
+																																						</tr>
+																																					</thead>	
+																																					<tbody>			
+																																		
+																																				<tr>																														
+																																					<td><%= property.price %> </td>																																														
+																																					<td> <%= number_with_precision property.total_score, :precision => 2 %></td>																		
+																																					<td> <%= property.match_score %></td>																		
+																																					<td> <%=  number_with_precision property.amenity_score, :precision => 2 %> </td> 
+																																					<td> <%= number_with_precision property.commute_score, :precision => 2 %></td>																		
+																																					<td> <%= number_with_precision property.commute_time_to, :precision => 2  %> </td>									
+																																					<td> <%=  number_with_precision property.commute_time_from, :precision => 2 %> </td> 																		
+																																				</tr>							
+																																		</tbody>
+																																		</table>			
+																																		
+																																		<p> Nearest Amenities:																																		
+																																		</p>
+																																		
+																																		
+																																		<% amenities = PropertiesAmenity.where(:property_id => property.id) %>
+																																		
+																																		<% amenities.each_with_index do |a, index| %>																																																																				
+																																					
+																																					<%  point = DublinOsmPoint.find( a.dublin_osm_point_id) %>  																		
+																																					<% coord = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = #{point.osm_id}").first %>
+																																					<% unique_id=(property.id).to_s + (point.osm_id).to_s %>
+
+																																					<%= label_tag "#{unique_id}", "#{point.name} ", :class => 'checkbox inline' %>																	
+																																					<%= check_box_tag "#{unique_id}", 1, false %>																																			
+																																		
+																																					<% amenities_location_hash[unique_id] = [coord.long, coord.lat] %> <!-- we need to prepend the property id so that this is a unique number -->
+																																		
+																																		<% end %> 
+																																
+																																<% property_location_array << [property.longitude.to_f, property.latitude.to_f] %>
+																													</div>
+																											</div>
+																								  </div> <!--accordion group -->
+																					<% end %>  <!-- end property loop -->
+														</div> <!--class accordion-->									
+						</div>			
+						<div class="span6"  id="results_right_column" >		
+								<div id="map_canvas" ></div>			
+						</div>
+							
+						<%= javascript_tag "mapGenerate()" %>						
+						<%= javascript_tag "initResultsMap(#{property_location_array})" %>
+						<%= javascript_tag "amenitiesPlot(#{amenities_location_hash.to_json})" %>
+			</div>				
+	</body>
+				
+				

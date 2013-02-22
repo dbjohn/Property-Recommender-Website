@@ -29,7 +29,7 @@ end
 	
 #	puts Scoring.travel_score_calc( 100, 100)																					
 begin	
-	Dir.glob(Rails.root.join("RubyCode/BatchProcessorCall/CSV/OTP_files/Amenities/*out.csv")) do |dir_file| 							
+	Dir.glob(Rails.root.join("other_files/Amenities/output_results/*out.csv")) do |dir_file| 							
 		File.open(dir_file, 'r') do |file| 							
 					 filename=  File.basename(file)
 					 # puts filename

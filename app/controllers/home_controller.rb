@@ -21,7 +21,7 @@ class HomeController < ApplicationController
 		
 		#Write commute destination coordinates to file for router to read
 		#this is not thread safe at the moment
-		 # File.open(Rails.root.join( "RubyCode/BatchProcessorCall/CSV/OTP_files/Origins.csv"), 'w') do |file| 							
+		 # File.open(Rails.root.join( "other_files/commute/otp_origin/Origin.csv"), 'w') do |file| 							
 				 # file.puts("label,lat,lon,input")
 				 # file.puts("o1,#{params[:commute_destination]},0")			
 		 # end
@@ -37,9 +37,9 @@ class HomeController < ApplicationController
 		#@properties.sort!	#sort in place for descending order 
 		
 		#PUT IN SEPARATE METHOD
-		amenity_ids = []
-		 amenity = PropertiesAmenity.where(:property_id => properties.map { |prop| prop.id}).each { |item| amenity_coord << item.dublin_osm_point_id}
-		.each
+		# amenity_ids = []
+		 # amenity = PropertiesAmenity.where(:property_id => properties.map { |prop| prop.id}).each { |item| amenity_coord << item.dublin_osm_point_id}
+		# .each
 	end
 	
   
