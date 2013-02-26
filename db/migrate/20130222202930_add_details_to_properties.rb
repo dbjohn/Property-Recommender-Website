@@ -6,7 +6,7 @@ class AddDetailsToProperties < ActiveRecord::Migration
     add_column :properties, :town_or_city, :string
     add_column :properties, :county, :string
     add_column :properties, :number_of_bedrooms, :int
-    add_column :properties, :accommodation_type, :string
+    add_column :properties, :property_type, :string
     add_column :properties, :move_in_date, :date
     add_column :properties, :lease_type, :string
     add_column :properties, :parking, :boolean

@@ -1,0 +1,84 @@
+=content_for :head do
+	=javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" 
+	=stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css"
+%body{:onload=>"initInputMap()"}
+	
+%h1 Property Site
+
+%div{:class=>"row-fluid"}
+
+	%div{:class=>"span6", :id=>"criteria_left_column"}
+	
+		%h5 Select Criteria		
+	
+		= form_tag(url_for(:action => "results")) do 					
+			=label_tag "min_price", "Minimum Price" 
+			=select_tag "min_price", options_for_select([ 1000, 20000, 300000 ]) 						
+			%br/
+			%br/
+			=label_tag "max_price", "Maximum Price"
+			=select_tag "max_price", options_for_select([ 20000, 30000, 400000 ]) 
+			%br/
+			=label_tag "no_of_bedrooms", "Number of Bedrooms"
+			=select_tag "no_of_bedrooms", options_for_select([ 1, 2, 3, 4, 5, 6  ]) 
+			%br/
+			=label_tag "property_type", "Type of Property"
+			=select_tag "property_type", options_for_select([ "Any type", "Apartment", "House", "Studio Apartment", "Flat"]) 
+			%br/																
+			%br/								
+			=label_tag "move_in", "When can you move in?"						
+			/uses the bootstrap datepicker http://www.eyecon.ro/bootstrap-datepicker/	 
+			.input-append.date#datepicker{"data-date"=>"10-10-2013", "data-date-format"=>"dd-mm-yyyy"}
+				=text_field_tag 'move_in', 'Select date...', :readonly=>"readonly"
+				%span.add-on 
+					%i.icon-calendar
+			%br/																			
+			=label_tag "lease_type", "Lease Type"
+			=select_tag "lease_type", options_for_select([ "Any type", "No Lease", "3 Month Lease", "6 Month Lease", "9 Month Lease", "1 Year Lease", "2 Year Lease", "3 Year Lease"]) 
+			%br/
+			=hidden_field_tag "commute_destination", "", :id=>"commute_destination_val" 			
+			%br/
+													
+			#advanced_options_area.collapse			
+				%br/
+				%h5 Facilities
+				
+				.row
+					.span3
+						=label_tag "parking", "Parking", :class=>"radio inline"
+					.span5
+						=label_tag "parking", "Yes", :class => "radio inline"
+						=radio_button_tag "parking", "yes"
+						=label_tag "parking", "Neutral", :class => "radio inline"
+						=radio_button_tag "parking", "neutral", true
+						=label_tag "parking", "No", :class => "radio inline"
+						=radio_button_tag "parking", "no"
+				
+				%br/
+				
+				.row
+					.span3
+						=label_tag "washing machine", "Washing Machine", :class=>"radio inline"
+					.span5
+						=label_tag "washing machine", "Yes", :class => "radio inline"
+						=radio_button_tag "washing machine", "yes"
+						=label_tag "washing machine", "Neutral", :class => "radio inline"
+						=radio_button_tag "washing machine", "neutral", true
+						=label_tag "washing machine", "No", :class => "radio inline"
+						=radio_button_tag "washing machine", "no"
+				
+			
+			=label_tag "options", "Simple", :class => "radio inline"
+			=radio_button_tag "options", "simple", true
+			=label_tag "options", "Advanced", :class => "radio inline"
+			=radio_button_tag "options", "advanced"
+			
+			
+			%br/
+			%br/
+			%div #{submit_tag "Submit"}
+			
+	%div{:class=>"span6", :id=>"criteria_right_column"}
+	
+		%h5 Select commute destination:
+		%div{:id=>"map_canvas"}   

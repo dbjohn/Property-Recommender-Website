@@ -2,11 +2,15 @@
 	h1{
 		font-size: 3em;		
 		text-align: center;    	
-		padding-bottom: 2%;
+		padding-bottom: 1%;
 		} 
 	
+	h5{
+		float: left;
+	}
+	
 	body{
-		padding-top: 30px;									 			
+		padding-top: 10px;									 			
 	}
 	
 	.span6 {
@@ -18,20 +22,31 @@
 			  /*I don't like the use of pixels here, but it works*/
 			  /* 750 px good for wide screen, */
 	#map_canvas {
-				  width: 450px;
-				  height: 450px;
+				  width: 510px;
+				  height: 425px;
 				   border: 3px solid black;
+				  
 			  }
 		
 	
-	#criteria_left_column{
-		padding-left: 20%;		
-		text-align: left; 		
+	.span9 {
+		padding-left: 10%;			
+		
 	}
 	
-	#criteria_right_column{
-		padding: 0%;		
+	
+	#criteria_left_column{
+		padding-left: 10%;			
+		text-align: left; 	
+		float: left;		
+		 width: 100%;
+	}
+	
+	
+	#criteria_right_column{				
 		text-align: left; 		
+		float: right;
+		padding-right: 5%;
 	}
 	
 	#results_left_column{
@@ -46,4 +61,9 @@
 		text-align: left; 		
 	}
 	
+	button.ui-button-icon-only { 
+    width: 1em;
+    margin-left: 0.5em;
+}
+
 	

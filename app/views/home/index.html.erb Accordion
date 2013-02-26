@@ -1,0 +1,68 @@
+<div class="accordion" id="accordion2">
+		  <div class="accordion-group">
+					<div class="accordion-heading">
+							  <a class="accordion-toggle" data-toggle="collapse"  href="#collapseOne">
+								Collapsible Group Item #1
+							  </a>
+					</div>
+					<div id="collapseOne" class="accordion-body collapse in">
+							  <div class="accordion-inner">
+								Anim pariatur cliche...
+							  </div>
+					</div>
+		  </div>
+		 
+		 <div class="accordion-group">
+					<div class="accordion-heading">
+							  <a class="accordion-toggle" data-toggle="collapse"  href="#collapseTwo">
+								Collapsible Group Item #2
+							  </a>
+					</div>
+			<div id="collapseTwo" class="accordion-body collapse">
+					  <div class="accordion-inner">
+						Anim pariatur cliche...
+					  </div>
+			</div>
+		</div>
+</div>
+
+<button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#demo">
+  simple collapsible
+</button>
+
+<button type="button" class="btn" id="mybutton">
+  My button
+</button>
+ 
+<div id="demo" class="collapse in"> fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+ </div>
+ 
+ <input type="radio" name="sex" value="male" id="male" >Male<br>
+ <input type="radio" name="sex" value="female" id="female">Female
+ <br>
+ <br>
+ <br>
+ <div id="demo1" class="collapse in"> fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+ </div>
+ <br>
+ <br>
+ <br>
+  <input type="radio" name="sex" value="male" id="male1" data-toggle="collapse" data-target="#demo3">Male<br>
+ <input type="radio" name="sex" value="female" id="female1" data-toggle="collapse" data-target="#demo3">Female
+ <br>
+ <br>
+ <br>
+ <div id="demo3" class="collapse in"> fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+fasdjfoisjdifjdsfjioafasdjfoisjdifjdsfjioa
+ </div>

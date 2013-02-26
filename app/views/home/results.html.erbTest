@@ -1,0 +1,20 @@
+	<% content_for :head do %>
+			<%= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" %>								
+	<% end %>
+	
+	
+
+<body>		
+		<h1>Results</h1>
+			
+			<p>
+				<%= "hello" %>
+				
+				<%= @temp %>
+				</br>
+				
+
+			</p>
+	</body>
+				
+	

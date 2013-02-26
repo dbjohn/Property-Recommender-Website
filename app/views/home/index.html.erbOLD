@@ -1,5 +1,5 @@
 	<% content_for :head do %>
-			<%= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" %>								
+			<%= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" %>											
 	<% end %>
 
 
