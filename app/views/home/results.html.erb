@@ -9,7 +9,7 @@
 			
 					<div class="row-fluid">
 						<div class="span6" id="results_left_column">																					
-								<p>	Commute destination = <%= params[:commute_destination] %></p>
+								<p>	Commute destination = <%= params[:commute_destination] %></p>								
 											
 													
 													<% property_location_array=[] %>
@@ -62,7 +62,7 @@
 																																		
 																																		<% amenities = PropertiesAmenity.where(:property_id => property.id) %>
 																																		
-																																		<% amenities.each_with_index do |a, index| %>																																																																				
+																																		<% amenities.each_with_index do |a, index| %>
 																																					
 																																					<%  point = DublinOsmPoint.find( a.dublin_osm_point_id) %>  																		
 																																					<% coord = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = #{point.osm_id}").first %>
@@ -87,7 +87,7 @@
 						</div>
 							
 						<%= javascript_tag "mapGenerate()" %>						
-						<%= javascript_tag "initResultsMap(#{property_location_array})" %>
+						<%= javascript_tag "initResultsMap(#{property_location_array}, '#{params[:commute_destination]}' )" %>
 						<%= javascript_tag "amenitiesPlot(#{amenities_location_hash.to_json})" %>
 			</div>				
 	</body>

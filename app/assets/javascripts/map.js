@@ -23,7 +23,17 @@
 			map.setCenter(position, zoom );
  
  };
-
+ function addDestinationMarker(pos){
+		
+			var markers = new OpenLayers.Layer.Markers( "Markers" );
+			map.addLayer(markers);		
+			
+			marker = new OpenLayers.Marker(pos);
+			marker.id = "1";
+			//marker.events.register("mousedown", marker, function() {alert(this.id);});
+			markers.addMarker(marker);
+	};
+			
  function  initInputMap() {
 			
 			mapGenerate();
@@ -37,13 +47,7 @@
 			var position       = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);						
 			
 			
-			var markers = new OpenLayers.Layer.Markers( "Markers" );
-			map.addLayer(markers);		
-			
-			var marker = new OpenLayers.Marker(position);
-			marker.id = "1";
-			//marker.events.register("mousedown", marker, function() {alert(this.id);});
-			markers.addMarker(marker);
+			addDestinationMarker(position);
 			
 			position.transform(toProjection,fromProjection);						
 			$("#commute_destination_val").val(position.lat.toString() + ","+ position.lon.toString());
@@ -108,7 +112,7 @@
 			
     };
 	
-	 function initResultsMap (coord_array) {
+	 function initResultsMap (coord_array, commute_destination) {
 						
 						//mapGenerate();
 			
@@ -179,6 +183,15 @@
 				propertyLayer.addFeatures([pointFeature]);
 			}
 			
+			
+			//commute_destination is actually a string in the order of latitude and longitude because that order was suited by OTP. We need to extract the long and lat values to create the marker.
+			
+			coordinates = commute_destination.split(',');
+			lat =  coordinates[0]
+			lon =  coordinates[1]
+			var position       = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection);			
+			addDestinationMarker(position);//also add the destination marker for reference.
+			
 			map.addLayer(propertyLayer);			
 			
 			// map.addLayer(markers);
@@ -232,10 +245,7 @@
 										strokeWidth: 2,
 										fillColor: "#00FFFF",
 										fillOpacity: 0.9,
-										pointRadius: 15,
-										// label with \n linebreaks
-										label : "${prop}",
-										
+										pointRadius: 15,										
 										fontColor: "${favColor}",
 										fontSize: "12px",
 										fontFamily: "Courier New, monospace",

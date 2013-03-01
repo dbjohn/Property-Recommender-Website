@@ -2,7 +2,7 @@ module Scoring
 
 		def self.travel_score_calc(to, from)	
 			#average = ((to.to_f + from.to_f) / 2.0)
-			if(to <= 0 or from <= 0)		#need this check, for bad data for -1, and bug with OTP filters.
+			if(to < 0 or from < 0)		#need this check, for bad data for -1, and bug with OTP filters.
 					return 0				
 			else
 					average = (to.to_f + from.to_f) / 2.0
@@ -23,12 +23,17 @@ module Scoring
 			no_of_properties = properties.length 
 			properties.each_with_index do |property, index|
 					property.match_score = ((no_of_properties - index)/no_of_properties.to_f)*100.0
+					Rails.logger.debug "Property #{index} match score, in match score: #{property.match_score}"
 			end
 		end
 		
 		def self.total_score_calc(properties)
 				properties.each_with_index do |property, index|
-						property.total_score =	(property.match_score + property.commute_score + property.amenity_score)/3.0
+						Rails.logger.debug "Property #{index} before total score calc: #{property.to_yaml}"
+						Rails.logger.debug "Property #{index} match score, total score calc: #{property.match_score}"
+						Rails.logger.debug "Property #{index} commute score, total score calc: #{property.commute_score}"
+						Rails.logger.debug "Property #{index} amenity score, total score calc: #{property.amenity_score}"
+						property.total_score = (property.match_score + property.commute_score + property.amenity_score)/3.0
 				end
 		end
 	

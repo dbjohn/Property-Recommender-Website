@@ -24,6 +24,9 @@ class HomeController < ApplicationController
 		#To form a correct query string for this query, the word "AND" needs to separate each condition. We don't know which condition will be inserted into the array first or how many because it depends on what the user chooses. 
 		#Only the ones that are choosen are added to the array and so then Array.join is used to join the elements with "AND" to form the sql query string.
 		
+		#get commuteCalc request running early in the background. Collect later. NOte, not fully implemented yet as it is blocking wait.
+		 	
+		
 		sql_array = []
 		sql_array << "price >= :min_price" unless params[:min_price] == "No Min"
 		sql_array << "price <= :max_price" unless params[:max_price] == "No Max"
@@ -44,34 +47,31 @@ class HomeController < ApplicationController
 		
 		###########################################
 		#we have to pass params here rather than embed in the string for security reasons
+		#need to order by more variables...
 		@properties = Property.where(sql_string, params).order('price asc')
+		#@properties = Property.where(sql_string, params).
 		#@properties = Property.where("price >= :min_price AND price <= :max_price", :min_price => params[:min_price],  :max_price => params[:max_price]).order('price asc')
-		#ps = Property.where("price >= 1000 AND price <= 999999")
-				
-		#Scoring.match_score_calc @properties 
-				
 		
+		
+		Scoring.match_score_calc @properties
+					
 		#Write commute destination coordinates to file for router to read
 		#this is not thread safe at the moment
-		 # File.open(Rails.root.join( "other_files/commute/otp_origin/Origin.csv"), 'w') do |file| 							
-				 # file.puts("label,lat,lon,input")
-				 # file.puts("o1,#{params[:commute_destination]},0")			
-		 # end
+		  File.open(Rails.root.join( "other_files/commute/otp_origin/Origin.csv"), 'w') do |file| 							
+				  file.puts("label,lat,lon,input")
+				  file.puts("o1,#{params[:commute_destination]},0")			
+		  end
+					
+		transit_modes = params.slice(:transit, :car, :walk, :bicycle).values.join(",")
+		# CommuteCalc.request_routing_calculation(transit_modes)
+			 
+		 #pass a reference to the method of the sorted properties array. It is sorted so that properties align with the results written to file.
+		CommuteCalc.calc_commute_score @properties.sort {|x,y| x.id <=> y.id}
+					
+		Scoring.total_score_calc @properties
+				
+	    @properties.sort!	#sort in place for descending order 
 		
-		
-		
-		# CommuteCalc.request_routing_calculation
-		# CommuteCalc.calc_commute_score @properties
-		
-		# Scoring.total_score_calc @properties
-		
-		# @properties.sort!.reverse!	#sort in place for descending order 
-		#@properties.sort!	#sort in place for descending order 
-		
-		#PUT IN SEPARATE METHOD
-		# amenity_ids = []
-		 # amenity = PropertiesAmenity.where(:property_id => properties.map { |prop| prop.id}).each { |item| amenity_coord << item.dublin_osm_point_id}
-		# .each
 	end
 	
 	def process_form
@@ -80,4 +80,3 @@ class HomeController < ApplicationController
 	end
   
 end
-
