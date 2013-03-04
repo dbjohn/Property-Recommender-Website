@@ -60,6 +60,7 @@ begin
 				amenities_hash.each_value do |amenity_group|
 						amenity_group.sort!
 						PropertiesAmenity.new(:property_id => property_id, :dublin_osm_point_id => amenity_group[0].id, :amenity_type => amenity_group[0].amenity_type, :to_travel_time => amenity_group[0].to_travel_time, :from_travel_time => amenity_group[0].from_travel_time, :amenity_score => amenity_group[0].travel_score).save						
+						#add second and third here...
 				end
 										
 				#PropertiesAmenity.new(:property_id => property_id, :dublin_osm_point_id => amenities_array[0].id, :amenity_type => "test", :to_travel_time => amenities_array[0].to_travel_time, :from_travel_time => amenities_array[0].from_travel_time, :amenity_score => amenities_array[0].travel_score).save	
