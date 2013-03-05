@@ -21,9 +21,7 @@
 					%br/
 					%p Commute By:
 					=label_tag "transit", "Public Transit", :class=>"checkbox inline"
-					=check_box_tag "transit", "TRANSIT", false
-					=label_tag "bicycle", "Bicycle", :class=>"checkbox inline"
-					=check_box_tag "bicycle", "BICYCLE", false
+					=check_box_tag "transit", "WALK,TRANSIT", false					
 					=label_tag "walk", "Walk", :class=>"checkbox inline"
 					=check_box_tag "walk", "WALK", false
 					=label_tag "car", "Car", :class=>"checkbox inline"
