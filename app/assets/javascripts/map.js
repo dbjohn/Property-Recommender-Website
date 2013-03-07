@@ -6,6 +6,11 @@
 
 //doesn't work
 //window.map = new OpenLayers.Map("map_canvas");
+
+//to do
+// when you click a property it takes you to it
+//similarly for commute work place.
+//need to add a clear all checkbox
  
  function mapGenerate() {
 			
@@ -32,6 +37,11 @@
 			marker.id = "1";
 			//marker.events.register("mousedown", marker, function() {alert(this.id);});
 			markers.addMarker(marker);
+			
+			//not used on the search page
+			$("#commute_locate").click(function() {
+											 map.setCenter(marker.lonlat, 15); 
+							});
 	};
 			
  function  initInputMap() {
@@ -112,7 +122,7 @@
 			
     };
 	
-	 function initResultsMap (coord_array, commute_destination) {
+	 function initResultsMap (coords_hash, commute_destination) {
 						
 						//mapGenerate();
 			
@@ -125,6 +135,7 @@
 			//see what would happen if you comment these lines out:
 			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+			var zoom           = 12; 
 			
 			//var markers = new OpenLayers.Layer.Markers( "Markers" );
 			
@@ -136,72 +147,103 @@
                 // styleMap: new OpenLayers.StyleMap({                    
                     // fillColor: "#666666"
                 // })});
-				
-			//************
-			//the statements for declaring the renderer and vector layer is based on modifying an example here: http://openlayers.org/dev/examples/vector-features-with-text.html
-			 var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
-            renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
-            
-            var propertyLayer = new OpenLayers.Layer.Vector("Simple Geometry", {
-                styleMap: new OpenLayers.StyleMap({'default':{
-                    strokeColor: "#000000",
-                    strokeOpacity: 1,
-                    strokeWidth: 2,
-                    fillColor: "#FF5500",
-                    fillOpacity: 0.9,
-                    pointRadius: 15,
-                    // label with \n linebreaks
-                    label : "${number}",
-                    
-                    fontColor: "${favColor}",
-                    fontSize: "12px",
-                    fontFamily: "Courier New, monospace",
-                    fontWeight: "bold",
-                    labelAlign: "${align}",
-                    labelXOffset: "${xOffset}",
-                    labelYOffset: "${yOffset}",
-                    labelOutlineColor: "white",
-                    labelOutlineWidth: 3
-                }}),
-                renderers: renderer
-            });
-			//************
-				
 			
 			var i =1;
+			var properties_obj = {};
 			
-			for (element in coord_array){
-				lon = coord_array[element][0];
-				lat =coord_array[element][1];
-				point = new OpenLayers.Geometry.Point(lon,lat);
-				point.transform(fromProjection, toProjection);		
-				pointFeature = new OpenLayers.Feature.Vector(point);
-				pointFeature.attributes = { number: i};
-				i += 1;
-				//position  = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection);		
-				//markers.addMarker(new OpenLayers.Marker(position));
-				propertyLayer.addFeatures([pointFeature]);
-			}
-			
-			
-			//commute_destination is actually a string in the order of latitude and longitude because that order was suited by OTP. We need to extract the long and lat values to create the marker.
-			
-			coordinates = commute_destination.split(',');
+			//add this outside the loop because it only needs to be done once.
+			var coordinates = commute_destination.split(',');
 			lat =  coordinates[0]
 			lon =  coordinates[1]
 			var position       = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection);			
-			addDestinationMarker(position);//also add the destination marker for reference.
+			addDestinationMarker(position);
+							
+			for (prop in coords_hash){
+				if(coords_hash.hasOwnProperty(prop)){
+							//************
+							//the statements for declaring the renderer and vector layer is based on modifying an example here: http://openlayers.org/dev/examples/vector-features-with-text.html
+							 var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
+							renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
+							
+							properties_obj[prop] = new OpenLayers.Layer.Vector("Simple Geometry", {
+								styleMap: new OpenLayers.StyleMap({'default':{
+									strokeColor: "#000000",
+									strokeOpacity: 1,
+									strokeWidth: 2,
+									fillColor: "#FF5500",
+									fillOpacity: 0.9,
+									pointRadius: 15,
+									// label with \n linebreaks
+									label : "${number}",
+									
+									fontColor: "${favColor}",
+									fontSize: "12px",
+									fontFamily: "Courier New, monospace",
+									fontWeight: "bold",
+									labelAlign: "${align}",
+									labelXOffset: "${xOffset}",
+									labelYOffset: "${yOffset}",
+									labelOutlineColor: "white",
+									labelOutlineWidth: 3
+								}}),
+								renderers: renderer
+							});
+							//************
+								
+							
+							
+								 console.log(prop);
+								 console.log(coords_hash[prop][0]);
+								 console.log(coords_hash[prop][1]);
+								 
+								lon = coords_hash[prop][0];
+								lat =coords_hash[prop][1];
+								point = new OpenLayers.Geometry.Point(lon,lat);
+								point.transform(fromProjection, toProjection);		
+								pointFeature = new OpenLayers.Feature.Vector(point, {"property_id": prop, number: i});
+								// pointFeature.attributes = { number: i};
+								i += 1;
+								//position  = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection);		
+								//markers.addMarker(new OpenLayers.Marker(position));
+								properties_obj[prop].addFeatures(pointFeature);
+								
+
+							//commute_destination is actually a string in the order of latitude and longitude because that order was suited by OTP. We need to extract the long and lat values to create the marker.
+							
+						//also add the destination marker for reference.
+							
+							map.addLayer(properties_obj[prop]);			
+							
+							$("#"+prop).click(function() {
+																																
+															// var position    = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);		/
+															
+															//console.log(properties_obj[this.id].features);
+															console.log(this.id);
+															console.log(properties_obj[this.id]);
+															console.log(properties_obj[this.id].getFeaturesByAttribute("property_id", this.id));
+															// console.log(properties_obj[this.id].getFeaturesByAttribute("property_id", this.id)[0]);
+															 // console.log(properties_obj[this.id].getFeaturesByAttribute("property_id", this.id)[0].geometry.getVertices());
+															 // console.log(properties_obj[this.id].getFeaturesByAttribute("property_id", this.id)[0].geometry);
+															 var feature = properties_obj[this.id].getFeaturesByAttribute("property_id", this.id)[0];
+															  // var feature = properties_obj[this.id].getFeaturesByAttribute("property_id", this.id);
+															 var x_coord = feature.geometry.x; 
+															 var y_coord = feature.geometry.y; 
+															 map.setCenter([x_coord, y_coord], zoom); 
+													
+							});
+							
+							// map.addLayer(markers);
+							
+							
+							// var marker = new OpenLayers.Marker(position);
+							// marker.id = "1";
+							// marker.events.register("mousedown", marker, function() {alert(this.id);});
+							// markers.addMarker(marker);						
+					
 			
-			map.addLayer(propertyLayer);			
-			
-			// map.addLayer(markers);
-			
-			
-			// var marker = new OpenLayers.Marker(position);
-			// marker.id = "1";
-			// marker.events.register("mousedown", marker, function() {alert(this.id);});
-			// markers.addMarker(marker);						
-			
+		}
+	}
 };
 			
 
@@ -209,25 +251,27 @@
 	function amenitiesPlot (coords_hash) {
 		
 			// alert(coords_hash);
+			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection						
+			var zoom           = 12; 
 			var amenity_obj = {}
 			for(prop in coords_hash){
 					if(coords_hash.hasOwnProperty(prop)){
 							// console.log(coords_hash[prop])
-							  console.log(prop); //dublin osm id
-							  console.log(coords_hash[prop]); //array pair
-							  console.log(coords_hash[prop][0]);	//element
-							  console.log(coords_hash[prop][1]);
-							  console.log(coords_hash[prop][0][0]);			//nothing				  
-							  console.log(prop.length);		// 10 - number of letters in prop.
-							  console.log("------------------------------------------------");
+							  // console.log(prop); //dublin osm id
+							  // console.log(coords_hash[prop]); //array pair
+							  // console.log(coords_hash[prop][0]);	//prop
+							  // console.log(coords_hash[prop][1]);
+							  // console.log(coords_hash[prop][0][0]);			//nothing				  
+							  // console.log(prop.length);		// 10 - number of letters in prop.
+							  // console.log("------------------------------------------------");
 							 //console.log(Number(coords_hash[prop][0][1])+ 2);
 							//a little help from http://stackoverflow.com/questions/8423217/jquery-checkbox-checked-state-changed-event
 							// loop array
 				//			 for(var i=0; i < prop.length; i ++){
 						
 						
-								var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-								var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection						
+								
 								var lat;
 								var lon;
 								var point;
@@ -262,6 +306,7 @@
 
 									lon = Number(coords_hash[prop][0]);
 									lat =Number(coords_hash[prop][1]);
+									var position = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection)
 									// console.log(lon);
 									// console.log(lat);
 									// console.log(prop[i]);
@@ -270,16 +315,29 @@
 									// console.log("-----------------------------");
 									point = new OpenLayers.Geometry.Point(lon,lat);
 									point.transform(fromProjection, toProjection);		
-									pointFeature = new OpenLayers.Feature.Vector(point);
-									amenity_obj[prop].addFeatures([pointFeature]);
+									pointFeature = new OpenLayers.Feature.Vector(point, {"amenity_id": prop});
+									amenity_obj[prop].addFeatures(pointFeature);
+									
 									
 									amenity_obj[prop].setVisibility(false);
 									map.addLayer(amenity_obj[prop]);			
+									// console.log(amenity_obj[prop].features);
+									// console.log(amenity_obj[prop].getFeaturesByAttribute("amenity_id", prop));
 								
 									$("#"+prop).change(function() {
 									
 										if(this.checked){
 											amenity_obj[this.id].setVisibility(true);										
+											// var position    = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);		/
+											
+											//console.log(amenity_obj[this.id].features);
+											 console.log(amenity_obj[ this.id].getFeaturesByAttribute("amenity_id", this.id)[0].geometry.getVertices());
+											 console.log(amenity_obj[ this.id].getFeaturesByAttribute("amenity_id", this.id)[0].geometry);
+											  var feature = amenity_obj[ this.id].getFeaturesByAttribute("amenity_id", this.id)[0];
+											 var x_coord = feature.geometry.x; 
+											 var y_coord = feature.geometry.y; 
+											 map.setCenter([x_coord, y_coord], zoom); 
+											// console.log(amenity_obj[ this.id].getFeaturesByAttribute("amenity_id", this.id)[0].geometry.x);
 										}
 										else{
 											amenity_obj[this.id].setVisibility(false);										

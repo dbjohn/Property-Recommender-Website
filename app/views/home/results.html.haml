@@ -1,0 +1,76 @@
+=content_for :head do 
+	= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" 
+
+- property_location_hash= {} 				
+- amenities_location_hash = {} 				
+		
+%body	
+	%h1 Results			
+	.row-fluid
+		.span6#results_left_column														
+			.accordion#accordion2
+				- @properties.each_with_index do |property, index| 					
+					.accordion-group
+						.accordion-heading
+							%a.accordion-toggle{"data-toggle"=>"collapse", "data-parent"=>"#accordion2", :href=>"#collapse#{index}"}
+								%b + 
+								#{index + 1}
+								#{property.address}
+																																																																																					
+						%div{:id=> "collapse#{index}", :class => "accordion-body collapse #{index==0 ? 'in' : ''}"}
+							.accordion-inner
+								%table.table.table-bordered
+									%thead
+										%tr																														
+											%th Price
+											%th Total Score
+											%th Match Score
+											%th Amenity Score 
+											%th Commute Score
+											%th Commute To 
+											%th Commute From 														
+																																						
+									%tbody																																								
+										%tr																																																																		
+											%td €#{property.price}
+											%td #{number_with_precision property.total_score, :precision => 2 }
+											%td #{ property.match_score} %																		
+											%td #{number_with_precision property.amenity_score, :precision => 2} %
+											%td #{number_with_precision property.commute_score, :precision => 2} %																		
+											%td #{number_with_precision property.commute_time_to, :precision => 2} mins									
+											%td #{number_with_precision property.commute_time_from, :precision => 2} mins
+																																		
+								%button{:id => "#{property.id}", :class => "btn", :type => "button"} Locate Property
+																																		
+								%h6 Nearest Amenities:																																		
+																																																																				 
+								-@amenity_types.each_with_index do |a_type,index|																																				
+									-amenities =  PropertiesAmenity.where("property_id = :property_id AND amenity_type = :amenity_type AND transport_mode in (:transport_modes)",
+										:property_id => property.id, :amenity_type => a_type, :transport_modes => @transport_modes).order("amenity_score desc").limit(3)
+								
+									%p
+										%b #{@amenity_names_hash[a_type]} 																																				
+									
+									-amenities.each_with_index do |amenity, index|																																					
+										-point = DublinOsmPoint.find( amenity.dublin_osm_point_id)   																		
+										-coord = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = #{point.osm_id}").first 
+										-unique_id=(property.id).to_s + (point.osm_id).to_s 
+																																																																																								
+										%b #{index + 1} . 
+										=label_tag "#{unique_id}", "#{point.name} ", :class => 'checkbox inline' 
+										=check_box_tag "#{unique_id}", 1, false 
+										%br
+										
+										-amenities_location_hash[unique_id] = [coord.long, coord.lat]  																																																																							
+					
+								-property_location_hash[property.id] = [property.longitude.to_f, property.latitude.to_f] 
+
+		.span6#results_right_column
+			#map_canvas															
+			%br
+			%button#commute_locate.btn{:type=>"button"} Commute Location																
+	
+= javascript_tag "mapGenerate()" 						
+= javascript_tag "initResultsMap(#{property_location_hash.to_json}, '#{params[:commute_destination]}' )" 
+= javascript_tag "amenitiesPlot(#{amenities_location_hash.to_json})"
+		

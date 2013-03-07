@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   #require_relative './commute_calc.rb'
   #require_dependency './commute_calc.rb'
  require_dependency 'commute_calc'
+ require_dependency 'amenity_calc'
  require_dependency 'scoring'
 
   
@@ -62,12 +63,17 @@ class HomeController < ApplicationController
 				  file.puts("o1,#{params[:commute_destination]},0")			
 		  end
 					
-		transit_modes = params.slice(:transit, :car, :walk, :bicycle).values.join(",")
-		# CommuteCalc.request_routing_calculation(transit_modes)
+		@transport_modes = params.slice(:transit, :car, :walk, :bicycle).values
+		@amenity_types= params.slice(:supermarket, :convenience_shop, :restaurant, :library,:bank).values		
+		#A hash with the proper amenity names is used in the view as it is more presentable and better english
+		@amenity_names_hash = {'supermarket' => 'Supermarkets', 'convenience_shop' => 'Convenience Shops', 'restaurant' => 'Restaurants', 'library' => 'Libraries', 'bank' => 'Banks'}
+		# CommuteCalc.request_routing_calculation(@transport_modes)
 			 
 		 #pass a reference to the method of the sorted properties array. It is sorted so that properties align with the results written to file.
 		CommuteCalc.calc_commute_score @properties.sort {|x,y| x.id <=> y.id}
-					
+				
+		AmenityCalc.amenity_score_calc(@properties, @amenity_types, @transport_modes)
+		
 		Scoring.total_score_calc @properties
 				
 	    @properties.sort!	#sort in place for descending order 

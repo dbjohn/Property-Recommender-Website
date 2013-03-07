@@ -5,6 +5,7 @@ require_dependency 'amenity_calc'
 
 #override default
 # puts AmenityCalc.amenity_score_calc(a={"d"=>12,"e"=>5457})
-AmenityCalc.amenity_score_calc()
 
-Property.all.each {|py| p py}
+amenity_types = ["supermarket", "convenience_shop", "restaurant", "library", "bank"] 
+transport_modes = ["CAR", "TRANSIT,WALK", "WALK"]
+AmenityCalc.amenity_score_calc(Property.all, amenity_types, transport_modes)
