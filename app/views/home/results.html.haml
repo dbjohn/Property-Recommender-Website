@@ -43,17 +43,20 @@
 								%button{:id => "#{property.id}", :class => "btn", :type => "button"} Locate Property
 																																		
 								%h6 Nearest Amenities:																																		
-																																																																				 
+								
+								/ uniq by will take the first elements of a certain point which are also the best/nearest because the array is sorted by amenity score
+									
 								-@amenity_types.each_with_index do |a_type,index|																																				
 									-amenities =  PropertiesAmenity.where("property_id = :property_id AND amenity_type = :amenity_type AND transport_mode in (:transport_modes)",
-										:property_id => property.id, :amenity_type => a_type, :transport_modes => @transport_modes).order("amenity_score desc").limit(3)
-								
+										:property_id => property.id, :amenity_type => a_type, :transport_modes => @transport_modes).order("amenity_score desc").uniq_by {|a| a.dublin_osm_point_id}
+									
 									%p
 										%b #{@amenity_names_hash[a_type]} 																																				
 									
-									-amenities.each_with_index do |amenity, index|																																					
+									-amenities.take(3).each_with_index do |amenity, index|																																					
 										-point = DublinOsmPoint.find( amenity.dublin_osm_point_id)   																		
-										-coord = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = #{point.osm_id}").first 
+										-coord = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, 
+											cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = #{point.osm_id}").first 
 										-unique_id=(property.id).to_s + (point.osm_id).to_s 
 																																																																																								
 										%b #{index + 1} . 
