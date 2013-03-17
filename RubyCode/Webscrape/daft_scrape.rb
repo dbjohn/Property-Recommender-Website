@@ -56,5 +56,19 @@ require 'open-uri'
  script1 = doc.css('body #container #content script')[1]
  # puts script1
  
- puts script1.to_s.index("latitude")
- puts script1.to_s.index("longitude")
+ # puts script1.to_s.index("latitude")
+ # puts script1.to_s.index("longitude")
+ 
+ # a regular expression to get the latitude and longitude from the string. Grouping is used for the digits so that the values can 
+ # be retrieved from the match data object afterwards using array [] notation.
+  
+ md = /"latitude":"(\d+\.\d+)","longitude":"(-\d+\.\d+)"/.match(script1.to_s)
+ 
+ puts "lat is #{md[1]} long is #{md[2]} "
+ 
+ 
+ 
+ you can get the address in tag with id address_box
+ check that it contains dublin after last comma
+ how to organise addresses...names
+ 

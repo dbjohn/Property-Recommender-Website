@@ -67,6 +67,8 @@ class HomeController < ApplicationController
 		@amenity_types= params.slice(:supermarket, :convenience_shop, :restaurant, :library,:bank).values		
 		#A hash with the proper amenity names is used in the view as it is more presentable and better english
 		@amenity_names_hash = {'supermarket' => 'Supermarkets', 'convenience_shop' => 'Convenience Shops', 'restaurant' => 'Restaurants', 'library' => 'Libraries', 'bank' => 'Banks'}
+		#A hash for the transport modes, for converting from the strict syntax required by opentripplanner to a more readable format in the view.
+		@transport_mode_words_hash = {'CAR' => 'Car', 'TRANSIT,WALK' => 'public transport and walking', 'WALK' => 'walking'}
 		# CommuteCalc.request_routing_calculation(@transport_modes)
 			 
 		 #pass a reference to the method of the sorted properties array. It is sorted so that properties align with the results written to file.
