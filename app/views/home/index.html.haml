@@ -141,7 +141,29 @@
 					=check_box_tag "library", "library", true
 					=label_tag "bank", "Bank", :class=>"checkbox inline"
 					=check_box_tag "bank", "bank", true
+					%br/
+					%br/
+					=label_tag "amenity_weighting_default", "Use Default Weighting", :class=>"checkbox inline"
+					=check_box_tag "amenity_weighting_default", false
+					%br/					
+					.center			
+						#slider
+							%br/		
+							%table#range{:width=>"100%", :cellspacing => "0", :cellpadding => "0"}
+								%tr
+									%th#supermarket_weight{:width => "25%"} Supermarket
+									%th#bank_weight{:width => "25%"} Bank
+									%th#restaurant_weight{:width => "25%"} Restaurant
+									%th#convenience_shop_weight{:width => "25%"} Convenience Shop
+							
+					%br/							
+					#text Ranges
 					
+					=hidden_field_tag "supermarket_weight_value", "", :id=>"supermarket_weight_value" 			
+					=hidden_field_tag "convenience_shop_weight_value", "", :id=>"convenience_shop_weight_value" 			
+					=hidden_field_tag "restaurant_weight_value", "", :id=>"restaurant_weight_value" 			
+					=hidden_field_tag "library_weight_value", "", :id=>"library_weight_value" 			
+					=hidden_field_tag "bank_weight_value", "", :id=>"bank_weight_value" 			
 				
 				%br/
 				=label_tag "options", "Simple", :class => "radio inline"

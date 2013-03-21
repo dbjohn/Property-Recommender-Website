@@ -64,7 +64,9 @@ class HomeController < ApplicationController
 		  end
 					
 		@transport_modes = params.slice(:transit, :car, :walk, :bicycle).values
+		#might be easier to use one hash for amenities...
 		@amenity_types= params.slice(:supermarket, :convenience_shop, :restaurant, :library,:bank).values		
+		@amenity_weights = params.slice(:supermarket_weight_value, :convenience_shop_weight_value, :restaurant_weight_value, :library_weight_value, bank_weight_value).values
 		#A hash with the proper amenity names is used in the view as it is more presentable and better english
 		@amenity_names_hash = {'supermarket' => 'Supermarkets', 'convenience_shop' => 'Convenience Shops', 'restaurant' => 'Restaurants', 'library' => 'Libraries', 'bank' => 'Banks'}
 		#A hash for the transport modes, for converting from the strict syntax required by opentripplanner to a more readable format in the view.

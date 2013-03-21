@@ -10,7 +10,7 @@
 //to do
 // when you click a property it takes you to it
 //similarly for commute work place.
-//need to add a clear all checkbox
+//need to add a clear all checkbox. see trigger event
  
  function mapGenerate() {
 			
