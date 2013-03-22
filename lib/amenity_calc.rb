@@ -1,7 +1,7 @@
 module AmenityCalc
 
 		#default weights in place.
-		 def self.amenity_score_calc(properties, amenity_types, transport_modes, weights={"supermarket"=>0.3, "convenience_shop" => 0.2, "restaurant"=>0.1, "library" => 0.1, "bank"=>0.1 })															
+		 def self.amenity_score_calc(properties, amenity_types, transport_modes, weights)															
 				transport_weight = 1.0/transport_modes.length
 				properties.each do |p| 				
 						total = 0							
@@ -9,8 +9,9 @@ module AmenityCalc
 								transport_modes.each do |t|
 										
 										score = PropertiesAmenity.where(:property_id => p.id, :amenity_type => a, :transport_mode => t).order("amenity_score desc").pluck(:amenity_score).first
-																				
-										total += score * weights[a] * transport_weight																															
+
+										#the concatenation of _weight value is a bit of a hack										
+										total += score * (weights[a+"_weight_value"].to_f/100.0) * transport_weight																															
 										
 								end
 						end

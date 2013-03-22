@@ -152,9 +152,12 @@
 							%table#range{:width=>"100%", :cellspacing => "0", :cellpadding => "0"}
 								%tr
 									%th#supermarket_weight{:width => "25%"} Supermarket
-									%th#bank_weight{:width => "25%"} Bank
-									%th#restaurant_weight{:width => "25%"} Restaurant
 									%th#convenience_shop_weight{:width => "25%"} Convenience Shop
+									%th#restaurant_weight{:width => "25%"} Restaurant
+									%th#library_weight{:width => "25%"} Library
+									%th#bank_weight{:width => "25%"} Bank
+									
+									
 							
 					%br/							
 					#text Ranges
@@ -171,11 +174,13 @@
 				=label_tag "options", "Advanced", :class => "radio inline"
 				=radio_button_tag "options", "advanced"
 				
+				=@cat
 				
 				%br/
 				%br/
 				%div #{submit_tag "Submit"}
 
+= javascript_tag "setUpAmenityWeighting(#{@default_amenity_weights.to_json})" 				
 
 		
 		

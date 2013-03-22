@@ -1,7 +1,4 @@
-class HomeController < ApplicationController
-  #require_relative './test_ruby.rb'
-  #require_relative './commute_calc.rb'
-  #require_dependency './commute_calc.rb'
+class HomeController < ApplicationController  
  require_dependency 'commute_calc'
  require_dependency 'amenity_calc'
  require_dependency 'scoring'
@@ -9,14 +6,13 @@ class HomeController < ApplicationController
   
 
   def index
-	
+	#TODO: note these do not add up to 100%. Please review.
+	@default_amenity_weights = {"supermarket"=>30, "convenience_shop" => 20, "restaurant"=>10, "library" => 10, "bank"=>10 }
   end
   
   def results
-	
-	
-		#if type is anytype then don't include it#############################
-		#########################################
+		
+		#TODO: #get commuteCalc request running early in the background. Collect later. NOte, not fully implemented yet as it is blocking wait.
 		
 		#make a process form method. When you know how to do it in ruby.
 		###########################################
@@ -24,9 +20,6 @@ class HomeController < ApplicationController
 		#apply the restrictions on filtering, if any
 		#To form a correct query string for this query, the word "AND" needs to separate each condition. We don't know which condition will be inserted into the array first or how many because it depends on what the user chooses. 
 		#Only the ones that are choosen are added to the array and so then Array.join is used to join the elements with "AND" to form the sql query string.
-		
-		#get commuteCalc request running early in the background. Collect later. NOte, not fully implemented yet as it is blocking wait.
-		 	
 		
 		sql_array = []
 		sql_array << "price >= :min_price" unless params[:min_price] == "No Min"
@@ -44,16 +37,11 @@ class HomeController < ApplicationController
 		sql_array << "microwave = :microwave" unless params[:microwave] == "neutral"
 		
 		sql_string = sql_array.join(" AND ")
-		#@temp = params		
 		
 		###########################################
 		#we have to pass params here rather than embed in the string for security reasons
 		#need to order by more variables...
 		@properties = Property.where(sql_string, params).order('price asc')
-		#@properties = Property.where(sql_string, params).
-		#@properties = Property.where("price >= :min_price AND price <= :max_price", :min_price => params[:min_price],  :max_price => params[:max_price]).order('price asc')
-		
-		
 		Scoring.match_score_calc @properties
 					
 		#Write commute destination coordinates to file for router to read
@@ -66,17 +54,17 @@ class HomeController < ApplicationController
 		@transport_modes = params.slice(:transit, :car, :walk, :bicycle).values
 		#might be easier to use one hash for amenities...
 		@amenity_types= params.slice(:supermarket, :convenience_shop, :restaurant, :library,:bank).values		
-		@amenity_weights = params.slice(:supermarket_weight_value, :convenience_shop_weight_value, :restaurant_weight_value, :library_weight_value, bank_weight_value).values
+		@amenity_weights = params.slice(:supermarket_weight_value, :convenience_shop_weight_value, :restaurant_weight_value, :library_weight_value, :bank_weight_value)
 		#A hash with the proper amenity names is used in the view as it is more presentable and better english
 		@amenity_names_hash = {'supermarket' => 'Supermarkets', 'convenience_shop' => 'Convenience Shops', 'restaurant' => 'Restaurants', 'library' => 'Libraries', 'bank' => 'Banks'}
 		#A hash for the transport modes, for converting from the strict syntax required by opentripplanner to a more readable format in the view.
 		@transport_mode_words_hash = {'CAR' => 'Car', 'TRANSIT,WALK' => 'public transport and walking', 'WALK' => 'walking'}
-		# CommuteCalc.request_routing_calculation(@transport_modes)
-			 
+		
+		CommuteCalc.request_routing_calculation(@transport_modes)			
 		 #pass a reference to the method of the sorted properties array. It is sorted so that properties align with the results written to file.
 		CommuteCalc.calc_commute_score @properties.sort {|x,y| x.id <=> y.id}
 				
-		AmenityCalc.amenity_score_calc(@properties, @amenity_types, @transport_modes)
+		AmenityCalc.amenity_score_calc(@properties, @amenity_types, @transport_modes, @amenity_weights)
 		
 		Scoring.total_score_calc @properties
 				

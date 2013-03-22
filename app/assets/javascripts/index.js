@@ -23,9 +23,11 @@ $('#datepicker').datepicker();
 	//The following colResizable code is based on examples at http://quocity.com/colresizable/#samples
 	//this plugin was developed by Alvaro Prieto Lauroba
 	//modified to suit the purposes of this project.
+});
 
+function setUpAmenityWeighting(default_amenity_weights){
 	//An object with the proper amenity names is used in the view as it is more presentable and better english. translate from html input ids to proper names.
-	var amenity_names_obj = {'supermarket_weight' : 'Supermarkets', 'convenience_shop_weight' : 'Convenience Shops', 'restaurant_weight' : 'Restaurants', 'library_weight' : 'Libraries', 'bank_weight' : 'Banks'}	
+	var amenity_names_obj = {'supermarket_weight' : 'Supermarket', 'convenience_shop_weight' : 'Convenience Shop', 'restaurant_weight' : 'Restaurant', 'library_weight' : 'Library', 'bank_weight' : 'Bank'}	
 
 		var onSampleResized = function(e){
 			var columns = $(e.currentTarget).find("th");
@@ -66,23 +68,34 @@ $('#datepicker').datepicker();
 										if(this.checked){
 											$("#slider").hide("slow");
 											//change values to default...
+																						
+											var s="";
+											for(amenity in default_amenity_weights){ 
+													
+													
+													s+=" "+ amenity_names_obj[amenity + "_weight"] + ": " + default_amenity_weights[amenity] + "%,";			
+													
+													$("#" + amenity + "_weight_value").val(default_amenity_weights[amenity]);
+												}
+											s=s.slice(0,-1);
 											
-											// $(this).prev().slider("disable");
-											// totalChecked += $(this).prev().slider("value");
-											// freeValue -= 1;
+											$("#text").html(s);												
 											
 										}
 										else{
 												$("#slider").show("slow");
-												// $(this).prev().slider("enable");
-												// totalChecked -= $(this).prev().slider("value");
-												// freeValue += 1;
+												
+												//TODO: if user clicks to undefault, then changes some values
+												//then clicks to default then back to undefault
+												//This should restore the values previously in undefault.
+												//could temporarily save them in an variable...
 										}
 									});
 									
 									$('#amenity_weighting_default').trigger('click');
+									$('#amenity_weighting_default').attr('checked',true);
 		
 	
-});
+};
 			
 			
