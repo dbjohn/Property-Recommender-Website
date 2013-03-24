@@ -1,4 +1,4 @@
-module Scoring
+class Scoring
 
 		def self.travel_score_calc(to, from)	
 			#average = ((to.to_f + from.to_f) / 2.0)

@@ -2,21 +2,28 @@
 	=javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" 
 	=stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css"
 
-%body{:onload=>"initInputMap()"}
-	
-	%h1 Property Site
-
-	%div.container		
-		
-		%div{:id=>"criteria_left_column"}
-			
+%body.background		
+	#header
+		#header_logo
+			%a
+				=image_tag "logo4.png",:id=>"logo", :alt => "Property Search"
+	%ul.breadcrumb
+		%li
+			%a{:href=>"#"} 
+				Home
+			%span.divider /
+		%li
+			%a{:href=>"#"} 
+				Search
+			%span.divider /
+			
+	.container				
+		#criteria_left_column			
 		
 			= form_tag(url_for(:action => "results")) do 					
 				%h5 Select Criteria		
 				#criteria_right_column
-					%h5 Select commute destination:					
-					%br/
-					%br/
+					%h5 Select commute destination:										
 					%div{:id=>"map_canvas"}   			
 					%br/
 					-# User can select one or more modes of transport. The quickest mode will be chosen after calculations.
@@ -27,17 +34,13 @@
 					=check_box_tag "walk", "WALK", false
 					=label_tag "car", "Car", :class=>"checkbox inline"
 					=check_box_tag "car", "CAR", false
-					
-				
-				%br/
-				%br/
-				=label_tag "min_price", "Minimum Price" 
-				=select_tag "min_price", options_for_select([ "No Min", 1000, 20000, 300000 ]) 						
-				%br/
-				=label_tag "max_price", "Maximum Price"
-				=select_tag "max_price", options_for_select([ "No Max", 20000, 30000, 400000 ]) 
-				%br/
-				%br/
+				%p
+					=label_tag "min_price", "Minimum Price" 
+					=select_tag "min_price", options_for_select([ "No Min", 1000, 20000, 300000 ]) 						
+					%br/
+					=label_tag "max_price", "Maximum Price"
+					=select_tag "max_price", options_for_select([ "No Max", 20000, 30000, 400000 ]) 
+
 				=label_tag "min_no_of_bedrooms", "Minimum Number of Bedrooms"
 				=select_tag "min_no_of_bedrooms", options_for_select([ "No Min", 1, 2, 3, 4, 5, 6 ]) 
 				%br/
@@ -58,8 +61,14 @@
 				=label_tag "lease_type", "Lease Type"
 				=select_tag "lease_type", options_for_select([ "Any Type", "No Lease", "3 Month Lease", "6 Month Lease", "9 Month Lease", "1 Year Lease", "2 Year Lease", "3 Year Lease"]) 
 				%br/
-				=hidden_field_tag "commute_destination", "", :id=>"commute_destination_val" 			
-				%br/										
+				=hidden_field_tag "commute_destination", "", :id=>"commute_destination_val"
+				%br/				
+				=label_tag "options", "Simple", :class => "radio inline"
+				=radio_button_tag "options", "simple", true
+				=label_tag "options", "Advanced", :class => "radio inline"
+				=radio_button_tag "options", "advanced"
+				%br/                
+				%br/
 				#advanced_options_area.collapse			
 					%h6 Facilities
 					
@@ -168,11 +177,7 @@
 					=hidden_field_tag "library_weight_value", "", :id=>"library_weight_value" 			
 					=hidden_field_tag "bank_weight_value", "", :id=>"bank_weight_value" 			
 				
-				%br/
-				=label_tag "options", "Simple", :class => "radio inline"
-				=radio_button_tag "options", "simple", true
-				=label_tag "options", "Advanced", :class => "radio inline"
-				=radio_button_tag "options", "advanced"
+				
 				
 				=@cat
 				
@@ -180,9 +185,5 @@
 				%br/
 				%div #{submit_tag "Submit"}
 
-= javascript_tag "setUpAmenityWeighting(#{@default_amenity_weights.to_json})" 				
-
-		
-		
-			
-	
+= javascript_tag "setUpAmenityWeighting(#{DEFAULT_AMENITY_WEIGHTS.to_json})" 				
+								

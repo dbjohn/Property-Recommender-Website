@@ -61,7 +61,7 @@
 										-unique_id=(property.id).to_s + (point.osm_id).to_s 
 																																																																																								
 										%b #{index + 1} . 
-										=label_tag "#{unique_id}", "#{point.name} ", :class => 'checkbox inline' 
+										=label_tag "#{unique_id}", "#{point.name} ", :class => 'checkbox inline' , :data => {:latitude => coord.lat, :longitude => coord.long}
 										=check_box_tag "#{unique_id}", 1, false 
 										%div by #{@transport_mode_words_hash[amenity.transport_mode]} - to: #{number_with_precision amenity.to_travel_time, :precision=> 2} minutes, from: #{number_with_precision amenity.from_travel_time, :precision=> 2} minutes
 										

@@ -1,6 +1,9 @@
-module AmenityCalc
+
+
+class AmenityCalc
 
 		#default weights in place.
+		#TODO: ADD reference to weights constant as default value.
 		 def self.amenity_score_calc(properties, amenity_types, transport_modes, weights)															
 				transport_weight = 1.0/transport_modes.length
 				properties.each do |p| 				

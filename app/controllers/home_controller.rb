@@ -1,13 +1,11 @@
 class HomeController < ApplicationController  
  require_dependency 'commute_calc'
  require_dependency 'amenity_calc'
- require_dependency 'scoring'
-
-  
-
+ require_dependency 'scoring'  
+ 
   def index
 	#TODO: note these do not add up to 100%. Please review.
-	@default_amenity_weights = {"supermarket"=>30, "convenience_shop" => 20, "restaurant"=>10, "library" => 10, "bank"=>10 }
+
   end
   
   def results
@@ -22,7 +20,7 @@ class HomeController < ApplicationController
 		#Only the ones that are choosen are added to the array and so then Array.join is used to join the elements with "AND" to form the sql query string.
 		
 		sql_array = []
-		sql_array << "price >= :min_price" unless params[:min_price] == "No Min"
+		sql_array << "price >= :min_price" unless params[:min_price].blank? && params[:min_price] == "No Min"
 		sql_array << "price <= :max_price" unless params[:max_price] == "No Max"
 		sql_array << "number_of_bedrooms >= :min_no_of_bedrooms" unless params[:min_no_of_bedrooms] == "No Min"
 		sql_array << "number_of_bedrooms <= :max_no_of_bedrooms" unless params[:max_no_of_bedrooms] == "No Max"

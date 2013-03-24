@@ -23,6 +23,7 @@ $('#datepicker').datepicker();
 	//The following colResizable code is based on examples at http://quocity.com/colresizable/#samples
 	//this plugin was developed by Alvaro Prieto Lauroba
 	//modified to suit the purposes of this project.
+    initInputMap();
 });
 
 function setUpAmenityWeighting(default_amenity_weights){
@@ -55,46 +56,81 @@ function setUpAmenityWeighting(default_amenity_weights){
 			s=s.slice(0,-1);
 			// columns.each(function(){ msg += $(this).width() + "px; "; })
 			$("#text").html(s);
+			
+			//uncheck the default checkbox if the user changes values
+			var default_checbox = $('#amenity_weighting_default');
+			if(default_checbox.is(':checked')){
+				default_checbox.attr(check 
+			}
 		};	
 		
 			$("#range").colResizable({
-			liveDrag:true, 
-			gripInnerHtml:"<div class='grip'></div>", 
-			draggingClass:"dragging", 
-			onResize:onSampleResized});
+				liveDrag:true, 
+				gripInnerHtml:"<div class='grip'></div>", 
+				draggingClass:"dragging", 
+				onResize:onSampleResized});
+			
+			var columns = $('#range').find("th");
+			var total = 0, i, w;
+			for(i = 0; i<columns.length; i++){
+				w = columns.eq(i).width()-10 - (i==0?1:0);
+				// ranges.push(w);
+				total+=w;				
+			}	
 			
 			$('#amenity_weighting_default').change(function() {
-									
-										if(this.checked){
-											$("#slider").hide("slow");
-											//change values to default...
-																						
-											var s="";
-											for(amenity in default_amenity_weights){ 
-													
-													
-													s+=" "+ amenity_names_obj[amenity + "_weight"] + ": " + default_amenity_weights[amenity] + "%,";			
-													
-													$("#" + amenity + "_weight_value").val(default_amenity_weights[amenity]);
-												}
-											s=s.slice(0,-1);
+			
+				if($(this).is(':checked')){					
+															
+					for(amenity in default_amenity_weights){ 																						
+						$("#" + amenity + "_weight").css("width",total*(default_amenity_weights[amenity]/100) + "px");
+					}
+					
+					e = {currentTarget: $('#range')};
+					onSampleResized(e);					
 											
-											$("#text").html(s);												
-											
-										}
-										else{
-												$("#slider").show("slow");
-												
-												//TODO: if user clicks to undefault, then changes some values
-												//then clicks to default then back to undefault
-												//This should restore the values previously in undefault.
-												//could temporarily save them in an variable...
-										}
-									});
-									
-									$('#amenity_weighting_default').trigger('click');
-									$('#amenity_weighting_default').attr('checked',true);
-		
+					//need to disable the table before re-initialization.
+					$("#range").colResizable({
+					   disable: true,
+					   });
+								   
+					$("#range").colResizable({
+					   liveDrag:true, 
+					   gripInnerHtml:"<div class='grip'></div>", 
+					   draggingClass:"dragging", 
+					   onResize:onSampleResized});  
+					
+					
+					// $("#slider").hide("slow");
+					//change values to default...
+																
+					// var s="";
+					// for(amenity in default_amenity_weights){ 
+							
+							
+							// s+=" "+ amenity_names_obj[amenity + "_weight"] + ": " + default_amenity_weights[amenity] + "%,";			
+							
+							// $("#" + amenity + "_weight_value").val(default_amenity_weights[amenity]);
+						// }
+					// s=s.slice(0,-1);
+					
+					// $("#text").html(s);	
+
+
+					
+				}
+				else{
+						// $("#slider").show("slow");
+						
+						//TODO: if user clicks to undefault, then changes some values
+						//then clicks to default then back to undefault
+						//This should restore the values previously in undefault.
+						//could temporarily save them in an variable...
+				}
+			});
+			
+			
+
 	
 };
 			
