@@ -25,20 +25,20 @@ function mapGenerate() {
 
 };
  
- function addDestinationMarker(pos){
-		
-			var markers = new OpenLayers.Layer.Markers( "Markers" );
-			map.addLayer(markers);		
+function addDestinationMarker(pos){
 			
-			marker = new OpenLayers.Marker(pos);
-			marker.id = "1";
-			
-			markers.addMarker(marker);
-						
-			$("#commute_locate").click(function() {
-											 map.setCenter(marker.lonlat, 15); 
-							});
-	};
+	var markers = new OpenLayers.Layer.Markers( "Markers" );
+	map.addLayer(markers);		
+
+	marker = new OpenLayers.Marker(pos);
+	marker.id = "1";
+
+	markers.addMarker(marker);
+				
+	$("#commute_locate").click(function() {
+		map.setCenter(marker.lonlat, 15); 
+	});
+};
 			
  function  initInputMap() {
 			
@@ -210,7 +210,7 @@ function mapGenerate() {
 
 									lon = Number(coords_hash[prop][0]);
 									lat =Number(coords_hash[prop][1]);
-									var position = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection)									
+									var position = new OpenLayers.LonLat(lon,lat).transform(fromProjection, toProjection);
 									point = new OpenLayers.Geometry.Point(lon,lat);
 									point.transform(fromProjection, toProjection);		
 									pointFeature = new OpenLayers.Feature.Vector(point, {"amenity_id": prop});
@@ -225,7 +225,7 @@ function mapGenerate() {
 											amenity_obj[this.id].setVisibility(true);																					
 											 console.log(amenity_obj[ this.id].getFeaturesByAttribute("amenity_id", this.id)[0].geometry.getVertices());
 											 console.log(amenity_obj[ this.id].getFeaturesByAttribute("amenity_id", this.id)[0].geometry);
-											  var feature = amenity_obj[ this.id].getFeaturesByAttribute("amenity_id", this.id)[0];
+											 var feature = amenity_obj[ this.id].getFeaturesByAttribute("amenity_id", this.id)[0];
 											 var x_coord = feature.geometry.x; 
 											 var y_coord = feature.geometry.y; 
 											 map.setCenter([x_coord, y_coord], zoom); 										

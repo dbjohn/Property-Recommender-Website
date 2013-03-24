@@ -4,8 +4,21 @@
 - property_location_hash= {} 				
 - amenities_location_hash = {} 				
 		
-%body	
-	%h1 Results			
+%body.background	
+	#header
+		#header_logo
+			%a
+				=image_tag "logo4.png",:id=>"logo", :alt => "Property Search"
+	%ul.breadcrumb
+		%li
+			%a{:href=>"#"} 
+				Home
+			%span.divider /
+		%li
+			%a{:href=>"#"} 
+				Results
+			%span.divider /
+					
 	.row-fluid
 		.span6#results_left_column														
 			.accordion#accordion2
@@ -52,7 +65,7 @@
 										:property_id => property.id, :amenity_type => a_type, :transport_modes => @transport_modes).order("amenity_score desc").uniq_by {|a| a.dublin_osm_point_id}
 									
 									
-									%h6 #{@amenity_names_hash[a_type]} 																																				
+									%h6 #{a_type.humanize.pluralize} 																																				
 									
 									-amenities.take(3).each_with_index do |amenity, index|																																					
 										-point = DublinOsmPoint.find( amenity.dublin_osm_point_id)   																		

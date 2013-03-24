@@ -175,15 +175,14 @@
 					=hidden_field_tag "convenience_shop_weight_value", "", :id=>"convenience_shop_weight_value" 			
 					=hidden_field_tag "restaurant_weight_value", "", :id=>"restaurant_weight_value" 			
 					=hidden_field_tag "library_weight_value", "", :id=>"library_weight_value" 			
-					=hidden_field_tag "bank_weight_value", "", :id=>"bank_weight_value" 			
-				
-				
-				
-				=@cat
+					=hidden_field_tag "bank_weight_value", "", :id=>"bank_weight_value" 														
 				
 				%br/
 				%br/
 				%div #{submit_tag "Submit"}
 
+
+/ initInputMap sets up the map in different way to the results page so it is not included in the common document loaded function and is called here.
+= javascript_tag "initInputMap()"
 = javascript_tag "setUpAmenityWeighting(#{DEFAULT_AMENITY_WEIGHTS.to_json})" 				
 								
