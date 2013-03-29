@@ -2,7 +2,7 @@ directory = "/media/sf_Main/property_site/other_files/Amenities/"
 
  ActiveRecord::Base.connection.execute("copy (select osm_id::text||'_supermarket' as label, round(cast(ST_Y(ST_Transform(way,4326)) as numeric), 5) as lat, round(cast(ST_X(ST_Transform(way,4326)) as numeric), 5) as long, 0 as input from dublin_osm_point where shop like '%supermarket%') to '#{directory}supermarkets.csv' DELIMITER ',' CSV;") 
  
-  ActiveRecord::Base.connection.execute("copy (select osm_id::text||'_convenience_shop' as label, round(cast(ST_Y(ST_Transform(way,4326)) as numeric), 5) as lat, round(cast(ST_X(ST_Transform(way,4326)) as numeric), 5) as long, 0 as input from dublin_osm_point where shop like 'convenience') to '#{directory}convenience_shops.csv' DELIMITER ',' CSV;")
+ ActiveRecord::Base.connection.execute("copy (select osm_id::text||'_convenience_shop' as label, round(cast(ST_Y(ST_Transform(way,4326)) as numeric), 5) as lat, round(cast(ST_X(ST_Transform(way,4326)) as numeric), 5) as long, 0 as input from dublin_osm_point where shop like 'convenience') to '#{directory}convenience_shops.csv' DELIMITER ',' CSV;")
  
  ActiveRecord::Base.connection.execute("copy (select osm_id::text||'_bank' as label, round(cast(ST_Y(ST_Transform(way,4326)) as numeric), 5) as lat, round(cast(ST_X(ST_Transform(way,4326)) as numeric), 5) as long, 0 as input from dublin_osm_point where amenity like 'bank') to '#{directory}banks.csv' DELIMITER ',' CSV;")
  
@@ -12,4 +12,7 @@ directory = "/media/sf_Main/property_site/other_files/Amenities/"
  
  
  #Credit to Brian Candler for this simple suggestion here http://www.ruby-forum.com/topic/169194
+ #There should be a file called a.csv existing in the directory, which contains the CSV file headers required by OTP. 
+ #As it is alphabetically first it will be insert at the top of the output file.
+ 
  system("cat #{directory}*.csv > #{directory}combined_file.csv")

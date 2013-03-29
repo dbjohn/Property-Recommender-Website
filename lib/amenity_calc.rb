@@ -11,11 +11,12 @@ class AmenityCalc
 						amenity_types.each do |a|
 								transport_modes.each do |t|
 										
-										score = PropertiesAmenity.where(:property_id => p.id, :amenity_type => a, :transport_mode => t).order("amenity_score desc").pluck(:amenity_score).first
-
-										#the concatenation of _weight value is a bit of a hack										
-										total += score * (weights[a+"_weight_value"].to_f/100.0) * transport_weight																															
-										
+									score = PropertiesAmenity.where(:property_id => p.id, :amenity_type => a, :transport_mode => t).order("amenity_score desc").pluck(:amenity_score).first
+									#get top three scores?
+									
+									#the concatenation of _weight value is a bit of a hack										
+									total += score * (weights[a+"_weight_value"].to_f/100.0) * transport_weight																															
+									
 								end
 						end
 						Property.update(p.id, :amenity_score => total)				

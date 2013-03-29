@@ -12,24 +12,23 @@ begin
 amenities_path_dir =  Rails.root.join("other_files/Amenities/output_results/")
 
  #credit here for this tip http://stackoverflow.com/questions/5810782/how-to-get-ruby-dirglob-to-return-basenames-not-absolute-paths
- transport_modes = Dir.chdir(amenities_path_dir) {Dir["*"]}  
+ #change to the directory and retrieve all file/folder names with Dir[*].
+ transport_modes = Dir.chdir(amenities_path_dir) {Dir["*"]}   
  transport_modes.each do |mode| 
 		Dir.glob(File.join(amenities_path_dir, mode, "*out.csv")) do |dir_file| 							
-			File.open(dir_file, 'r') do |file| 							
+			File.open(dir_file, 'r') do |file| 												
+					filename=  File.basename(file)					 										
 					
-					filename=  File.basename(file)					 
-										
-					property_id= filename.slice(0...(filename.index('_'))).to_i					 
-					amenities_array = [ ]
-							
-					#credit to user Travis for pointing out this way of creating a hash with a default format.
+					property_id= filename.slice(0...(filename.index('_'))).to_i	#would probably be more elegant to use regular expressions.
+					amenities_array = [ ]							
+					#credit to user Travis for pointing out this way of creating a hash with a default form.
 					#http://stackoverflow.com/questions/9234038/append-a-value-in-a-hash-object-in-ruby-using-an-already-existing-key					
 					amenities_hash = Hash.new { |hash, key| hash[key] = [] }
 					#in this case, an array is used. This allows us to loop through the lines and they will be allocated to the correct array in the hash depending on their label (amenity type).
+					#This creates hashes of the following form: {bank => [amenity1, amenity2, amenity3...], supermarket=>[amenity1, amenity2], restaurant=>…etc}
 					
 					csv_array=CSV.read(file) #read in all lines into an array
-					#drop the field labels on the first row and iterate over the rest
-					
+					#drop the field labels on the first row and iterate over the rest					
 					csv_array.drop(1).each do |line|							
 							 amenity = DublinOsmPoint.find(line[0].slice(0...(line[0].index('_'))))       #use slice index -1 to get end of string 
 							 amenity.to_travel_time = convert_seconds_to_minutes( line[4].to_f)

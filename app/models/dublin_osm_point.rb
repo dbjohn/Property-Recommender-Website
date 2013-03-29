@@ -9,7 +9,7 @@ class DublinOsmPoint < ActiveRecord::Base
    has_many :properties_amenities
    has_many :properties, :through => :properties_amenities
    
-   #This comparator enables sorting in descending order.
+   #This comparator enables sorting in descending order of travel score.
    	def <=> (point_2)
 				if travel_score > point_2.travel_score
 					return -1

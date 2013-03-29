@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130301230223) do
+ActiveRecord::Schema.define(:version => 20130327131721) do
 
 # Could not dump table "dublin_osm_line" because of following StandardError
 #   Unknown type 'geometry' for column 'way'
@@ -46,8 +46,7 @@ ActiveRecord::Schema.define(:version => 20130301230223) do
     t.string   "address_line1"
     t.string   "address_line2"
     t.string   "address_line3"
-    t.string   "town_or_city"
-    t.string   "county"
+    t.string   "address_line4"
     t.integer  "number_of_bedrooms"
     t.string   "property_type"
     t.date     "move_in_date"

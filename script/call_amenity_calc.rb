@@ -4,6 +4,7 @@ require_dependency 'amenity_calc'
 #override default
 # puts AmenityCalc.amenity_score_calc(a={"d"=>12,"e"=>5457})
 
+#use constants?
 amenity_types = ["supermarket", "convenience_shop", "restaurant", "library", "bank"] 
 transport_modes = ["CAR", "TRANSIT,WALK", "WALK"]
 

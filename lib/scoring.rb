@@ -22,8 +22,9 @@ class Scoring
 		def self.match_score_calc(properties)
 			no_of_properties = properties.length 
 			properties.each_with_index do |property, index|
+					#should be to_i
 					property.match_score = ((no_of_properties - index)/no_of_properties.to_f)*100.0
-					Rails.logger.debug "Property #{index} match score, in match score: #{property.match_score}"
+					# Rails.logger.debug "Property #{index} match score, in match score: #{property.match_score}"
 			end
 		end
 		

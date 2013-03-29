@@ -1,6 +1,3 @@
-#John see Tips 
-#http://ruby.bastardsbook.com/chapters/html-parsing/
-
 require 'nokogiri'
 require 'open-uri'
 
@@ -34,27 +31,12 @@ require 'open-uri'
 # file = File.open("example.html", "rb") 
 # doc = file.read
 
-doc = Nokogiri::HTML(open('./example.html'))
 # puts file_string
 # address = doc.css('title').first.content
- address = doc.css('#address_box h2').first.content
- address_fields = address.split(',')
- 
+# address = doc.css('#address_box h2').first.content
+# puts address
 
-  if address_fields.length <= 4 then
- 
-		 #we don't know how many fields there are but there must be 4 or less.
-		 #the last 2 address fields, generally postal district (e.g. Dublin 4) and area (e.g. Ranelagh) are the most important for searching.
-		 # Most addresses seem to have a minimum of 2 fields so a4 and a3 will nearly always be populated. The other two might be nil, in which case we will ignore later.
-		 a4, a3, a2, a1 = address_fields.reverse
-		 puts a4 unless a4 == nil
-		 puts a3 unless a3 == nil
-		 puts a2 unless a2 == nil
-		 puts a1 unless a1 == nil 
-	else
-	#skip
-end
- 
+doc = Nokogiri::HTML(open('./search_results_page/Daft.ie   Search Results.htm'))
  
  #NEED to parse the price - weekly? month? set to float
  # price = doc.css('#smi-summary-items div').first.content
@@ -68,9 +50,26 @@ end
 # summary_set = doc.css('#smi-summary-items span.header_text') 
 
 
+ # script = doc.css('script').first.text
+ # puts script
+
+link = start link
+startLoop 
+ # doc = Nokogiri::HTML(open('./search_results_page/Daft.ie   Search Results.htm')) 
+ doc = Nokogiri::HTML(open(link)) 
+     
+ #"http://www.daft.ie/searchrental.daft?search=1&s[cc_id]=ct1&s[search_type]=rental&s[refreshmap]=1&offset=0&limit=10&search_type=rental&offset=10
  
- 
- # script1 = doc.css('body #container #content script')[1]
+ property_links = doc.css('.box h2 a')
+ # property_links.each_with_index do |l, index| 
+	# #puts index
+	# puts l['href']
+	doc = open link
+	process_property(doc)
+# end	
+link = doc.css('.paging li a').last['href']
+#loop
+end
  # puts script1
  
  # puts script1.to_s.index("latitude")
@@ -85,7 +84,7 @@ end
  
  
  
+ # you can get the address in tag with id address_box
+ # check that it contains dublin after last comma
+ # how to organise addresses...names
  
- 
- 
- #you could use the paragraph summary from the search pages.

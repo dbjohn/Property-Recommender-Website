@@ -33,6 +33,9 @@ class CommuteCalc
 
 			 properties.each do |property|
 			
+				#move first read line out of properties block
+				#then just read the line. no risk. ordering preserved.
+				
 				 loop do
 					 line = CSV.parse(file.gets)
 					 break if line[0][0].to_i == property.id		# Convert line id element to int first then compare to property id.

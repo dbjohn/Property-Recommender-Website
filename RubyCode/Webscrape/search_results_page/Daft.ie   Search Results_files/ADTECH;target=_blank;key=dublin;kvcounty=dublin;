@@ -1,0 +1,9 @@
+document.write("<SCR"+"IPT language='JavaScript1.1' SRC=\"http://ad-emea.doubleclick.net/adj/N5457.151082.2050381444621/B7290496;sz=728x90;pc=[TPAS_ID];click=http%3A//adserver.adtech.de/adlink%2F809%2F1582620%2F0%2F225%2FAdId%3D8870943%3BBnId%3D6%3Bitime%3D338025211%3Bkey%3Ddublin%3Blink%3D;ord=338025211?\">\n");
+document.write("</SCR"+"IPT>\n");
+document.write("<NOSCRIPT>\n");
+document.write("<A HREF=\"http://adserver.adtech.de/adlink/809/1582620/0/225/AdId=8870943;BnId=6;itime=338025211;key=dublin;nodecode=yes;link=http://ad-emea.doubleclick.net/jump/N5457.151082.2050381444621/B7290496;sz=728x90;pc=[TPAS_ID];ord=338025211?\">\n");
+document.write("<IMG SRC=\"http://ad-emea.doubleclick.net/ad/N5457.151082.2050381444621/B7290496;sz=728x90;pc=[TPAS_ID];ord=338025211?\" BORDER=0 WIDTH=728 HEIGHT=90 ALT=\"Advertisement\"></A>\n");
+document.write("</NOSCRIPT>\n");
+
+var adcount_1582620_1_=new Image();
+adcount_1582620_1_.src="http://adserver.adtech.de/adcount/3.0/809/1582620/0/225/AdId=8870943;BnId=6;ct=3009672426;st=1564;adcid=1;itime=338025211;reqtype=5;";

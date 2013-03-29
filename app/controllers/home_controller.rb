@@ -1,4 +1,8 @@
 class HomeController < ApplicationController  
+#business logic files are in the lib folder
+#as per advice in a number of places, require_dependencies is used
+#http://stackoverflow.com/questions/1457241/how-are-require-require-dependency-and-constants-reloading-related-in-rails
+
  require_dependency 'commute_calc'
  require_dependency 'amenity_calc'
  require_dependency 'scoring'  
@@ -44,6 +48,7 @@ class HomeController < ApplicationController
 					
 		#Write commute destination coordinates to file for router to read
 		#this is not thread safe at the moment
+		#could probably put into separate method.
 		  # File.open(Rails.root.join( "other_files/commute/otp_origin/Origin.csv"), 'w') do |file| 							
 				  # file.puts("label,lat,lon,input")
 				  # file.puts("o1,#{params[:commute_destination]},0")			
@@ -51,6 +56,7 @@ class HomeController < ApplicationController
 					
 		@transport_modes = params.slice(:transit, :car, :walk, :bicycle).values
 		#might be easier to use one hash for amenities...
+		
 		@amenity_types= params.slice(:supermarket, :convenience_shop, :restaurant, :library,:bank).values		
 		@amenity_weights = params.slice(:supermarket_weight_value, :convenience_shop_weight_value, :restaurant_weight_value, :library_weight_value, :bank_weight_value)
 				
@@ -60,7 +66,7 @@ class HomeController < ApplicationController
 		# CommuteCalc.request_routing_calculation(@transport_modes)			
 		 #pass a reference to the method of the sorted properties array. It is sorted so that properties align with the results written to file.
 		# CommuteCalc.calc_commute_score @properties.sort {|x,y| x.id <=> y.id}
-				
+						
 		AmenityCalc.amenity_score_calc(@properties, @amenity_types, @transport_modes, @amenity_weights)
 		
 		# Scoring.total_score_calc @properties
