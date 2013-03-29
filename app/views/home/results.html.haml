@@ -55,34 +55,36 @@
 																																		
 								%button{:id => "#{property.id}", :class => "btn", :type => "button"} Locate Property
 								
-								%p
-									%b Nearest Amenities:																																		
-								
-								/ uniq by will take the first elements of a certain point which are also the best/nearest because the array is sorted by amenity score
+								/if the user removed all amenities from the advanced options area, unlikely but not impossible as designed, then no information about amenities is shown.
+								-if(@amenity_types.length > 0)
+									%p
+										%b Nearest Amenities:																																		
 									
-								-@amenity_types.each_with_index do |a_type,index|																																				
-									-amenities =  PropertiesAmenity.where("property_id = :property_id AND amenity_type = :amenity_type AND transport_mode in (:transport_modes)",
-										:property_id => property.id, :amenity_type => a_type, :transport_modes => @transport_modes).order("amenity_score desc").uniq_by {|a| a.dublin_osm_point_id}
-									
-									
-									%h6 #{a_type.humanize.pluralize} 																																				
-									
-									-amenities.take(3).each_with_index do |amenity, index|																																					
-										-point = DublinOsmPoint.find( amenity.dublin_osm_point_id)   																		
-										-coord = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, 
-											cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = #{point.osm_id}").first 
-										-unique_id=(property.id).to_s + (point.osm_id).to_s 
-																																																																																								
-										%b #{index + 1} . 
-										=label_tag "#{unique_id}", "#{point.name} ", :class => 'checkbox inline' , :data => {:latitude => coord.lat, :longitude => coord.long}
-										=check_box_tag "#{unique_id}", 1, false 
-										%div by #{@transport_mode_words_hash[amenity.transport_mode]} - to: #{number_with_precision amenity.to_travel_time, :precision=> 2} minutes, from: #{number_with_precision amenity.from_travel_time, :precision=> 2} minutes
+									/ uniq by will take the first elements of a certain point which are also the best/nearest because the array is sorted by amenity score
+										
+									-@amenity_types.each_with_index do |a_type,index|																																				
+										-amenities =  PropertiesAmenity.where("property_id = :property_id AND amenity_type = :amenity_type AND transport_mode in (:transport_modes)",
+											:property_id => property.id, :amenity_type => a_type, :transport_modes => @transport_modes).order("amenity_score desc").uniq_by {|a| a.dublin_osm_point_id}
 										
 										
+										%h6 #{a_type.humanize.pluralize} 																																				
 										
-										-amenities_location_hash[unique_id] = [coord.long, coord.lat]  																																																																							
-					
-								-property_location_hash[property.id] = [property.longitude.to_f, property.latitude.to_f] 
+										-amenities.take(3).each_with_index do |amenity, index|																																					
+											-point = DublinOsmPoint.find( amenity.dublin_osm_point_id)   																		
+											-coord = DublinOsmPoint.find_by_sql("select cast(ST_Y(ST_Transform(way,4326)) as numeric) as lat, 
+												cast(ST_X(ST_Transform(way,4326)) as numeric) as long from dublin_osm_point where osm_id = #{point.osm_id}").first 
+											-unique_id=(property.id).to_s + (point.osm_id).to_s 
+																																																																																									
+											%b #{index + 1} . 
+											=label_tag "#{unique_id}", "#{point.name} ", :class => 'checkbox inline' , :data => {:latitude => coord.lat, :longitude => coord.long}
+											=check_box_tag "#{unique_id}", 1, false 
+											%div by #{@transport_mode_words_hash[amenity.transport_mode]} - to: #{number_with_precision amenity.to_travel_time, :precision=> 2} minutes, from: #{number_with_precision amenity.from_travel_time, :precision=> 2} minutes
+											
+											
+											
+											-amenities_location_hash[unique_id] = [coord.long, coord.lat]  																																																																							
+						
+									-property_location_hash[property.id] = [property.longitude.to_f, property.latitude.to_f] 								
 
 		.span6#results_right_column
 			#map_canvas															

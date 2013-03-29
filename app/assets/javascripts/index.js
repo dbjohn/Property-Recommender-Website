@@ -134,7 +134,9 @@ function setUpAmenityWeighting(default_amenity_weights){
 		}
 		else{
 			console.log("not checked");
-			$("#"+ $(this).attr("id") + "_weight").remove();
+			$("#" + $(this).attr("id") + "_weight").remove();
+			$("#" + $(this).attr("id") + "_weight_value").val("0");
+			
 			// and it wasn't as good as removing it
 			//$("#"+ $(this).attr("id") + "_weight").css("width","0px");
 			//$("#"+ $(this).attr("id") + "_weight").css("width","10px");

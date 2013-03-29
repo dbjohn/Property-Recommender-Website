@@ -15,13 +15,14 @@ function mapGenerate() {
         window.map = new OpenLayers.Map("map_canvas");
 
         var maplayer         = new OpenLayers.Layer.OSM();
+		
         var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
         var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
         var position       = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);						
         var zoom           = 12; 
 
         map.addLayer(maplayer);
-        map.setCenter(position, zoom );
+        map.setCenter(position, zoom);
 
 };
  
@@ -31,7 +32,6 @@ function addDestinationMarker(pos){
 	map.addLayer(markers);		
 
 	marker = new OpenLayers.Marker(pos);
-	marker.id = "1";
 
 	markers.addMarker(marker);
 				

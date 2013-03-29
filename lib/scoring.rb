@@ -6,11 +6,12 @@ class Scoring
 					return 0				
 			else
 					average = (to.to_f + from.to_f) / 2.0
-					return distance_decay_formula(average)						
+					return distance_decay_function(average)						
+			
 			end
 		end
 
-		def self.distance_decay_formula(num)
+		def self.distance_decay_function(num)
 			if(num >= 0 and num <= 120)
 				return (-5/6.0)*(num) + 100
 			else

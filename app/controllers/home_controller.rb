@@ -66,8 +66,9 @@ class HomeController < ApplicationController
 		# CommuteCalc.request_routing_calculation(@transport_modes)			
 		 #pass a reference to the method of the sorted properties array. It is sorted so that properties align with the results written to file.
 		# CommuteCalc.calc_commute_score @properties.sort {|x,y| x.id <=> y.id}
-						
-		AmenityCalc.amenity_score_calc(@properties, @amenity_types, @transport_modes, @amenity_weights)
+		
+		# if(@amenity_types.blank?
+		#AmenityCalc.amenity_score_calc(@properties, @amenity_types, @transport_modes, @amenity_weights)
 		
 		# Scoring.total_score_calc @properties
 				
