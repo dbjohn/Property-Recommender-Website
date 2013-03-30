@@ -1,5 +1,7 @@
 #John see Tips 
 #http://ruby.bastardsbook.com/chapters/html-parsing/
+# we can safely assume that all places are being let because that is what we searched for
+# keep an eye on disk usage.
 
 require 'nokogiri'
 require 'open-uri'
@@ -35,25 +37,25 @@ require 'open-uri'
 # doc = file.read
 
 doc = Nokogiri::HTML(open('./example.html'))
-# puts file_string
-# address = doc.css('title').first.content
- address = doc.css('#address_box h2').first.content
- address_fields = address.split(',')
+
+
+ # address = doc.css('#address_box h2').first.content
+ # address_fields = address.split(',')
  
 
-  if address_fields.length <= 4 then
+  # if address_fields.length <= 4 then
  
-		 #we don't know how many fields there are but there must be 4 or less.
-		 #the last 2 address fields, generally postal district (e.g. Dublin 4) and area (e.g. Ranelagh) are the most important for searching.
-		 # Most addresses seem to have a minimum of 2 fields so a4 and a3 will nearly always be populated. The other two might be nil, in which case we will ignore later.
-		 a4, a3, a2, a1 = address_fields.reverse
-		 puts a4 unless a4 == nil
-		 puts a3 unless a3 == nil
-		 puts a2 unless a2 == nil
-		 puts a1 unless a1 == nil 
-	else
-	#skip
-end
+		 # #we don't know how many fields there are but there must be 4 or less.
+		 # #the last 2 address fields, generally postal district (e.g. Dublin 4) and area (e.g. Ranelagh) are the most important for searching.
+		 # # Most addresses seem to have a minimum of 2 fields so a4 and a3 will nearly always be populated. The other two might be nil, in which case we will ignore later.
+		 # a4, a3, a2, a1 = address_fields.reverse
+		 # puts a4 unless a4 == nil
+		 # puts a3 unless a3 == nil
+		 # puts a2 unless a2 == nil
+		 # puts a1 unless a1 == nil 
+	# else
+	# #skip
+# end
  
  
  #NEED to parse the price - weekly? month? set to float
@@ -64,9 +66,9 @@ end
 # puts property_type = summary_set[0].content
 # puts no_of_bedrooms = summary_set[1].content
 # puts no_of_bathrooms = summary_set[2].content
+#just let them be nil, if they are not provided. E.g. studio apartments don't provide bedroom or bathroom numbers, so just let this field be nil for them.
 
-# summary_set = doc.css('#smi-summary-items span.header_text') 
-
+#present?
 
  
  

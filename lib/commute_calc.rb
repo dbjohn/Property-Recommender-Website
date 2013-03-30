@@ -30,12 +30,13 @@ class CommuteCalc
 		# Rails.logger.debug "Properties inside commute calc: #{properties.to_yaml}"
 
 		 File.open(Rails.root.join( "other_files/commute/results/o1_0_out.csv"),"r" ) do |file|																			
-
+			
+			line = CSV.parse(file.gets) #read in the first line which is just the csv headers
 			 properties.each do |property|
 			
-				#move first read line out of properties block
-				#then just read the line. no risk. ordering preserved.
 				
+				#This loop do is necessary. Because the exported properties may contain more properties than in the filtered properties array
+				#so we skip over properties that are not in the filter properties array.				
 				 loop do
 					 line = CSV.parse(file.gets)
 					 break if line[0][0].to_i == property.id		# Convert line id element to int first then compare to property id.

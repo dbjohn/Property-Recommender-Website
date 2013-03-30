@@ -4,6 +4,10 @@ h1{
 	padding-bottom: 1%;
 } 
 
+h4{
+	margin: 0; /* needed to make the headings in the accordion on the results page not take up too much space.*/
+}
+
 h5{
 	display: inline-block
 }
@@ -26,7 +30,7 @@ p{
 
 #logo{
 	margin: 10px 10px 10px 300px;	
-	height: 60px;
+	height: 60px; 
 	
 	}
 	
@@ -40,39 +44,33 @@ p{
 	
 }
 
-.span6 {
-	padding: 0%;
-	
-	text-align: left; 		
-}
+
 		  
 		  /*I don't like the use of pixels here, but it works*/
 		  /* 750 px good for wide screen, */
 #map_canvas {
 	width: 510px;
 	height: 425px;
-	border: 3px solid black;
-
-}
-	
-
-.span9 {
-	padding-left: 10%;			
+	border: 2px solid black;
+	margin-bottom: 2%;
 	
 }
 
 
-#criteria_left_column{
+form{
 	padding-left: 10%;			
 	text-align: left; 	
 	float: left;		
-	 width: 100%;
-	 background-color: white;
+	width: 100%;
+	background-color: white;
 	/*background: url(<%= asset_path 'natural_paper/natural_paper/natural_paper.png'%>) repeat scroll 0% 0%  transparent;*/
 }
 
+input[type="submit"]{
+	
+}
 
-#criteria_right_column{				
+#criteria_right_side{				
 	text-align: left; 		
 	float: right;
 	padding-right: 5%;
@@ -80,23 +78,39 @@ p{
 
 #results_left_column{
 	padding-left: 2%;
-	
+	margin-top: 10px;
 	text-align: left; 		
 }
 
 #results_right_column{
 	padding-left: 5%;
-	
+	margin-top: 10px;
 	text-align: left; 		
 }
 
+.accordion {
+    background-color: white;	
+	
+	}
+	
+.accordion-heading {
+    background-color: #73AEE9;
+	
+/* 	font-size: large;
+	font-weight: bold; */
+	}
+
+.accordion-heading .accordion-toggle {
+    color: white;
+}
+	
 button.ui-button-icon-only { 
 width: 1em;
 margin-left: 0.5em;
 }
 
-#advanced_options_area{
-	 padding: 0%;
+#advanced_options_area{		
 	border: 2px solid black;		
+	margin-right: 5%;
 	}
 

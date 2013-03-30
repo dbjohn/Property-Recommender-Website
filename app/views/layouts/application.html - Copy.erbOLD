@@ -9,7 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
+	#header
+		#header_logo
+			=link_to image_tag("logo5.png",:id=>"logo", :alt => "Property Search"), root_path			
 <%= yield %>
 
 </body>

@@ -1,3 +1,7 @@
+/ openlayers.js was attempted to be included in the assets/javascript 
+/ but it wasn't displaying properly and was just easier to reference from here.
+/ It may require extra files in images and stylesheets folder to work from assets.
+
 =content_for :head do 
 	= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" 
 
@@ -5,10 +9,7 @@
 - amenities_location_hash = {} 				
 		
 %body.background	
-	#header
-		#header_logo
-			%a
-				=image_tag "logo4.png",:id=>"logo", :alt => "Property Search"
+
 	%ul.breadcrumb
 		%li
 			%a{:href=>"#"} 
@@ -26,9 +27,7 @@
 					.accordion-group
 						.accordion-heading
 							%a.accordion-toggle{"data-toggle"=>"collapse", "data-parent"=>"#accordion2", :href=>"#collapse#{index}"}
-								%b + 
-								#{index + 1}
-								#{property.address}
+								%h4 + #{index + 1} #{property.address}
 																																																																																					
 						%div{:id=> "collapse#{index}", :class => "accordion-body collapse #{index==0 ? 'in' : ''}"}
 							.accordion-inner
