@@ -1,5 +1,3 @@
-
-
 class AmenityCalc
 
 		#default weights in place.

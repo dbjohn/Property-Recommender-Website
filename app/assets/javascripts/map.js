@@ -7,6 +7,8 @@
 
 //TODO
 //need to add a clear all checkbox. see trigger event
+var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator P
  
 function mapGenerate() {
 
@@ -14,10 +16,10 @@ function mapGenerate() {
         // Map is being defined as a global variable, this seems to be the recommended practice
         window.map = new OpenLayers.Map("map_canvas");
 
-        var maplayer         = new OpenLayers.Layer.OSM();
+        var maplayer = new OpenLayers.Layer.OSM();
 		
-        var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-        var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+        // var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+        // var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
         var position       = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);						
         var zoom           = 12; 
 
@@ -32,7 +34,8 @@ function addDestinationMarker(pos){
 	map.addLayer(markers);		
 
 	marker = new OpenLayers.Marker(pos);
-
+	
+	
 	markers.addMarker(marker);
 				
 	$("#commute_locate").click(function() {
@@ -48,8 +51,8 @@ function addDestinationMarker(pos){
 			// and here http://openlayers.org/dev/examples/click-handler.html
 			
 			//TODO: repeatation? move to object namespace - or class or something
-			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+			// var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+			// var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
 			var position       = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);						
 			
 			
@@ -60,7 +63,7 @@ function addDestinationMarker(pos){
 			
 			//help from http://stackoverflow.com/questions/2160725/taking-coordinates-of-points-in-openlayers				
             
-            map.events.register('click', map, function() {
+            map.events.register('click', map, function(e) {
                 // If you are using OpenStreetMap (etc) tiles and want to convert back 
                 // to gps coords add the following line :-
                 // lonlat.transform( map.projection,map.displayProjection);
@@ -114,15 +117,11 @@ function addDestinationMarker(pos){
                             fillOpacity: 0.9,
                             pointRadius: 15,
                             // label with \n linebreaks
-                            label : "${number}",
-                            
-                            fontColor: "${favColor}",
+                            label : "${number}",                            
+                            fontColor: "black",
                             fontSize: "12px",
                             fontFamily: "Courier New, monospace",
-                            fontWeight: "bold",
-                            labelAlign: "${align}",
-                            labelXOffset: "${xOffset}",
-                            labelYOffset: "${yOffset}",
+                            fontWeight: "bold",                            
                             labelOutlineColor: "white",
                             labelOutlineWidth: 3
                         }}),
@@ -144,15 +143,15 @@ function addDestinationMarker(pos){
                     map.addLayer(properties_obj[prop]);			
                     
                     $("#"+prop).click(function() {                                                                                                                                    
-                    console.log(this.id);
-                    console.log(properties_obj[this.id]);
-                    console.log(properties_obj[this.id].getFeaturesByAttribute("property_id", this.id));
+						console.log(this.id);
+						console.log(properties_obj[this.id]);
+						console.log(properties_obj[this.id].getFeaturesByAttribute("property_id", this.id));
 
-                    var feature = properties_obj[this.id].getFeaturesByAttribute("property_id", this.id)[0];
+						var feature = properties_obj[this.id].getFeaturesByAttribute("property_id", this.id)[0];
 
-                    var x_coord = feature.geometry.x; 
-                    var y_coord = feature.geometry.y; 
-                    map.setCenter([x_coord, y_coord], zoom); 
+						var x_coord = feature.geometry.x; 
+						var y_coord = feature.geometry.y; 
+						map.setCenter([x_coord, y_coord], zoom); 
 
                     });
                     

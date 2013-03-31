@@ -3,8 +3,8 @@ class DublinOsmPoint < ActiveRecord::Base
   attr_accessor :travel_score, :to_travel_time, :from_travel_time, :amenity_type
   attr_accessible :travel_score, :to_travel_time, :from_travel_time, :amenity_type
   
-  set_table_name 'dublin_osm_point'
-  set_primary_key 'osm_id'
+  self.table_name = 'dublin_osm_point'
+  self.primary_key = 'osm_id'
    
    has_many :properties_amenities
    has_many :properties, :through => :properties_amenities

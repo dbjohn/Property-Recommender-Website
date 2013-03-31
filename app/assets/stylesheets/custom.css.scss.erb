@@ -15,9 +15,7 @@ h5{
 body{
 	
 	
-}
 
-.background{
 	background: url(<%= asset_path 'ravenna/ravenna/ravenna.png'%>) repeat scroll 0% 0%  transparent;
 	/*background: url(<%= asset_path 'white_brick_wall/white_brick_wall/white_brick_wall.png'%>) repeat scroll 0% 0%  transparent;*/
 	
@@ -28,22 +26,49 @@ p{
 	
 }
 
+.container{	
+	background-color: white;
+	box-shadow: 0 5px 23px 6px #BEBBBB;
+	margin-bottom: 20px;
+	
+}
+
 #logo{
-	margin: 10px 10px 10px 300px;	
+	margin: 10px;
 	height: 60px; 
 	
 	}
 	
-#header_logo{	
+#header{	
 	background-color: #73AEE9;
+	text-align: center;
+    
+}
+
+#header_logo{	
+	width: 930px;
+	margin: auto;
+    text-align: left;
+}
+
+.breadcrumbWrapper{
+	background-color: #F5F5F5;
+    position: relative;
+    text-align: center;
 }
 
 .breadcrumb{
-	margin: 0;
-	padding: 2px 20px;
-	
+	margin: 0 auto;
+    padding: 2px 20px;
+    text-align: left;
+    width: 920px;
 }
 
+
+.collapse {
+/* this is needed so that it works in IE */
+    overflow: hidden;
+}
 
 		  
 		  /*I don't like the use of pixels here, but it works*/
@@ -57,21 +82,21 @@ p{
 }
 
 
-form{
-	padding-left: 10%;			
-	text-align: left; 	
-	float: left;		
-	width: 100%;
-	background-color: white;
+form{	
+	text-align: left; 						
+	margin: 20px 50px;
 	/*background: url(<%= asset_path 'natural_paper/natural_paper/natural_paper.png'%>) repeat scroll 0% 0%  transparent;*/
 }
 
+.btn-large {
+    background-color: #73AEE9;
+	color: white;
+	}
 
 
 #criteria_right_side{				
 	text-align: left; 		
-	float: right;
-	padding-right: 5%;
+	float: right;	
 }
 
 #results_left_column{
@@ -101,6 +126,10 @@ form{
 .accordion-heading .accordion-toggle {
     color: white;
 }
+
+li{
+	color: #0088CC;
+}
 	
 button.ui-button-icon-only { 
 width: 1em;
@@ -109,6 +138,6 @@ margin-left: 0.5em;
 
 #advanced_options_area{		
 	border: 2px solid black;		
-	margin-right: 5%;
-	}
+	
+}
 

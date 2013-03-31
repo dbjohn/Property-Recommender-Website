@@ -91,3 +91,8 @@ doc = Nokogiri::HTML(open('./example.html'))
  
  
  #you could use the paragraph summary from the search pages.
+ 
+ #could use this strategy to check whether it exists before creating 
+# property = Property.where(:daft_id => id).first_or_create()
+ # property.update_attributes(.......)
+ 

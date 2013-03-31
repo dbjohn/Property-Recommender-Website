@@ -2,177 +2,168 @@
 	=stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css"
 	=javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js"
 
-%body.background			
-	%ul.breadcrumb
-		%li
-			%a{:href=>"#"} 
-				Home
-			%span.divider /
-		%li
-			%a{:href=>"#"} 
-				Search
-			%span.divider /
-			
-	.container						
-	
-		= form_tag(url_for(:action => "results")) do 					
-			%h5 Select Criteria		
-			#criteria_right_side
-				%h5 Select commute destination:										
-				%div{:id=>"map_canvas"}   							
-				-# User can select one or more modes of transport. The quickest mode will be chosen after calculations.
-				=label_tag "Select Mode of Transport"
-				=label_tag "transit", "Public Transit", :class=>"checkbox inline"
-				=check_box_tag "transit", "TRANSIT,WALK", false					
-				=label_tag "walk", "Walk", :class=>"checkbox inline"
-				=check_box_tag "walk", "WALK", false
-				=label_tag "car", "Car", :class=>"checkbox inline"
-				=check_box_tag "car", "CAR", false
-			%p
-				=label_tag "min_price", "Minimum Price" 
-				=select_tag "min_price", options_for_select([ "No Min", 1000, 20000, 300000 ]) 										
-				=label_tag "max_price", "Maximum Price"
-				=select_tag "max_price", options_for_select([ "No Max", 20000, 30000, 400000 ]) 
-			%p
-				=label_tag "min_no_of_bedrooms", "Minimum Number of Bedrooms"
-				=select_tag "min_no_of_bedrooms", options_for_select([ "No Min", 1, 2, 3, 4, 5, 6 ]) 
-				=label_tag "max_no_of_bedrooms", "Maximum Number of Bedrooms"
-				=select_tag "max_no_of_bedrooms", options_for_select([ "No Max", 1, 2, 3, 4, 5, 6 ]) 
-			%p
-				=label_tag "property_type", "Type of Property"
-				=select_tag "property_type", options_for_select([ "Any Type", "Apartment", "House", "Studio Apartment", "Flat"]) 																										
-			%p			
-				=label_tag "move_in", "When can you move in?"						
-				/uses the bootstrap datepicker http://www.eyecon.ro/bootstrap-datepicker/	 
-				.input-append.date#datepicker{"data-date"=>Date.today.to_s, "data-date-format"=>"yyyy-mm-dd"}
-					=text_field_tag 'move_in', "#{Date.today.to_s}", :readonly=>"readonly", :placeholder => "Select date..."
-					%span.add-on 
-						%i.icon-calendar
-			%p																			
-				=label_tag "lease_type", "Lease Type"
-				=select_tag "lease_type", options_for_select([ "Any Type", "No Lease", "3 Month Lease", "6 Month Lease", "9 Month Lease", "1 Year Lease", "2 Year Lease", "3 Year Lease"]) 
-			
-			=hidden_field_tag "commute_destination", "", :id=>"commute_destination_val"
-			%p																						
-				=label_tag "options", "Simple", :class => "radio inline"
-				=radio_button_tag "options", "simple", true
-				=label_tag "options", "Advanced", :class => "radio inline"
-				=radio_button_tag "options", "advanced"
-
-			#advanced_options_area.collapse			
-				%h6 Facilities
-				
-				.row
-					.span2
-						=label_tag "parking", "Parking", :class=>"radio inline"
-					.span3
-						=label_tag "parking", "Yes", :class => "radio inline"
-						=radio_button_tag "parking", "true"
-						=label_tag "parking", "Neutral", :class => "radio inline"
-						=radio_button_tag "parking", "neutral", true
-						=label_tag "parking", "No", :class => "radio inline"
-						=radio_button_tag "parking", "false"
-					
-					.span2
-						=label_tag "washing_machine", "Washing Machine", :class=>"radio inline"
-					.span3
-						=label_tag "washing_machine", "Yes", :class => "radio inline"
-						=radio_button_tag "washing_machine", "true"
-						=label_tag "washing_machine", "Neutral", :class => "radio inline"
-						=radio_button_tag "washing_machine", "neutral", true
-						=label_tag "washing_machine", "No", :class => "radio inline"
-						=radio_button_tag "washing_machine", "false"
-													
-						
-				.row
-					.span2
-						=label_tag "dryer", "Dryer", :class=>"radio inline"
-					.span3
-						=label_tag "dryer", "Yes", :class => "radio inline"
-						=radio_button_tag "dryer", "true"
-						=label_tag "dryer", "Neutral", :class => "radio inline"
-						=radio_button_tag "dryer", "neutral", true
-						=label_tag "dryer", "No", :class => "radio inline"
-						=radio_button_tag "dryer", "false"
-				
-					.span2
-						=label_tag "dishwasher", "Dishwasher", :class=>"radio inline"
-					.span3
-						=label_tag "dishwasher", "Yes", :class => "radio inline"
-						=radio_button_tag "dishwasher", "true"
-						=label_tag "dishwasher", "Neutral", :class => "radio inline"
-						=radio_button_tag "dishwasher", "neutral", true
-						=label_tag "dishwasher", "No", :class => "radio inline"
-						=radio_button_tag "dishwasher", "false"
-
-				
-				
-				.row
-					.span2
-						=label_tag "internet", "Internet ", :class=>"radio inline"
-					.span3
-						=label_tag "internet", "Yes", :class => "radio inline"
-						=radio_button_tag "internet", "true"
-						=label_tag "internet", "Neutral", :class => "radio inline"
-						=radio_button_tag "internet", "neutral", true
-						=label_tag "internet", "No", :class => "radio inline"
-						=radio_button_tag "internet", "false"				
-				
-					.span2
-						=label_tag "microwave", "Microwave ", :class=>"radio inline"
-					.span3
-						=label_tag "microwave", "Yes", :class => "radio inline"
-						=radio_button_tag "microwave", "true"
-						=label_tag "microwave", "Neutral", :class => "radio inline"
-						=radio_button_tag "microwave", "neutral", true
-						=label_tag "microwave", "No", :class => "radio inline"
-						=radio_button_tag "microwave", "false"
-				
-				%h6 Amenities
-				=label_tag "supermarket", "Supermarket", :class=>"checkbox inline"
-				=check_box_tag "supermarket", "supermarket", true					
-				=label_tag "convenience_shop", "Convenience Shop", :class=>"checkbox inline"
-				=check_box_tag "convenience_shop", "convenience_shop", true
-				=label_tag "restaurant", "Restaurant", :class=>"checkbox inline"
-				=check_box_tag "restaurant", "restaurant", true
-				=label_tag "library", "Library", :class=>"checkbox inline"
-				=check_box_tag "library", "library", true
-				=label_tag "bank", "Bank", :class=>"checkbox inline"
-				=check_box_tag "bank", "bank", true
-				
-				%h6 Set Amenity Weighting
-				%p
-					=label_tag "amenity_weighting_default", "Use Default Weighting", :class=>"checkbox inline"
-					=check_box_tag "amenity_weighting_default", false
-				%p
-					.center			
-						#slider	
-							%table#range{:width=>"100%", :cellspacing => "0", :cellpadding => "0"}
-								%tr
-									%th#supermarket_weight{:width => "25%"} Supermarket
-									%th#convenience_shop_weight{:width => "25%"} Convenience Shop
-									%th#restaurant_weight{:width => "25%"} Restaurant
-									%th#library_weight{:width => "25%"} Library
-									%th#bank_weight{:width => "25%"} Bank
-								%tr
-									%td 25%
-									%td 25%
-									%td 25%
-									%td 25%
-									%td 25%
-				
-				/					
+.container	
+	.row
+		.span12
+			= form_tag(url_for(:action => "results")) do 					
+				%h5 Select Criteria		
+				#criteria_right_side
+					%h5 Select commute destination:										
+					%div{:id=>"map_canvas"}   							
+					-# User can select one or more modes of transport. The quickest mode will be chosen after calculations.
 					%p
-						#text Ranges
+						=label_tag "Select Mode of Transport"
+						=label_tag "transit", "Public Transit", :class=>"checkbox inline"
+						=check_box_tag "transit", "TRANSIT,WALK", false					
+						=label_tag "walk", "Walk", :class=>"checkbox inline"
+						=check_box_tag "walk", "WALK", false
+						=label_tag "car", "Car", :class=>"checkbox inline"
+						=check_box_tag "car", "CAR", false
+				%p
+					=label_tag "min_price", "Minimum Price" 
+					=select_tag "min_price", options_for_select([ "No Min", 1000, 20000, 300000 ]) 										
+					=label_tag "max_price", "Maximum Price"
+					=select_tag "max_price", options_for_select([ "No Max", 20000, 30000, 400000 ]) 
+				%p
+					=label_tag "min_no_of_bedrooms", "Minimum Number of Bedrooms"
+					=select_tag "min_no_of_bedrooms", options_for_select([ "No Min", 1, 2, 3, 4, 5, 6 ]) 
+					=label_tag "max_no_of_bedrooms", "Maximum Number of Bedrooms"
+					=select_tag "max_no_of_bedrooms", options_for_select([ "No Max", 1, 2, 3, 4, 5, 6 ]) 
+				%p
+					=label_tag "property_type", "Type of Property"
+					=select_tag "property_type", options_for_select([ "Any Type", "Apartment", "House", "Studio Apartment", "Flat"]) 																										
+				%p			
+					=label_tag "move_in", "When can you move in?"						
+					/uses the bootstrap datepicker http://www.eyecon.ro/bootstrap-datepicker/	 
+					.input-append.date#datepicker{"data-date"=>Date.today.to_s, "data-date-format"=>"yyyy-mm-dd"}
+						=text_field_tag 'move_in', "#{Date.today.to_s}", :readonly=>"readonly", :placeholder => "Select date..."
+						%span.add-on 
+							%i.icon-calendar
+				%p																			
+					=label_tag "lease_type", "Lease Type"
+					=select_tag "lease_type", options_for_select([ "Any Type", "No Lease", "3 Month Lease", "6 Month Lease", "9 Month Lease", "1 Year Lease", "2 Year Lease", "3 Year Lease"]) 
 				
-				=hidden_field_tag "supermarket_weight_value", "", :id=>"supermarket_weight_value" 			
-				=hidden_field_tag "convenience_shop_weight_value", "", :id=>"convenience_shop_weight_value" 			
-				=hidden_field_tag "restaurant_weight_value", "", :id=>"restaurant_weight_value" 			
-				=hidden_field_tag "library_weight_value", "", :id=>"library_weight_value" 			
-				=hidden_field_tag "bank_weight_value", "", :id=>"bank_weight_value" 														
-			
-			%p
-				%div #{submit_tag "Submit", :class=>"btn-large"}
+				=hidden_field_tag "commute_destination", "", :id=>"commute_destination_val"
+				%p																						
+					=label_tag "options", "Simple", :class => "radio inline"
+					=radio_button_tag "options", "simple", true
+					=label_tag "options", "Advanced", :class => "radio inline"
+					=radio_button_tag "options", "advanced"
+
+				#advanced_options_area.collapse			
+					%h6 Facilities
+					
+					.row
+						.span2
+							=label_tag "parking", "Parking", :class=>"radio inline"
+						.span3
+							=label_tag "parking", "Yes", :class => "radio inline"
+							=radio_button_tag "parking", "true"
+							=label_tag "parking", "Neutral", :class => "radio inline"
+							=radio_button_tag "parking", "neutral", true
+							=label_tag "parking", "No", :class => "radio inline"
+							=radio_button_tag "parking", "false"
+						
+						.span2
+							=label_tag "washing_machine", "Washing Machine", :class=>"radio inline"
+						.span3
+							=label_tag "washing_machine", "Yes", :class => "radio inline"
+							=radio_button_tag "washing_machine", "true"
+							=label_tag "washing_machine", "Neutral", :class => "radio inline"
+							=radio_button_tag "washing_machine", "neutral", true
+							=label_tag "washing_machine", "No", :class => "radio inline"
+							=radio_button_tag "washing_machine", "false"
+														
+							
+					.row
+						.span2
+							=label_tag "dryer", "Dryer", :class=>"radio inline"
+						.span3
+							=label_tag "dryer", "Yes", :class => "radio inline"
+							=radio_button_tag "dryer", "true"
+							=label_tag "dryer", "Neutral", :class => "radio inline"
+							=radio_button_tag "dryer", "neutral", true
+							=label_tag "dryer", "No", :class => "radio inline"
+							=radio_button_tag "dryer", "false"
+					
+						.span2
+							=label_tag "dishwasher", "Dishwasher", :class=>"radio inline"
+						.span3
+							=label_tag "dishwasher", "Yes", :class => "radio inline"
+							=radio_button_tag "dishwasher", "true"
+							=label_tag "dishwasher", "Neutral", :class => "radio inline"
+							=radio_button_tag "dishwasher", "neutral", true
+							=label_tag "dishwasher", "No", :class => "radio inline"
+							=radio_button_tag "dishwasher", "false"
+
+					
+					
+					.row
+						.span2
+							=label_tag "internet", "Internet ", :class=>"radio inline"
+						.span3
+							=label_tag "internet", "Yes", :class => "radio inline"
+							=radio_button_tag "internet", "true"
+							=label_tag "internet", "Neutral", :class => "radio inline"
+							=radio_button_tag "internet", "neutral", true
+							=label_tag "internet", "No", :class => "radio inline"
+							=radio_button_tag "internet", "false"				
+					
+						.span2
+							=label_tag "microwave", "Microwave ", :class=>"radio inline"
+						.span3
+							=label_tag "microwave", "Yes", :class => "radio inline"
+							=radio_button_tag "microwave", "true"
+							=label_tag "microwave", "Neutral", :class => "radio inline"
+							=radio_button_tag "microwave", "neutral", true
+							=label_tag "microwave", "No", :class => "radio inline"
+							=radio_button_tag "microwave", "false"
+					
+					%h6 Amenities
+					=label_tag "supermarket", "Supermarket", :class=>"checkbox inline"
+					=check_box_tag "supermarket", "supermarket", true					
+					=label_tag "convenience_shop", "Convenience Shop", :class=>"checkbox inline"
+					=check_box_tag "convenience_shop", "convenience_shop", true
+					=label_tag "restaurant", "Restaurant", :class=>"checkbox inline"
+					=check_box_tag "restaurant", "restaurant", true
+					=label_tag "library", "Library", :class=>"checkbox inline"
+					=check_box_tag "library", "library", true
+					=label_tag "bank", "Bank", :class=>"checkbox inline"
+					=check_box_tag "bank", "bank", true
+					
+					%h6 Set Amenity Weighting
+					%p
+						=label_tag "amenity_weighting_default", "Use Default Weighting", :class=>"checkbox inline"
+						=check_box_tag "amenity_weighting_default", false
+					%p
+						.center			
+							#slider	
+								%table#range{:width=>"100%", :cellspacing => "0", :cellpadding => "0"}
+									%tr
+										%th#supermarket_weight{:width => "25%"} Supermarket
+										%th#convenience_shop_weight{:width => "25%"} Convenience Shop
+										%th#restaurant_weight{:width => "25%"} Restaurant
+										%th#library_weight{:width => "25%"} Library
+										%th#bank_weight{:width => "25%"} Bank
+									%tr
+										%td 25%
+										%td 25%
+										%td 25%
+										%td 25%
+										%td 25%
+					
+					/					
+						%p
+							#text Ranges
+					
+					=hidden_field_tag "supermarket_weight_value", "", :id=>"supermarket_weight_value" 			
+					=hidden_field_tag "convenience_shop_weight_value", "", :id=>"convenience_shop_weight_value" 			
+					=hidden_field_tag "restaurant_weight_value", "", :id=>"restaurant_weight_value" 			
+					=hidden_field_tag "library_weight_value", "", :id=>"library_weight_value" 			
+					=hidden_field_tag "bank_weight_value", "", :id=>"bank_weight_value" 														
+				
+				%p
+					%div #{submit_tag "Submit", :class=>"btn-large"}
 
 
 / initInputMap sets up the map in different way to the results page so it is not included in the common document loaded function and is called here.
