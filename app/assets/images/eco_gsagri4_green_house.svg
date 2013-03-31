@@ -1151,7 +1151,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1167,7 +1167,7 @@
        id="rect5004"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccccccccccccccccccccc"
-       inkscape:export-filename="C:\Users\John\Google_Drive\Folders_from_Skydrive\DIT\Year_4\Final_year_project\Property_site\source_code\Main\property_site\app\assets\images\text3325.png"
+       inkscape:export-filename="C:\Users\John\Google_Drive\Folders_from_Skydrive\DIT\Year_4\Final_year_project\Property_site\source_code\Main\property_site\app\assets\images\logo5.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <text
@@ -1178,7 +1178,8 @@
        id="text3325"
        sodipodi:linespacing="125%"
        inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90"><tspan
+       inkscape:export-ydpi="90"
+       inkscape:export-filename="C:\Users\John\Google_Drive\Folders_from_Skydrive\DIT\Year_4\Final_year_project\Property_site\source_code\Main\property_site\app\assets\images\logo5.png"><tspan
          sodipodi:role="line"
          x="25.000013"
          y="734.505"

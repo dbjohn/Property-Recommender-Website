@@ -58,12 +58,16 @@ function setUpAmenityWeighting(default_amenity_weights){
 			console.log(columns.eq(i).attr("id"));
 		}		 
 		
+		var tableDataFields = $("#range td"), index=0;
+		
 		for(amenity in ranges){ 
 			ranges[amenity] = Math.round(100*ranges[amenity]/total);				
 			
 			s+=" "+ amenity_names_obj[amenity] + ": " + ranges[amenity] + "%,";			
 			console.log(ranges[amenity]);
 			$("#" + amenity + "_value").val(ranges[amenity]);
+			tableDataFields.eq(index).text(ranges[amenity] + "%");
+			index++;
 		}		
 		
 		s=s.slice(0,-1);
@@ -117,7 +121,10 @@ function setUpAmenityWeighting(default_amenity_weights){
 			
 			//check if there is a better way to create new html elements with jquery
 			//toTitleCase???
-			$("#range tr").append($('<th>').attr("id", $(this).attr("id") + "_weight").text(amenity_names_obj[$(this).attr("id")+"_weight"]));
+			var tableRows = $("#range tr");
+			
+			tableRows.eq(0).append($('<th>').attr("id", $(this).attr("id") + "_weight").text(amenity_names_obj[$(this).attr("id")+"_weight"]));
+			tableRows.eq(1).append($('<td>')); //we can just append the table data, and it will be given the right text value later in onSampleResized
 			
 			//there are too many problems with setting the width to zero. For example, it ends up increasing the total width, when you've unselected a number of columns and then reselected them.
 			// for(amenity in default_amenity_weights){ 																						
@@ -135,23 +142,16 @@ function setUpAmenityWeighting(default_amenity_weights){
 		else{
 			console.log("not checked");
 			$("#" + $(this).attr("id") + "_weight").remove();
+			$("#range tr td").eq(0).remove();
 			$("#" + $(this).attr("id") + "_weight_value").val("0");
-			
-			// and it wasn't as good as removing it
+			//and it wasn't as good as removing it
 			//$("#"+ $(this).attr("id") + "_weight").css("width","0px");
 			//$("#"+ $(this).attr("id") + "_weight").css("width","10px");
-			// $("#library_weight").css("width","0px");
-			// $("#library_weight").remove();
-			reInitialiseTable();
-				
-			
+			//$("#library_weight").css("width","0px");
+			//$("#library_weight").remove();
+			reInitialiseTable();			
 		}
 	});
-
-		
-		
-
-	
 };
 
 

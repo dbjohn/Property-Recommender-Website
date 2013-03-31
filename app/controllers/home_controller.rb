@@ -1,6 +1,9 @@
 class HomeController < ApplicationController  
 #business logic files are in the lib folder
 #as per advice in a number of places, require_dependencies is used
+#config.watchable_dirs['lib'] = [:rb] is added to config/environments/development.rb
+#https://rails.lighthouseapp.com/projects/8994/tickets/5218-rails-3-rc-does-not-autoload-from-lib
+#http://stackoverflow.com/questions/4018757/rails3-not-reloading-code-in-lib-while-in-development-mode
 #http://stackoverflow.com/questions/1457241/how-are-require-require-dependency-and-constants-reloading-related-in-rails
 
  require_dependency 'commute_calc'
