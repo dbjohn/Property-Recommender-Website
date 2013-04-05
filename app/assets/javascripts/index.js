@@ -9,9 +9,9 @@ $('#datepicker').datepicker();
 
 //$("#collapseOne").collapse({toggle: false});
  $('#options_advanced').change(function(){$('#advanced_options_area').collapse('show');});
- $('#options_simple').change(function(){$('#advanced_options_area').collapse('hide');});
- //set it to simple by default
- $('#options_simple').prop('checked',true);
+ $('#options_basic').change(function(){$('#advanced_options_area').collapse('hide');});
+ //set it to basic by default
+ $('#options_basic').prop('checked',true);
 
  //Remove the padding when the collapsed area is hidden.
  //some inspiration from this question http://stackoverflow.com/questions/9137073/change-css-padding-while-collapse

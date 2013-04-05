@@ -1,1 +1,1 @@
-DEFAULT_AMENITY_WEIGHTS = {"supermarket"=>30, "convenience_shop" => 20, "restaurant"=>20, "library" => 10, "bank"=>20 }
+DEFAULT_AMENITY_WEIGHTS = {"supermarket_weight_value"=>30, "convenience_shop_weight_value" => 20, "restaurant_weight_value"=>20, "library_weight_value" => 10, "bank_weight_value"=>20 }

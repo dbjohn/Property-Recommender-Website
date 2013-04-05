@@ -57,10 +57,6 @@ class CommuteCalc
 		return seconds.to_f/60.0			
 	end
 	
-	def self.test ( temp)
-		temp.commute_score = 124
-	end
-
 end
 	
 	 

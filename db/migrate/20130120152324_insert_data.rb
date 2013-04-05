@@ -1,4 +1,6 @@
 class InsertData < ActiveRecord::Migration
+#could have used rake db seed instead. However this suffices.
+
   def up
     Property.new(:address => "test", :price => 10000, :longitude => -6.2658, :latitude => 53.3376).save
 	Property.new(:address => "test1", :price => 20000, :longitude => -6.27792, :latitude => 53.32775).save

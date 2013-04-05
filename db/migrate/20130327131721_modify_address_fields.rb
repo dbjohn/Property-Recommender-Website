@@ -4,7 +4,7 @@
 class ModifyAddressFields < ActiveRecord::Migration
   def self.up
 	rename_column :properties, :town_or_city, :address_line4
-	remove_column :properties, :county	
+	remove_column :properties, :county		
   end 
   
   def self.down

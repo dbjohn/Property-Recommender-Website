@@ -77,6 +77,11 @@ class HomeController < ApplicationController
 				
 	    # @properties.sort!	#sort in place for descending order 
 		
+		#the top 10 properties will be taken. slice! is used to remove from the 11th element to the end. 
+		#it will modify the array in place
+		@properties.slice!(10..-1)
+
+		
 	end
 	
 	def process_form

@@ -1,0 +1,6 @@
+the webscraping process involves running the following 3 scripts in this order:
+1. rails runner script/Webscrape/download_daft_pages.rb
+2. rails runner script/Webscrape/scrape_search_pages.rb
+3. rails runner script/Webscrape/scrape_property_pages.rb
+
+See each file for further details on these scripts.

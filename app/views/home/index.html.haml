@@ -34,7 +34,7 @@
 					=select_tag "property_type", options_for_select([ "Any Type", "Apartment", "House", "Studio Apartment", "Flat"]) 																										
 				%p			
 					=label_tag "move_in", "When can you move in?"						
-					/uses the bootstrap datepicker http://www.eyecon.ro/bootstrap-datepicker/	 
+					/uses the bootstrap-datepicker http://www.eyecon.ro/bootstrap-datepicker/	 
 					.input-append.date#datepicker{"data-date"=>Date.today.to_s, "data-date-format"=>"yyyy-mm-dd"}
 						=text_field_tag 'move_in', "#{Date.today.to_s}", :readonly=>"readonly", :placeholder => "Select date..."
 						%span.add-on 
@@ -45,8 +45,8 @@
 				
 				=hidden_field_tag "commute_destination", "", :id=>"commute_destination_val"
 				%p																						
-					=label_tag "options", "Simple", :class => "radio inline"
-					=radio_button_tag "options", "simple", true
+					=label_tag "options", "Basic", :class => "radio inline"
+					=radio_button_tag "options", "basic", true
 					=label_tag "options", "Advanced", :class => "radio inline"
 					=radio_button_tag "options", "advanced"
 

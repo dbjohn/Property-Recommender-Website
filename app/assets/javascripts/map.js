@@ -21,7 +21,7 @@ function mapGenerate() {
         // var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
         // var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
         var position       = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);						
-        var zoom           = 12; 
+        var zoom           = 14; 
 
         map.addLayer(maplayer);
         map.setCenter(position, zoom);
@@ -133,26 +133,19 @@ function addDestinationMarker(pos){
                     lat =coords_hash[prop][1];
                     point = new OpenLayers.Geometry.Point(lon,lat);
                     point.transform(fromProjection, toProjection);		
-                    pointFeature = new OpenLayers.Feature.Vector(point, {"property_id": prop, number: i});						
-                    i += 1;
-
+                    pointFeature = new OpenLayers.Feature.Vector(point, {"property_id": prop, number: i});						                    
                     properties_obj[prop].addFeatures(pointFeature);
+					i += 1;
                         
                     //commute_destination is actually a string in the order of latitude and longitude because that order was suited by OTP. We need to extract the long and lat values to create the marker.							
                     
                     map.addLayer(properties_obj[prop]);			
                     
                     $("#"+prop).click(function() {                                                                                                                                    
-						console.log(this.id);
-						console.log(properties_obj[this.id]);
-						console.log(properties_obj[this.id].getFeaturesByAttribute("property_id", this.id));
-
 						var feature = properties_obj[this.id].getFeaturesByAttribute("property_id", this.id)[0];
-
 						var x_coord = feature.geometry.x; 
 						var y_coord = feature.geometry.y; 
 						map.setCenter([x_coord, y_coord], zoom); 
-
                     });
                     
 		}
@@ -192,14 +185,10 @@ function addDestinationMarker(pos){
 										strokeWidth: 2,
 										fillColor: "#00FFFF",
 										fillOpacity: 0.9,
-										pointRadius: 15,										
-										fontColor: "${favColor}",
+										pointRadius: 15,																				
 										fontSize: "12px",
 										fontFamily: "Courier New, monospace",
-										fontWeight: "bold",
-										labelAlign: "${align}",
-										labelXOffset: "${xOffset}",
-										labelYOffset: "${yOffset}",
+										fontWeight: "bold",										
 										labelOutlineColor: "white",
 										labelOutlineWidth: 3
 									}}),

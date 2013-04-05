@@ -1,6 +1,9 @@
-/ openlayers.js was attempted to be included in the assets/javascript 
-/ but it wasn't displaying properly and was just easier to reference from here.
-/ It may require extra files in images and stylesheets folder to work from assets.
+-#  openlayers.js was attempted to be included in the assets/javascript 
+-#  but it wasn't displaying properly and was just easier to reference from here.
+-# It may require extra files in images and stylesheets folder to work from assets.
+
+-# rather than show the to and from times to commute and amenities. It was decided that this is bit too much information.
+-# instead just the average of the two times is shown. But it would be easy to show both times if desired.
 
 =content_for :head do 
 	= javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js" 
@@ -16,10 +19,19 @@
 				.accordion-group
 					.accordion-heading
 						%a.accordion-toggle{"data-toggle"=>"collapse", "data-parent"=>"#accordion2", :href=>"#collapse#{index}"}
-							%h4 + #{index + 1}. #{property.address}
+							%span.rank #{index + 1}
+							%h4	
+								-# credit to this tip here for using the reject.(&blank?).join syntax: http://stackoverflow.com/questions/2434885/ruby-concatenate-strings-and-add-spaces
+								-# This will only join the address lines that are not nil/blank into a string 
+								#{[property.address_line1, property.address_line2, property.address_line3, property.address_line4].reject(&:blank?).join(', ')}
+								
+							%span.plus
+								%h4 +
+								
 																																																																																				
 					%div{:id=> "collapse#{index}", :class => "accordion-body collapse #{index==0 ? 'in' : ''}"}
-						.accordion-inner
+						.accordion-inner																				
+							
 							%table.table.table-bordered
 								%thead
 									%tr																														
@@ -28,9 +40,7 @@
 										%th Match Score
 										%th Amenity Score 
 										%th Commute Score
-										%th Commute To 
-										%th Commute From 														
-																																					
+										%th Average Commute																																																											
 								%tbody																																								
 									%tr																																																																		
 										%td €#{property.price}
@@ -38,10 +48,13 @@
 										%td #{ property.match_score} %																		
 										%td #{number_with_precision property.amenity_score, :precision => 2} %
 										%td #{number_with_precision property.commute_score, :precision => 2} %																		
-										%td #{number_with_precision property.commute_time_to, :precision => 2} mins									
-										%td #{number_with_precision property.commute_time_from, :precision => 2} mins
-																																	
-							%button{:id => "#{property.id}", :class => "btn", :type => "button"} Property Location
+										%td #{number_with_precision ((property.commute_time_to.to_f + property.commute_time_from.to_f)/ 2.0), :precision => 2} mins																			
+							%p
+								#{property.description}
+							%p
+								=link_to "View more property details", "http://www.daft.ie/searchrental.daft?id=" + property.daft_id																																										
+							%p
+								%button{:id => "#{property.id}", :class => "btn", :type => "button"} Property Location
 							
 							/if the user removed all amenities from the advanced options area, unlikely but not impossible as designed, then no information about amenities is shown.
 							
@@ -55,8 +68,8 @@
 									%ul.nav.nav-tabs
 									
 										-@amenity_types.each_with_index do |a_type, index|
-											%li 
-												%a{:href=>"#tab#{index}", "data-toggle"=>"tab"} #{a_type.humanize.pluralize}
+											%li{:class => "#{index==0 ? 'active' : ''}" }
+												%a{:href=>"##{property.id}tab#{index}", "data-toggle"=>"tab"} #{a_type.humanize.pluralize}
 										
 								
 										/ uniq by will take the first elements of a certain point which are also the best/nearest because the array is sorted by amenity score
@@ -67,7 +80,7 @@
 												:property_id => property.id, :amenity_type => a_type, :transport_modes => @transport_modes).order("amenity_score desc").uniq_by {|a| a.dublin_osm_point_id}
 																																																																							
 											
-											.tab-pane{:id=>"tab#{index}"}
+											%div{:id=>"#{property.id}tab#{index}", :class => "tab-pane #{index==0 ? 'active' : ''}"}
 											
 												-amenities.take(3).each_with_index do |amenity, index|																																					
 													-point = DublinOsmPoint.find( amenity.dublin_osm_point_id)   																		
@@ -78,7 +91,7 @@
 													%b #{index + 1} . 
 													=label_tag "#{unique_id}", "#{point.name} ", :class => 'checkbox inline' , :data => {:latitude => coord.lat, :longitude => coord.long}
 													=check_box_tag "#{unique_id}", 1, false 
-													%div by #{@transport_mode_words_hash[amenity.transport_mode]} - to: #{number_with_precision amenity.to_travel_time, :precision=> 2} minutes, from: #{number_with_precision amenity.from_travel_time, :precision=> 2} minutes																										
+													%div by #{@transport_mode_words_hash[amenity.transport_mode]} taking #{number_with_precision (amenity.to_travel_time.to_f +  amenity.from_travel_time.to_f)/2, :precision=> 2} minutes on average
 													
 													-amenities_location_hash[unique_id] = [coord.long, coord.lat]  																																																																							
 						

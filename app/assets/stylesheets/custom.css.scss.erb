@@ -6,6 +6,7 @@ h1{
 
 h4{
 	margin: 0; /* needed to make the headings in the accordion on the results page not take up too much space.*/
+	display: inline;
 }
 
 h5{
@@ -15,7 +16,7 @@ h5{
 body{
 	
 	
-
+/* ravenna is a subtle brick pattern available for free without restriction from subtlepatterns.com */
 	background: url(<%= asset_path 'ravenna/ravenna/ravenna.png'%>) repeat scroll 0% 0%  transparent;
 	/*background: url(<%= asset_path 'white_brick_wall/white_brick_wall/white_brick_wall.png'%>) repeat scroll 0% 0%  transparent;*/
 	
@@ -103,6 +104,24 @@ form{
 	padding-left: 2%;
 	margin-top: 10px;
 	text-align: left; 		
+}
+/*making the a circled number is based on ideas from this question: http://stackoverflow.com/questions/4861224/how-to-css-a-number-to-be-surrounded-by-a-circle*/
+
+.rank {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 999px 999px 999px 999px;
+    color: black;
+    display: inline-block;
+    float: left;
+    height: 20px;
+	width: 20px;
+    margin-right: 10px;
+    padding: 2px;
+    text-align: center;
+}
+.plus {
+    float: right;
 }
 
 #results_right_column{
