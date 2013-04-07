@@ -26,6 +26,8 @@ class HomeController < ApplicationController
 		#To form a correct query string for this query, the word "AND" needs to separate each condition. We don't know which condition will be inserted into the array first or how many because it depends on what the user chooses. 
 		#Only the ones that are choosen are added to the array and so then Array.join is used to join the elements with "AND" to form the sql query string.
 		#if params[attribute] isn't present (for whatever reason), i.e. it's blank then don't include that condition
+		
+		#TODO: Revise all the dropdown options provided to see if they match the new data in properties table. Do select distinct etc...
 		sql_array = []
 		sql_array << "price >= :min_price" unless params[:min_price].blank? || params[:min_price] == "No Min"
 		sql_array << "price <= :max_price" unless params[:max_price].blank? || params[:max_price] == "No Max"
@@ -52,41 +54,41 @@ class HomeController < ApplicationController
 		#Write commute destination coordinates to file for router to read
 		#this is not thread safe at the moment
 		#could probably put into separate method.
-		  # File.open(Rails.root.join( "other_files/commute/otp_origin/Origin.csv"), 'w') do |file| 							
-				  # file.puts("label,lat,lon,input")
-				  # file.puts("o1,#{params[:commute_destination]},0")			
-		  # end
+		  File.open(Rails.root.join( "other_files/commute/otp_origin/Origin.csv"), 'w') do |file| 							
+				  file.puts("label,lat,lon,input")
+				  file.puts("o1,#{params[:commute_destination]},0")			
+		  end
 					
-		@transport_modes = params.slice(:transit, :car, :walk, :bicycle).values
+		@transport_modes = params.slice(:transit, :car, :walk).values
 		#might be easier to use one hash for amenities...
 		
-		@amenity_types= params.slice(:supermarket, :convenience_shop, :restaurant, :library,:bank).values		
+		@amenity_types = params.slice(:supermarket, :convenience_shop, :restaurant, :library,:bank).values		
 		@amenity_weights = params.slice(:supermarket_weight_value, :convenience_shop_weight_value, :restaurant_weight_value, :library_weight_value, :bank_weight_value)
 				
 		#A hash for the transport modes, for converting from the strict syntax required by opentripplanner into a more readable format in the view.
 		@transport_mode_words_hash = {'CAR' => 'Car', 'TRANSIT,WALK' => 'public transport and walking', 'WALK' => 'walking'}
 		
-		# CommuteCalc.request_routing_calculation(@transport_modes)			
+		 CommuteCalc.request_routing_calculation(@transport_modes)			
 		 #pass a reference to the method of the sorted properties array. It is sorted so that properties align with the results written to file.
-		# CommuteCalc.calc_commute_score @properties.sort {|x,y| x.id <=> y.id}
+		 CommuteCalc.calc_commute_score @properties.sort {|x,y| x.id <=> y.id}
 		
-		# if(@amenity_types.blank?
-		#AmenityCalc.amenity_score_calc(@properties, @amenity_types, @transport_modes, @amenity_weights)
+		# if not using default amenity weighting then recalculate the amenity scores for the property.
+		if(!params[:amenity_weighting_default]) then
+			# Rails.logger.debug @amenity_types.inspect
+			AmenityCalc.amenity_score_calc(@properties, @amenity_types, @transport_modes, @amenity_weights) 
+		end
 		
-		# Scoring.total_score_calc @properties
+		Scoring.total_score_calc @properties
 				
-	    # @properties.sort!	#sort in place for descending order 
+	    @properties.sort!	#sort in place for descending order by total score
 		
-		#the top 10 properties will be taken. slice! is used to remove from the 11th element to the end. 
+		#the top 10 properties will be taken. slice! is used to remove all from the 11th element to the end. 
 		#it will modify the array in place
 		@properties.slice!(10..-1)
 
 		
 	end
 	
-	def process_form
-		
-		#return sql_string
-	end
-  
+	
+
 end

@@ -9,6 +9,8 @@ end
 #	puts Scoring.travel_score_calc( 100, 100)																					
 begin	
 
+
+
 amenities_path_dir =  Rails.root.join("other_files/Amenities/output_results/")
 
  #credit here for this tip http://stackoverflow.com/questions/5810782/how-to-get-ruby-dirglob-to-return-basenames-not-absolute-paths
@@ -17,9 +19,9 @@ amenities_path_dir =  Rails.root.join("other_files/Amenities/output_results/")
  transport_modes.each do |mode| 
 		Dir.glob(File.join(amenities_path_dir, mode, "*out.csv")) do |dir_file| 							
 			File.open(dir_file, 'r') do |file| 												
-					filename=  File.basename(file)					 										
+					filename =  File.basename(file)					 										
 					
-					property_id= filename.slice(0...(filename.index('_'))).to_i	#would probably be more elegant to use regular expressions.
+					property_id = filename.slice(0...(filename.index('_'))).to_i	#would probably be more elegant to use regular expressions.
 					amenities_array = [ ]							
 					#credit to user Travis for pointing out this way of creating a hash with a default form.
 					#http://stackoverflow.com/questions/9234038/append-a-value-in-a-hash-object-in-ruby-using-an-already-existing-key					

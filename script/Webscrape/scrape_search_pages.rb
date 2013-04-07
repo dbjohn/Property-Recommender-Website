@@ -135,6 +135,9 @@ end
 #Delete all properties in the database first
 Property.delete_all()
 
+array =[]
+i=0
+
  Dir.glob(File.join(search_file_directory, "*")) do |search_file| 							
 	# puts "hello"
 	# puts search_file
@@ -157,7 +160,10 @@ Property.delete_all()
 		daft_id = get_daft_id(link)
 	 
 	    # puts daft_id
-	
+		
+		array <<daft_id
+		i +=1
+		
 		
 		description_area = get_description_area(box)
 		
@@ -176,13 +182,18 @@ Property.delete_all()
 		full_description = availability + " - " + description
 		# puts full_description
 		
-		Property.create(:daft_id => daft_id, :move_in_date => move_in_date, :description => full_description)
+		#the daft search pages seem to contain some duplicates. So by using find_or_create_by_daft_id
+		# we check first if the property has already been created, if it is then skip it, if is not then it is created.
+		Property.find_or_create_by_daft_id( daft_id, :move_in_date => move_in_date, :description => full_description)
 		# prop = Property.new(:daft_id => daft_id, :move_in_date => move_in_date, :description => full_description)
 		
 		# puts prop.to_yaml
 		
 	end
 end
+# p array
+# puts array.length
+# puts i
  
 
  

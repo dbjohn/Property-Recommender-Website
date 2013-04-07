@@ -31,11 +31,13 @@ class Scoring
 		
 		def self.total_score_calc(properties)
 				properties.each_with_index do |property, index|
-						Rails.logger.debug "Property #{index} before total score calc: #{property.to_yaml}"
-						Rails.logger.debug "Property #{index} match score, total score calc: #{property.match_score}"
-						Rails.logger.debug "Property #{index} commute score, total score calc: #{property.commute_score}"
-						Rails.logger.debug "Property #{index} amenity score, total score calc: #{property.amenity_score}"
-						property.total_score = (property.match_score + property.commute_score + property.amenity_score)/3.0
+						# Rails.logger.debug "Property #{index} before total score calc: #{property.to_yaml}"
+						Rails.logger.debug "Property #{property.id} match score, total score calc: #{property.match_score}"
+						Rails.logger.debug "Property #{property.id} commute score, total score calc: #{property.commute_score}"
+						Rails.logger.debug "Property #{property.id} amenity score, total score calc: #{property.amenity_score}"
+						#compact: removes nils
+						scores = [property.match_score, property.commute_score, property.amenity_score].compact
+						property.total_score = scores.sum/scores.length
 				end
 		end
 	

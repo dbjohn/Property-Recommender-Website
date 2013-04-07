@@ -23,6 +23,7 @@ $('#datepicker').datepicker();
 });
 
 function setUpAmenityWeighting(default_amenity_weights){
+	//the default amenity weights are DEFAULT_AMENITY_WEIGHTS = {"supermarket_weight_value" : 30, "convenience_shop_weight_value" : 20, "restaurant_weight_value" : 20, "library_weight_value" : 10, "bank_weight_value" : 20 }
 	//An object with the proper amenity names is used in the view as it is more presentable and better english. translate from html input ids to proper names.
 	var amenity_names_obj = {'supermarket_weight' : 'Supermarket', 'convenience_shop_weight' : 'Convenience Shop', 'restaurant_weight' : 'Restaurant', 'library_weight' : 'Library', 'bank_weight' : 'Bank'}	
 	
@@ -47,7 +48,8 @@ function setUpAmenityWeighting(default_amenity_weights){
 		var columns = $(e.currentTarget).find("th");
 		// var msg = "columns widths: ";
 		
-		var ranges = {}, total = 0, i, s ="", w, width;
+		
+		var ranges = {}, total = 0, i, w;
 		for(i = 0; i<columns.length; i++){				
 			w =  columns.eq(i).width() -10 - (i==0?1:0);
 			// ranges.push(w);
@@ -55,29 +57,28 @@ function setUpAmenityWeighting(default_amenity_weights){
 			// console.log(columns[i]);
 			//make ranges a hash
 			ranges[columns.eq(i).attr("id")] = w;
-			console.log(columns.eq(i).attr("id"));
+			// console.log(columns.eq(i).attr("id"));
 		}		 
 		
 		var tableDataFields = $("#range td"), index=0;
 		
 		for(amenity in ranges){ 
 			ranges[amenity] = Math.round(100*ranges[amenity]/total);				
+						
 			
-			s+=" "+ amenity_names_obj[amenity] + ": " + ranges[amenity] + "%,";			
-			console.log(ranges[amenity]);
 			$("#" + amenity + "_value").val(ranges[amenity]);
 			tableDataFields.eq(index).text(ranges[amenity] + "%");
 			index++;
 		}		
 		
-		s=s.slice(0,-1);
+		
 		// columns.each(function(){ msg += $(this).width() + "px; "; })
-		$("#text").html(s);
+		
 		
 		//uncheck the default checkbox if the user changes values
-		var $default_checbox = $('#amenity_weighting_default');
-		if($default_checbox.is(':checked')){				
-				$default_checbox.trigger('click').attr('checked',false);
+		var $default_checkbox = $('#amenity_weighting_default');
+		if($default_checkbox.is(':checked')){				
+				$default_checkbox.trigger('click').attr('checked',false);
 		}
 	};	
 	
@@ -99,8 +100,11 @@ function setUpAmenityWeighting(default_amenity_weights){
 	
 		if($(this).is(':checked')){					
 													
-			for(amenity in default_amenity_weights){ 																						
-				$("#" + amenity + "_weight").css("width",total*(default_amenity_weights[amenity]/100) + "px");
+			for(amenity in default_amenity_weights){ 					
+				//the default amenity hash has the words _weight_value at the end. Therefore we only get up to the weight string.
+				//There is probably a more efficient way of naming the parts involved, however it got complicated and this just works for now.
+				$("#" + amenity.substring(0,amenity.lastIndexOf("_"))).css("width",total*(default_amenity_weights[amenity]/100) + "px");
+				
 			}
 			
 			reInitialiseTable();					
@@ -109,7 +113,9 @@ function setUpAmenityWeighting(default_amenity_weights){
 			
 		}
 	
-	}).trigger('click').attr('checked',true);;//turn on default amenity_weighting on page load
+	});
+	
+	$('#amenity_weighting_default').trigger('click').attr('checked',true);//turn on default amenity_weighting on page load
 	
 	
 

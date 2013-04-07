@@ -8,5 +8,9 @@ require_dependency 'amenity_calc'
 amenity_types = ["supermarket", "convenience_shop", "restaurant", "library", "bank"] 
 transport_modes = ["CAR", "TRANSIT,WALK", "WALK"]
 
+properties = Property.all
 #TODO: Need to update to add the weights?
-AmenityCalc.amenity_score_calc(Property.all, amenity_types, transport_modes)
+AmenityCalc.amenity_score_calc(properties, amenity_types, transport_modes)
+#we save these default amenity scores permanently with the properties.
+properties.each {|p| p.save}
+

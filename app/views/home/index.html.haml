@@ -2,6 +2,8 @@
 	=stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css"
 	=javascript_include_tag "http://www.openlayers.org/api/OpenLayers.js"
 
+-price_array=[300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400,2500,2600,2700,2800,2900,3000,3100,3200,3300,3400,3500,3600,3700,3800,3900,4000,4100,4200,4300,4400,4500,4600,4700,4800,4900,5000]
+	
 .container	
 	.row
 		.span12
@@ -21,9 +23,12 @@
 						=check_box_tag "car", "CAR", false
 				%p
 					=label_tag "min_price", "Minimum Price" 
-					=select_tag "min_price", options_for_select([ "No Min", 1000, 20000, 300000 ]) 										
+					=select_tag "min_price", options_for_select(price_array.unshift("No Min")) 										
 					=label_tag "max_price", "Maximum Price"
-					=select_tag "max_price", options_for_select([ "No Max", 20000, 30000, 400000 ]) 
+					-# replace the first element which is now "No Min" with "No Max"
+					-price_array[0] = "No Max"
+					=select_tag "max_price", options_for_select(price_array) 
+
 				%p
 					=label_tag "min_no_of_bedrooms", "Minimum Number of Bedrooms"
 					=select_tag "min_no_of_bedrooms", options_for_select([ "No Min", 1, 2, 3, 4, 5, 6 ]) 
@@ -31,7 +36,7 @@
 					=select_tag "max_no_of_bedrooms", options_for_select([ "No Max", 1, 2, 3, 4, 5, 6 ]) 
 				%p
 					=label_tag "property_type", "Type of Property"
-					=select_tag "property_type", options_for_select([ "Any Type", "Apartment", "House", "Studio Apartment", "Flat"]) 																										
+					=select_tag "property_type", options_for_select([ "Any Type", "Apartment to let", "Flat to let", "Studio apartment to let", "House to let"])
 				%p			
 					=label_tag "move_in", "When can you move in?"						
 					/uses the bootstrap-datepicker http://www.eyecon.ro/bootstrap-datepicker/	 
@@ -41,7 +46,7 @@
 							%i.icon-calendar
 				%p																			
 					=label_tag "lease_type", "Lease Type"
-					=select_tag "lease_type", options_for_select([ "Any Type", "No Lease", "3 Month Lease", "6 Month Lease", "9 Month Lease", "1 Year Lease", "2 Year Lease", "3 Year Lease"]) 
+					=select_tag "lease_type", options_for_select(["Any Type", "Minimum 1 Year", "No Minimum", "Minimum 3 Months", "Minimum 6 Months"]) 
 				
 				=hidden_field_tag "commute_destination", "", :id=>"commute_destination_val"
 				%p																						
@@ -152,9 +157,10 @@
 										%td 25%
 										%td 25%
 					
-					/					
-						%p
-							#text Ranges
+										
+					%p
+						%i
+							Drag columns to adjust amenity weights
 					
 					=hidden_field_tag "supermarket_weight_value", "", :id=>"supermarket_weight_value" 			
 					=hidden_field_tag "convenience_shop_weight_value", "", :id=>"convenience_shop_weight_value" 			
@@ -169,4 +175,3 @@
 / initInputMap sets up the map in different way to the results page so it is not included in the common document loaded function and is called here.
 = javascript_tag "initInputMap()"
 = javascript_tag "setUpAmenityWeighting(#{DEFAULT_AMENITY_WEIGHTS.to_json})" 				
-								

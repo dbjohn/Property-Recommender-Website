@@ -43,9 +43,9 @@
 										%th Average Commute																																																											
 								%tbody																																								
 									%tr																																																																		
-										%td €#{property.price}
-										%td #{number_with_precision property.total_score, :precision => 2 }
-										%td #{ property.match_score} %																		
+										%td €#{property.price} 
+										%td #{number_with_precision property.total_score, :precision => 2 } %
+										%td #{number_with_precision property.match_score, :precision => 2}  %																		
 										%td #{number_with_precision property.amenity_score, :precision => 2} %
 										%td #{number_with_precision property.commute_score, :precision => 2} %																		
 										%td #{number_with_precision ((property.commute_time_to.to_f + property.commute_time_from.to_f)/ 2.0), :precision => 2} mins																			

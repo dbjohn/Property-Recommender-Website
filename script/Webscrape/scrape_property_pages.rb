@@ -101,7 +101,8 @@ end
  
  
  #need to add more facilities!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!just check again
- 
+ index =0
+ check_array = []
  
  Dir.glob(File.join(properties_directory, "*")) do |file_path| 							
 	
@@ -110,8 +111,8 @@ end
 	property_html = Nokogiri::HTML(open(property_file))
 		# puts doc.class.name
 		# puts doc.inspect
-	puts "--------------------------------"	
-	puts daft_id
+	# puts "--------------------------------"	
+	check_array << daft_id
 		
 	# puts get_lease(property_html)
 	property = Property.where(:daft_id => daft_id).first
@@ -152,8 +153,20 @@ end
 	property.cable_television = facilities["Cable Television"]	
 	property.dishwasher = facilities["Dishwasher"]	
 	property.internet = facilities["Internet"]	
-	property.save
-	# p property
-		
 	
- end
+	
+	
+	val = property.save
+	
+	puts val unless val ==true
+	
+	p property unless val ==true
+	puts property.longitude unless val ==true
+		
+		index +=1
+	
+	end
+	
+	
+	puts index
+	p check_array

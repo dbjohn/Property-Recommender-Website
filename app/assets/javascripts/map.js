@@ -21,7 +21,7 @@ function mapGenerate() {
         // var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
         // var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
         var position       = new OpenLayers.LonLat(-6.259460,53.345223).transform(fromProjection, toProjection);						
-        var zoom           = 14; 
+        var zoom           = 13; 
 
         map.addLayer(maplayer);
         map.setCenter(position, zoom);
@@ -34,8 +34,6 @@ function addDestinationMarker(pos){
 	map.addLayer(markers);		
 
 	marker = new OpenLayers.Marker(pos);
-	
-	
 	markers.addMarker(marker);
 				
 	$("#commute_locate").click(function() {
@@ -86,7 +84,7 @@ function addDestinationMarker(pos){
             //TODO: make some of these variable declarations on one line.
 			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-			var zoom           = 12; 									
+			var zoom           = 14; 									
 			var lat;
 			var lon;
 			var point;
@@ -162,7 +160,7 @@ function addDestinationMarker(pos){
 		
 			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 			var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection						
-			var zoom           = 12; 
+			var zoom           = 14; 
 			var amenity_obj = {}
 			for(prop in coords_hash){
 					if(coords_hash.hasOwnProperty(prop)){
