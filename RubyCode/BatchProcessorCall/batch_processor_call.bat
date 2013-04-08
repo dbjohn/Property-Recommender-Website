@@ -1,5 +1,4 @@
 echo off
-rem this workds java -cp C:\Users\John\Programming\Java\Package_example\Source\Stand_alone_example\ HelloWorld
 
 
 rem this works:

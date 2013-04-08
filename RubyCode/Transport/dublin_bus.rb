@@ -1,12 +1,5 @@
-=begin
-talk
-
-can use
-response.to_hash, to get in hash.
 
 
-=end
-#class Dublin_bus
 begin
 	gem "savon", "=1.2.0"
 	require "savon" 
@@ -47,21 +40,5 @@ end
   #some error occur, dir not writable etc.
 
 	
-=begin
-	pieces...
-	response = client.request :get_user do
-	soap.version = 2
-	
-	
-	response = client.request(:get_stop_data_by_route, :route) do
-		soap.version = 2
-		soap.body = {:route => "16"}
-	end
-end
-	
-=end
 
-#	 end
-#end
 
-#Dublin_bus.new

@@ -33,10 +33,7 @@ PropertySite::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
-  
-  #jb added these:
-  config.log_level = :debug
-  
-  config.watchable_dirs['lib']=[:rb]
+  config.assets.debug = true   
+   
+  config.watchable_dirs['lib']=[:rb] #jb 
 end

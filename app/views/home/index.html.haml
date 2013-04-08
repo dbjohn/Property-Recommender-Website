@@ -14,9 +14,10 @@
 					%div{:id=>"map_canvas"}   							
 					-# User can select one or more modes of transport. The quickest mode will be chosen after calculations.
 					%p
+						-# transit walk is chosen as a default value but the user can change that if desired
 						=label_tag "Select Mode of Transport"
 						=label_tag "transit", "Public Transit", :class=>"checkbox inline"
-						=check_box_tag "transit", "TRANSIT,WALK", false					
+						=check_box_tag "transit", "TRANSIT,WALK", true					
 						=label_tag "walk", "Walk", :class=>"checkbox inline"
 						=check_box_tag "walk", "WALK", false
 						=label_tag "car", "Car", :class=>"checkbox inline"
