@@ -49,7 +49,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: property_site_production
+  database: property_site_development
   pool: 5
   username: railspg
   password: RootPass

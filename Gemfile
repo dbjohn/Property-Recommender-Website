@@ -46,4 +46,4 @@ gem 'debugger'
 gem "nokogiri"
 gem "httparty"
 
-gem 'haml-rails', :group => :development
+gem 'haml-rails'
